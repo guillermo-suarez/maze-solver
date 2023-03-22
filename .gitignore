@@ -1,0 +1,2 @@
+# Hacer que git ignore la carpeta __pycache__ que sólo sirve en tiempo de ejecución
+/__pycache__
