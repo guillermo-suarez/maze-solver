@@ -61,24 +61,24 @@ for i in range(0, height):
 	maze.append(line)
 
 # Randomize starting point and set it a cell
-starting_height = int(9)
-starting_width = int(9)
+starting_height = int(9)					# Forzar cordY inicio = 9
+starting_width = int(9)						# Forzar cordX inicio = 9
 if (starting_height == 0):
 	starting_height += 1
-if (starting_height == height-1):
-	starting_height -= 1
+if (starting_height == height-1):			# Ya que height = 10, esto es SIEMPRE verdadero
+	starting_height -= 1					# Ahora cordY inicio = 8
 if (starting_width == 0):
 	starting_width += 1
-if (starting_width == width-1):
-	starting_width -= 1
+if (starting_width == width-1):				# Ya que width = 10, esto es SIEMPRE verdadero
+	starting_width -= 1						# Ahora cordX inicio = 8
 
 # Mark it as cell and add surrounding walls to the list
-maze[starting_height][starting_width] = cell
+maze[starting_height][starting_width] = cell				# La celda en Y = 8, X = 8 ahora es '0' (CELL)
 walls = []
-walls.append([starting_height - 1, starting_width])
-walls.append([starting_height, starting_width - 1])
-walls.append([starting_height, starting_width + 1])
-walls.append([starting_height + 1, starting_width])
+walls.append([starting_height - 1, starting_width])			# Pared en Y = 7, X = 8
+walls.append([starting_height, starting_width - 1])			# Pared en Y = 8, X = 7
+walls.append([starting_height, starting_width + 1])			# Pared en Y = 8, X = 9
+walls.append([starting_height + 1, starting_width])			# Pared en Y = 9, X = 8
 
 # Denote walls in maze
 maze[starting_height-1][starting_width] = 'x'
@@ -91,7 +91,7 @@ while (walls):
 	rand_wall = walls[int(random.random()*len(walls))-1]
 
 	# Check if it is a left wall
-	if (rand_wall[1] != 0):
+	if (rand_wall[1] != 0):									# Esto SIEMPRE va a ser verdadero, sin importar la pared que elija
 		if (maze[rand_wall[0]][rand_wall[1]-1] == 'u' and maze[rand_wall[0]][rand_wall[1]+1] == '0'):
 			# Find the number of surrounding cells
 			s_cells = surroundingCells(rand_wall)
@@ -102,22 +102,22 @@ while (walls):
 
 				# Mark the new walls
 				# Upper cell
-				if (rand_wall[0] != 0):
-					if (maze[rand_wall[0]-1][rand_wall[1]] != '0'):
+				if (rand_wall[0] != 0):						# Esto SIEMPRE va a ser verdadero, sin importar la pared que elja
+					if (maze[rand_wall[0]-1][rand_wall[1]] != '0'):					# En el caso de que se elija la pared de ABAJO del StartingPoint, esto es siempre falso
 						maze[rand_wall[0]-1][rand_wall[1]] = 'x'
-					if ([rand_wall[0]-1, rand_wall[1]] not in walls):
-						walls.append([rand_wall[0]-1, rand_wall[1]])
+					if ([rand_wall[0]-1, rand_wall[1]] not in walls):				# En ese caso, el upper cell es CELDA = '0'
+						walls.append([rand_wall[0]-1, rand_wall[1]])				# Sin embargo lo agrega igual a las paredes (!!!)
 
 
 				# Bottom cell
-				if (rand_wall[0] != height-1):
+				if (rand_wall[0] != height-1):				# Siempre VERDADERO para todas las walls excepto la de ABAJO, para esa es siempre FALSO
 					if (maze[rand_wall[0]+1][rand_wall[1]] != '0'):
 						maze[rand_wall[0]+1][rand_wall[1]] = 'x'
 					if ([rand_wall[0]+1, rand_wall[1]] not in walls):
 						walls.append([rand_wall[0]+1, rand_wall[1]])
 
 				# Leftmost cell
-				if (rand_wall[1] != 0):	
+				if (rand_wall[1] != 0):						# Siempre VERDADERO para todas las walls
 					if (maze[rand_wall[0]][rand_wall[1]-1] != '0'):
 						maze[rand_wall[0]][rand_wall[1]-1] = 'x'
 					if ([rand_wall[0], rand_wall[1]-1] not in walls):
@@ -132,7 +132,7 @@ while (walls):
 			continue
 
 	# Check if it is an upper wall
-	if (rand_wall[0] != 0):
+	if (rand_wall[0] != 0):									# Esto SIEMPRE va a ser verdadero, sin importar la pared que elija
 		if (maze[rand_wall[0]-1][rand_wall[1]] == 'u' and maze[rand_wall[0]+1][rand_wall[1]] == '0'):
 
 			s_cells = surroundingCells(rand_wall)
@@ -170,7 +170,7 @@ while (walls):
 			continue
 
 	# Check the bottom wall
-	if (rand_wall[0] != height-1):
+	if (rand_wall[0] != height-1):									# Esto, para la pared de ABAJO, es SIEMPRE FALSO. Para el resto, es SIEMPRE VERDADERO
 		if (maze[rand_wall[0]+1][rand_wall[1]] == 'u' and maze[rand_wall[0]-1][rand_wall[1]] == '0'):
 
 			s_cells = surroundingCells(rand_wall)
@@ -204,7 +204,7 @@ while (walls):
 			continue
 
 	# Check the right wall
-	if (rand_wall[1] != width-1):
+	if (rand_wall[1] != width-1):									# Esto, para la pared de DERECHA, es SIEMPRE FALSO. Para el resto, es SIEMPRE VERDADERO
 		if (maze[rand_wall[0]][rand_wall[1]+1] == 'u' and maze[rand_wall[0]][rand_wall[1]-1] == '0'):
 
 			s_cells = surroundingCells(rand_wall)
@@ -269,4 +269,4 @@ maze[0][1] = cell
 maze[9][8] = cell
 
 # Print final maze
-printMaze(maze)
+# printMaze(maze)
