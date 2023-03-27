@@ -1,14 +1,12 @@
-import anytree
-
 from genlab import maze
 from anytree import Node, RenderTree, find_by_attr
 from colorama import Fore
 
-arbol = Node(name = "(10, 10)", cordX = 10, cordY = 10)
-
 print(Fore.WHITE)
 
-rel = []
+arbol = Node(name = "(10, 10)", cordX = 10, cordY = 10)
+
+relegados = []
 
 # Se recorre el arbol desde abajo a la derecha hacia arriba a la izquierda
 # Se recorre cada fila de derecha a izquierda
@@ -35,30 +33,30 @@ for j in range(10, 0, -1):
                 nodo.parent = padre
             # Si su nodo padre todavía no se agregó al árbol... ¿?¿?¿?¿?
             else:
-                rel.append(nodo)
+                relegados.append(nodo)
 
 a = 0
 
-while len(rel) != 0:
+while len(relegados) != 0:
     padre = None
     # Si ahora si existe un nodo a la DERECHA para que sea su padre
-    if find_by_attr(arbol, "(" + str(rel[a].cordY) + ", " + str(rel[a].cordX + 1) + ")") != None:
-        padre = find_by_attr(arbol, "(" + str(rel[a].cordY) + ", " + str(rel[a].cordX + 1) + ")")
+    if find_by_attr(arbol, "(" + str(relegados[a].cordY) + ", " + str(relegados[a].cordX + 1) + ")") != None:
+        padre = find_by_attr(arbol, "(" + str(relegados[a].cordY) + ", " + str(relegados[a].cordX + 1) + ")")
     # Si ahora si existe un nodo ABAJO para que sea su padre
-    elif find_by_attr(arbol, "(" + str(rel[a].cordY + 1) + ", " + str(rel[a].cordX) + ")") != None:
-        padre = find_by_attr(arbol, "(" + str(rel[a].cordY + 1) + ", " + str(rel[a].cordX) + ")")
+    elif find_by_attr(arbol, "(" + str(relegados[a].cordY + 1) + ", " + str(relegados[a].cordX) + ")") != None:
+        padre = find_by_attr(arbol, "(" + str(relegados[a].cordY + 1) + ", " + str(relegados[a].cordX) + ")")
     # Si ahora si existe un nodo a la IZQUIERDA para que sea su padre
-    elif find_by_attr(arbol, "(" + str(rel[a].cordY) + ", " + str(rel[a].cordX - 1) + ")") != None:
-        padre = find_by_attr(arbol, "(" + str(rel[a].cordY) + ", " + str(rel[a].cordX - 1) + ")")
+    elif find_by_attr(arbol, "(" + str(relegados[a].cordY) + ", " + str(relegados[a].cordX - 1) + ")") != None:
+        padre = find_by_attr(arbol, "(" + str(relegados[a].cordY) + ", " + str(relegados[a].cordX - 1) + ")")
     # Si ahora si existe un nodo ARIBA para que sea su padre
-    elif find_by_attr(arbol, "(" + str(rel[a].cordY - 1) + ", " + str(rel[a].cordX) + ")") != None:
-        padre = find_by_attr(arbol, "(" + str(rel[a].cordY - 1) + ", " + str(rel[a].cordX) + ")")
+    elif find_by_attr(arbol, "(" + str(relegados[a].cordY - 1) + ", " + str(relegados[a].cordX) + ")") != None:
+        padre = find_by_attr(arbol, "(" + str(relegados[a].cordY - 1) + ", " + str(relegados[a].cordX) + ")")
     if padre != None:
-        nodo = rel.pop(a)
+        nodo = relegados.pop(a)
         nodo.parent = padre
         a = a - 1
     a = a + 1
-    if a > (len(rel) - 1):
+    if a > (len(relegados) - 1):
         a = 0
 
 final = Node(name = "(1, 1)", cordX = 1, cordY = 1)
