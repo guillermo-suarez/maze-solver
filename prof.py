@@ -73,6 +73,14 @@ while len(rel) != 0:
 #     print(nodo)
 # print('\n')
 
+final = Node(name = "(1, 1)", cordX = 1, cordY = 1)
+padre = None
+if find_by_attr(arbol, "(" + str(final.cordY) + ", " + str(final.cordX + 1) + ")") != None:
+    padre = find_by_attr(arbol, "(" + str(final.cordY) + ", " + str(final.cordX + 1) + ")")
+else:
+    padre = find_by_attr(arbol, "(" + str(final.cordY + 1) + ", " + str(final.cordX) + ")")
+final.parent = padre
+
 for pre, _, node in RenderTree(arbol):
     print("%s%s" % (pre, node.name))
 
