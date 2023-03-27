@@ -40,17 +40,17 @@ a = 0
 while len(relegados) != 0:
     padre = None
     # Si ahora si existe un nodo a la DERECHA para que sea su padre
-    if find_by_attr(arbol, "(" + str(relegados[a].cordY) + ", " + str(relegados[a].cordX + 1) + ")") != None:
-        padre = find_by_attr(arbol, "(" + str(relegados[a].cordY) + ", " + str(relegados[a].cordX + 1) + ")")
+    if find_by_attr(arbol, "(" + str(relegados[a].cordX + 1) + ", " + str(relegados[a].cordY) + ")") != None:
+        padre = find_by_attr(arbol, "(" + str(relegados[a].cordX + 1) + ", " + str(relegados[a].cordY) + ")")
     # Si ahora si existe un nodo ABAJO para que sea su padre
-    elif find_by_attr(arbol, "(" + str(relegados[a].cordY + 1) + ", " + str(relegados[a].cordX) + ")") != None:
-        padre = find_by_attr(arbol, "(" + str(relegados[a].cordY + 1) + ", " + str(relegados[a].cordX) + ")")
+    elif find_by_attr(arbol, "(" + str(relegados[a].cordX) + ", " + str(relegados[a].cordY + 1) + ")") != None:
+        padre = find_by_attr(arbol, "(" + str(relegados[a].cordX) + ", " + str(relegados[a].cordY + 1) + ")")
     # Si ahora si existe un nodo a la IZQUIERDA para que sea su padre
-    elif find_by_attr(arbol, "(" + str(relegados[a].cordY) + ", " + str(relegados[a].cordX - 1) + ")") != None:
-        padre = find_by_attr(arbol, "(" + str(relegados[a].cordY) + ", " + str(relegados[a].cordX - 1) + ")")
-    # Si ahora si existe un nodo ARIBA para que sea su padre
-    elif find_by_attr(arbol, "(" + str(relegados[a].cordY - 1) + ", " + str(relegados[a].cordX) + ")") != None:
-        padre = find_by_attr(arbol, "(" + str(relegados[a].cordY - 1) + ", " + str(relegados[a].cordX) + ")")
+    elif find_by_attr(arbol, "(" + str(relegados[a].cordX - 1) + ", " + str(relegados[a].cordY) + ")") != None:
+        padre = find_by_attr(arbol, "(" + str(relegados[a].cordX - 1) + ", " + str(relegados[a].cordY) + ")")
+    # Si ahora si existe un nodo ARRIBA para que sea su padre
+    elif find_by_attr(arbol, "(" + str(relegados[a].cordX) + ", " + str(relegados[a].cordY - 1) + ")") != None:
+        padre = find_by_attr(arbol, "(" + str(relegados[a].cordX) + ", " + str(relegados[a].cordY - 1) + ")")
     if padre != None:
         nodo = relegados.pop(a)
         nodo.parent = padre
