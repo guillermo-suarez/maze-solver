@@ -37,14 +37,6 @@ for j in range(10, 0, -1):
             else:
                 rel.append(nodo)
 
-# print(RenderTree(arbol))
-
-# print('\n')
-# print("Cantidad de nodos que no se pudieron agregar: " + str(len(rel)))
-# for nodo in rel:
-#     print(nodo)
-# print('\n')
-
 a = 0
 
 while len(rel) != 0:
@@ -69,11 +61,6 @@ while len(rel) != 0:
     if a > (len(rel) - 1):
         a = 0
 
-# print("Cantidad de nodos en la lista DESPUÉS del bucle: " + str(len(rel)))
-# for nodo in rel:
-#     print(nodo)
-# print('\n')
-
 final = Node(name = "(1, 1)", cordX = 1, cordY = 1)
 padre = None
 if find_by_attr(arbol, "(" + str(final.cordY) + ", " + str(final.cordX + 1) + ")") != None:
@@ -84,5 +71,3 @@ final.parent = padre
 
 for pre, _, node in RenderTree(arbol):
     print("%s%s" % (pre, node.name))
-
-# print(RenderTree(arbol))
