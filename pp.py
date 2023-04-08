@@ -4,11 +4,11 @@ from colorama import Fore
 
 contNodos = 0
 
-def crearNodo(x: int, y: int, estado: str):
+def crearNodo(x: int, y: int, estado: str, nivel: int):
     global contNodos
     nombre = "(" + str(x) + ", " + str(y) + ")"
     contNodos = contNodos + 1
-    nuevoNodo = Node(name = nombre, cordX = x, cordY = y, est = estado, id = contNodos)
+    nuevoNodo = Node(name = nombre, cordX = x, cordY = y, est = estado, id = contNodos, level = nivel)
     return nuevoNodo
 
 def existeNodo(arbol: Node, x: int, y: int):
@@ -27,85 +27,69 @@ def recorrerArbol(nodoActual: Node):
     if not termino:
         # Recorrer arriba
         if nodoActual.cordY > 0:
-            celda = getCelda(nodoActual.cordX, nodoActual.cordY - 1)
-            if celda == 'F':
-                nuevoNodo = crearNodo(nodoActual.cordX, nodoActual.cordY - 1, celda)
-                nuevoNodo.parent = nodoActual
+            x = nodoActual.cordX
+            y = nodoActual.cordY - 1
+            celda = getCelda(x, y)
+            nivel = nodoActual.level + 1
+            if celda == '0' and existeNodo(arbolPP, x, y):
+                celda = 'B'
+            nuevoNodo = crearNodo(x, y, celda, nivel)
+            nuevoNodo.parent = nodoActual
+            if nuevoNodo.est == '0':
+                termino = recorrerArbol(nuevoNodo)
+            elif nuevoNodo.est == 'F':
                 termino = True
-            elif celda == '0':
-                if not existeNodo(arbolPP, nodoActual.cordX, nodoActual.cordY - 1):
-                    nuevoNodo = crearNodo(nodoActual.cordX, nodoActual.cordY - 1, celda)
-                    nuevoNodo.parent = nodoActual
-                    termino = recorrerArbol(nuevoNodo)
-                else:
-                    nuevoNodo = crearNodo(nodoActual.cordX, nodoActual.cordY - 1, 'B')
-                    nuevoNodo.parent = nodoActual
-            else:
-                nuevoNodo = crearNodo(nodoActual.cordX, nodoActual.cordY - 1, 'X')
-                nuevoNodo.parent = nodoActual
     
     if not termino:
         # Recorrer izquierda
         if nodoActual.cordX > 0:
-            celda = getCelda(nodoActual.cordX - 1, nodoActual.cordY)
-            if celda == 'F':
-                nuevoNodo = crearNodo(nodoActual.cordX - 1, nodoActual.cordY, celda)
-                nuevoNodo.parent = nodoActual
+            x = nodoActual.cordX - 1
+            y = nodoActual.cordY
+            celda = getCelda(x, y)
+            nivel = nodoActual.level + 1
+            if celda == '0' and existeNodo(arbolPP, x, y):
+                celda = 'B'
+            nuevoNodo = crearNodo(x, y, celda, nivel)
+            nuevoNodo.parent = nodoActual
+            if nuevoNodo.est == '0':
+                termino = recorrerArbol(nuevoNodo)
+            elif nuevoNodo.est == 'F':
                 termino = True
-            elif celda == '0':
-                if not existeNodo(arbolPP, nodoActual.cordX - 1, nodoActual.cordY):
-                    nuevoNodo = crearNodo(nodoActual.cordX - 1, nodoActual.cordY, celda)
-                    nuevoNodo.parent = nodoActual
-                    termino = recorrerArbol(nuevoNodo)
-                else:
-                    nuevoNodo = crearNodo(nodoActual.cordX - 1, nodoActual.cordY, 'B')
-                    nuevoNodo.parent = nodoActual
-            else:
-                nuevoNodo = crearNodo(nodoActual.cordX - 1, nodoActual.cordY, 'X')
-                nuevoNodo.parent = nodoActual
     
     if not termino:
         # Recorrer abajo
         if nodoActual.cordY < 9:
-            celda = getCelda(nodoActual.cordX, nodoActual.cordY + 1)
-            if celda == 'F':
-                nuevoNodo = crearNodo(nodoActual.cordX, nodoActual.cordY + 1, celda)
-                nuevoNodo.parent = nodoActual
+            x = nodoActual.cordX
+            y = nodoActual.cordY + 1
+            celda = getCelda(x, y)
+            nivel = nodoActual.level + 1
+            if celda == '0' and existeNodo(arbolPP, x, y):
+                celda = 'B'
+            nuevoNodo = crearNodo(x, y, celda, nivel)
+            nuevoNodo.parent = nodoActual
+            if nuevoNodo.est == '0':
+                termino = recorrerArbol(nuevoNodo)
+            elif nuevoNodo.est == 'F':
                 termino = True
-            elif celda == '0':
-                if not existeNodo(arbolPP, nodoActual.cordX, nodoActual.cordY + 1):
-                    nuevoNodo = crearNodo(nodoActual.cordX, nodoActual.cordY + 1, celda)
-                    nuevoNodo.parent = nodoActual
-                    termino = recorrerArbol(nuevoNodo)
-                else:
-                    nuevoNodo = crearNodo(nodoActual.cordX, nodoActual.cordY + 1, 'B')
-                    nuevoNodo.parent = nodoActual
-            else:
-                nuevoNodo = crearNodo(nodoActual.cordX, nodoActual.cordY + 1, 'X')
-                nuevoNodo.parent = nodoActual
     
     if not termino:
         # Recorrer derecha
         if nodoActual.cordX < 9:
-            celda = getCelda(nodoActual.cordX + 1, nodoActual.cordY)
-            if celda == 'F':
-                nuevoNodo = crearNodo(nodoActual.cordX + 1, nodoActual.cordY, celda)
-                nuevoNodo.parent = nodoActual
+            x = nodoActual.cordX + 1
+            y = nodoActual.cordY
+            celda = getCelda(x, y)
+            nivel = nodoActual.level + 1
+            if celda == '0' and existeNodo(arbolPP, x, y):
+                celda = 'B'
+            nuevoNodo = crearNodo(x, y, celda, nivel)
+            nuevoNodo.parent = nodoActual
+            if nuevoNodo.est == '0':
+                termino = recorrerArbol(nuevoNodo)
+            elif nuevoNodo.est == 'F':
                 termino = True
-            elif celda == '0':
-                if not existeNodo(arbolPP, nodoActual.cordX + 1, nodoActual.cordY):
-                    nuevoNodo = crearNodo(nodoActual.cordX + 1, nodoActual.cordY, celda)
-                    nuevoNodo.parent = nodoActual
-                    termino = recorrerArbol(nuevoNodo)
-                else:
-                    nuevoNodo = crearNodo(nodoActual.cordX + 1, nodoActual.cordY, 'B')
-                    nuevoNodo.parent = nodoActual
-            else:
-                nuevoNodo = crearNodo(nodoActual.cordX + 1, nodoActual.cordY, 'X')
-                nuevoNodo.parent = nodoActual
     return termino
 
-arbolPP = crearNodo(9, 9, 'I')
+arbolPP = crearNodo(9, 9, 'I', 1)
 recorrerArbol(arbolPP)
 
 for pre, _, node in RenderTree(arbolPP):
@@ -120,4 +104,4 @@ for pre, _, node in RenderTree(arbolPP):
         print(Fore.YELLOW, end="")
     elif node.est == 'X':
         print(Fore.RED, end="")
-    print("[%s] %s Estado: %s" % (node.id, node.name, node.est))
+    print("[#%s] %s | N: %s | E: %s" % (node.id, node.name, node.level, node.est))
