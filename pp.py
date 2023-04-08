@@ -47,7 +47,7 @@ def recorrerArbol(nodoActual: Node):
             y = nodoActual.cordY
             celda = getCelda(x, y)
             nivel = nodoActual.level + 1
-            if celda == '0' and existeNodo(arbolPP, x, y):
+            if (celda == '0' or celda == 'I') and existeNodo(arbolPP, x, y):
                 celda = 'B'
             nuevoNodo = crearNodo(x, y, celda, nivel)
             nuevoNodo.parent = nodoActual
