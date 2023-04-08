@@ -1,4 +1,4 @@
-from funciones import crearNodo, existeNodo, imprimirArbol
+from funciones import crearNodo, existeNodo
 from anytree import Node
 
 def recorrerLabPP(arbolPP: Node, nodoActual: Node, laberinto: int):
