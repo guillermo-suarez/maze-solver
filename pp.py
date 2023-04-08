@@ -11,7 +11,7 @@ def recorrerLabPP(arbolPP: Node, nodoActual: Node, laberinto: int):
             y = nodoActual.cordY - 1
             celda = laberinto[y][x]
             nivel = nodoActual.level + 1
-            if celda == '0' and existeNodo(arbolPP, x, y):
+            if (celda == '0' or celda == 'I') and existeNodo(arbolPP, x, y):
                 celda = 'B'
             nuevoNodo = crearNodo(x, y, celda, nivel)
             nuevoNodo.parent = nodoActual
@@ -43,7 +43,7 @@ def recorrerLabPP(arbolPP: Node, nodoActual: Node, laberinto: int):
             y = nodoActual.cordY + 1
             celda = laberinto[y][x]
             nivel = nodoActual.level + 1
-            if celda == '0' and existeNodo(arbolPP, x, y):
+            if (celda == '0' or celda == 'I') and existeNodo(arbolPP, x, y):
                 celda = 'B'
             nuevoNodo = crearNodo(x, y, celda, nivel)
             nuevoNodo.parent = nodoActual
@@ -59,7 +59,7 @@ def recorrerLabPP(arbolPP: Node, nodoActual: Node, laberinto: int):
             y = nodoActual.cordY
             celda = laberinto[y][x]
             nivel = nodoActual.level + 1
-            if celda == '0' and existeNodo(arbolPP, x, y):
+            if (celda == '0' or celda == 'I') and existeNodo(arbolPP, x, y):
                 celda = 'B'
             nuevoNodo = crearNodo(x, y, celda, nivel)
             nuevoNodo.parent = nodoActual
