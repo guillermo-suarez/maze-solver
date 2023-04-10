@@ -7,7 +7,7 @@ def recorrerLabPA(arbolPA: Node, laberinto: int):
     agregoNodo = True #Bandera que permite controlar si se agregó por lo menos un nodo. Por si no hay salida del laberinto
     x = 0
     y = 0
-    nivel = 0
+    nivel = 1
     raiz = arbolPA
     nodoActual = arbolPA
 
@@ -16,7 +16,7 @@ def recorrerLabPA(arbolPA: Node, laberinto: int):
         nivel = nivel + 1
         for nodoActual in raiz.leaves:  # se itera únicamente sobre las hojas del árbol
             if nodoActual.est == '0' or nodoActual.est == 'I':   # Se agregan hijos únicamente a los nodos hojas
-                if nodoActual.cordY > 0:    # Recorrer arriba
+                if (nodoActual.cordY > 0 and not termino):    # Recorrer arriba
                     x = nodoActual.cordX
                     y = nodoActual.cordY - 1
                     celda = laberinto[y][x]
@@ -24,8 +24,10 @@ def recorrerLabPA(arbolPA: Node, laberinto: int):
                         celda = 'B'
                     nuevoNodo = crearNodo(x, y, celda, nivel)
                     nuevoNodo.parent = nodoActual
-                    agregoNodo = True        
-                if nodoActual.cordX > 0:    # Recorrer izquierda
+                    agregoNodo = True
+                    if nuevoNodo.est == 'F':
+                        termino = True        
+                if (nodoActual.cordX > 0 and not termino):    # Recorrer izquierda
                     x = nodoActual.cordX - 1
                     y = nodoActual.cordY
                     celda = laberinto[y][x]
@@ -34,7 +36,9 @@ def recorrerLabPA(arbolPA: Node, laberinto: int):
                     nuevoNodo = crearNodo(x, y, celda, nivel)
                     nuevoNodo.parent = nodoActual
                     agregoNodo = True
-                if nodoActual.cordY < 9:    # Recorrer abajo
+                    if nuevoNodo.est == 'F':
+                        termino = True
+                if (nodoActual.cordY < 9 and not termino):    # Recorrer abajo
                     x = nodoActual.cordX
                     y = nodoActual.cordY + 1
                     celda = laberinto[y][x]
@@ -43,7 +47,9 @@ def recorrerLabPA(arbolPA: Node, laberinto: int):
                     nuevoNodo = crearNodo(x, y, celda, nivel)
                     nuevoNodo.parent = nodoActual
                     agregoNodo = True
-                if nodoActual.cordX < 9:    # Recorrer derecha
+                    if nuevoNodo.est == 'F':
+                        termino = True
+                if (nodoActual.cordX < 9 and not termino):    # Recorrer derecha
                     x = nodoActual.cordX + 1
                     y = nodoActual.cordY
                     celda = laberinto[y][x]
@@ -52,6 +58,8 @@ def recorrerLabPA(arbolPA: Node, laberinto: int):
                     nuevoNodo = crearNodo(x, y, celda, nivel)
                     nuevoNodo.parent = nodoActual
                     agregoNodo = True
-            if nodoActual.est == 'F':
-                termino = True
+                    if nuevoNodo.est == 'F':
+                        termino = True
+            '''if nodoActual.est == 'F':
+                termino = True'''
     return termino
