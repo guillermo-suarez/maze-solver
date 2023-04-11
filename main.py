@@ -3,6 +3,7 @@ from pp import crearNodo, recorrerLabPP
 from pa import recorrerLabPA
 from funciones import imprimirArbol
 from colorama import Fore
+import dibujarArbol as draw
 
 arbolPP = crearNodo(9, 9, 'I', 1)
 terminoPP = recorrerLabPP(arbolPP, arbolPP, maze)
@@ -11,6 +12,8 @@ if not terminoPP:
     print(Fore.WHITE + "¡No tiene solución!")
 else:
     imprimirArbol(arbolPP)
+    draw.dibujarArbol(arbolPP)
+
 
 arbolPA = crearNodo(9, 9, 'I', 1)
 terminoPA = recorrerLabPA(arbolPA, maze)
@@ -19,3 +22,4 @@ if not terminoPA:
     print(Fore.WHITE + "¡No tiene solución!")
 else:
     imprimirArbol(arbolPA)
+    draw.dibujarArbol(arbolPA)
