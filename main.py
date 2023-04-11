@@ -1,7 +1,7 @@
 from genlab import maze, printMaze
 from pp import crearNodo, recorrerLabPP
 from pa import recorrerLabPA
-from funciones import imprimirArbol, crearMatrizRecorrida
+from funciones import imprimirArbol, crearMatrizRecorrida, imprimirMatriz
 from colorama import Fore
 
 arbolPP = crearNodo(9, 9, 'I', 1)
@@ -11,8 +11,6 @@ if not terminoPP:
     print(Fore.WHITE + "¡No tiene solución!")
 else:
     imprimirArbol(arbolPP)
-    labPP = crearMatrizRecorrida(arbolPP)
-    printMaze(labPP)
 
 arbolPA = crearNodo(9, 9, 'I', 1)
 terminoPA = recorrerLabPA(arbolPA, maze)
