@@ -4,13 +4,18 @@ from pa import recorrerLabPA
 from funciones import imprimirArbol
 from colorama import Fore
 
-raiz = crearNodo(9, 9, 'I', 1)
-
-arbolPP = raiz
-#termino = recorrerLabPP(arbolPP, raiz, maze)
-#print(Fore.WHITE + "PRIMERO EN PROFUNDIDAD:\n")
-termino = recorrerLabPA(arbolPP, maze)
-print(Fore.WHITE + "PRIMERO EN AMPLITUD:\n")
-imprimirArbol(arbolPP)
-if not termino:
+arbolPP = crearNodo(9, 9, 'I', 1)
+terminoPP = recorrerLabPP(arbolPP, arbolPP, maze)
+print(Fore.WHITE + "PRIMERO EN PROFUNDIDAD:\n")
+if not terminoPP:
     print(Fore.WHITE + "¡No tiene solución!")
+else:
+    imprimirArbol(arbolPP)
+
+arbolPA = crearNodo(9, 9, 'I', 1)
+terminoPA = recorrerLabPA(arbolPA, maze)
+print(Fore.WHITE + "PRIMERO EN AMPLITUD:\n")
+if not terminoPA:
+    print(Fore.WHITE + "¡No tiene solución!")
+else:
+    imprimirArbol(arbolPA)
