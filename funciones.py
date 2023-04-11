@@ -1,4 +1,6 @@
-from anytree import Node, RenderTree, findall_by_attr
+import numpy as np
+
+from anytree import Node, RenderTree, findall_by_attr, PreOrderIter
 from colorama import Fore
 
 contNodos = 0
@@ -31,3 +33,8 @@ def imprimirArbol(arbol: Node):
         elif node.est == 'X':
             print(Fore.RED, end="")
         print("[#%s] %s | N: %s | E: %s" % (node.id, node.name, node.level, node.est))
+
+def crearMatrizRecorrida(arbol: Node):
+    for nodo in PreOrderIter(arbol):
+        lab[nodo.cordY][nodo.cordX] = nodo.est
+    return lab
