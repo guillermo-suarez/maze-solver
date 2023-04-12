@@ -35,8 +35,9 @@ def imprimirArbol(arbol: Node):
         elif node.est == 'X':
             print(Fore.RED, end="")
         print("[#%s] %s | N: %s | E: %s" % (node.id, node.name, node.level, node.est))
+    print("\n")
 
-def crearMatrizRecorrida(arbol: Node):
+def getMatrizRecorrida(arbol: Node):
     lab = []
     for x in range(0, 10):
         fila = ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N']
@@ -59,6 +60,30 @@ def imprimirMatriz(matriz):
             else:
                 print(Fore.WHITE, end = "")
             print(str(matriz[i][j]), end = " ")
-
         print('\n')
-    print(Fore.WHITE)
+
+def getNodoFinal(arbol: Node):
+    nodoFinal = None
+    for nodo in arbol.leaves:
+        if nodo.est == 'F':
+            nodoFinal = nodo
+            break
+    return nodoFinal
+
+def getCaminoSolucion(arbol: Node):
+    solucion = None
+    nodoFinal = getNodoFinal(arbol)
+    if nodoFinal != None:
+        nodoActual = nodoFinal
+        nodos = []
+        while nodoActual.parent != None:
+            nodos.insert(0, nodoActual)
+            nodoActual = nodoActual.parent
+        solucion = crearNodo(9, 9, 'I', 1)
+        nodoAnt = solucion
+        for nodo in nodos:
+            nuevoNodo = crearNodo(nodo.cordX, nodo.cordY, nodo.est, nodo.level)
+            nuevoNodo.parent = nodoAnt
+            nodoAnt = nuevoNodo
+    return solucion
+    
