@@ -1,8 +1,11 @@
-from genlab import maze
+from genlab import maze, printMaze
 from pp import crearNodo, recorrerLabPP
 from pa import recorrerLabPA
-from funciones import imprimirArbol
+from funciones import imprimirArbol, crearMatrizRecorrida, imprimirMatriz
 from colorama import Fore
+
+print("\n" + Fore.WHITE + "LABERINTO A RECORRER:\n")
+imprimirMatriz(maze)
 
 arbolPP = crearNodo(9, 9, 'I', 1)
 terminoPP = recorrerLabPP(arbolPP, arbolPP, maze)

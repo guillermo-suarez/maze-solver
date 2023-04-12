@@ -269,4 +269,4 @@ maze[0][1] = cell
 maze[9][8] = cell
 
 # Print final maze
-printMaze(maze)
+# printMaze(maze)
