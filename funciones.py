@@ -7,6 +7,8 @@ contNodos = 0
 
 def crearNodo(x: int, y: int, estado: str, nivel: int):
     global contNodos
+    if estado == 'I':
+        contNodos = 0
     nombre = "(" + str(x) + ", " + str(y) + ")"
     contNodos = contNodos + 1
     nuevoNodo = Node(name = nombre, cordX = x, cordY = y, est = estado, id = contNodos, level = nivel)
