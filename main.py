@@ -7,7 +7,7 @@ from colorama import Fore
 print("\n" + Fore.WHITE + "LABERINTO A RECORRER:\n")
 imprimirMatriz(maze)
 
-print(Fore.WHITE + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------\n")
+print(Fore.WHITE + "-------------------------------------------------------------------------------------------------------------------------------\n")
 
 arbolPP = crearNodo(9, 9, 'I', 1)
 terminoPP = recorrerLabPP(arbolPP, arbolPP, maze)
@@ -27,7 +27,7 @@ else:
     matrizSolucionPP = getMatrizRecorrida(solucionPP)
     imprimirMatriz(matrizSolucionPP)
 
-print(Fore.WHITE + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------\n")
+print(Fore.WHITE + "-------------------------------------------------------------------------------------------------------------------------------\n")
 
 arbolPA = crearNodo(9, 9, 'I', 1)
 terminoPA = recorrerLabPA(arbolPA, maze)

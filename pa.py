@@ -1,4 +1,4 @@
-from funciones import crearNodo, existeNodo
+from funciones import crearNodo, existeNodo, esSuPadre
 from anytree import Node, LevelOrderIter
 
 def hijoNodoactual(laberinto: int, y: int, x: int, nodoActual: Node, arbolPA: Node, nodosAceptados: Node):
@@ -35,18 +35,22 @@ def recorrerLabPA(arbolPA: Node, laberinto: int):
                     if (nodoActual.cordY > 0 and not termino):    # Recorrer arriba
                         x = nodoActual.cordX
                         y = nodoActual.cordY - 1
-                        agregoNodo,termino = hijoNodoactual(laberinto,y,x,nodoActual,arbolPA,nodosAceptados)
+                        if not esSuPadre(nodoActual, x, y):
+                            agregoNodo,termino = hijoNodoactual(laberinto,y,x,nodoActual,arbolPA,nodosAceptados)
                     if (nodoActual.cordX > 0 and not termino):    # Recorrer izquierda
                         x = nodoActual.cordX - 1
                         y = nodoActual.cordY
-                        agregoNodo,termino = hijoNodoactual(laberinto,y,x,nodoActual,arbolPA,nodosAceptados)
+                        if not esSuPadre(nodoActual, x, y):
+                            agregoNodo,termino = hijoNodoactual(laberinto,y,x,nodoActual,arbolPA,nodosAceptados)
                     if (nodoActual.cordY < 9 and not termino):    # Recorrer abajo
                         x = nodoActual.cordX
                         y = nodoActual.cordY + 1
-                        agregoNodo,termino = hijoNodoactual(laberinto,y,x,nodoActual,arbolPA,nodosAceptados)
+                        if not esSuPadre(nodoActual, x, y):
+                            agregoNodo,termino = hijoNodoactual(laberinto,y,x,nodoActual,arbolPA,nodosAceptados)
                     if (nodoActual.cordX < 9 and not termino):    # Recorrer derecha
                         x = nodoActual.cordX + 1
                         y = nodoActual.cordY
-                        agregoNodo,termino = hijoNodoactual(laberinto,y,x,nodoActual,arbolPA,nodosAceptados)
+                        if not esSuPadre(nodoActual, x, y):
+                            agregoNodo,termino = hijoNodoactual(laberinto,y,x,nodoActual,arbolPA,nodosAceptados)
                     nodosAceptados.remove(nodoActual)   #Se quita de la lista aquel nodo con el que ya se haya trabajado
     return termino

@@ -84,4 +84,10 @@ def getCaminoSolucion(arbol: Node):
             nuevoNodo.parent = nodoAnt
             nodoAnt = nuevoNodo
     return solucion
-    
+
+def esSuPadre(nodo: Node, x: int, y: int):
+    resultado = False
+    if nodo.parent != None:
+        if nodo.parent.cordX == x and nodo.parent.cordY == y:
+            resultado = True
+    return resultado
