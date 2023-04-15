@@ -1,5 +1,3 @@
-import numpy as np
-
 from anytree import Node, RenderTree, findall_by_attr, PreOrderIter
 from colorama import Fore
 
