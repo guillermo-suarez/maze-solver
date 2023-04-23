@@ -61,8 +61,8 @@ for i in range(0, height):
 	maze.append(line)
 
 # Randomize starting point and set it a cell
-starting_height = int(9)
-starting_width = int(9)
+starting_height = height - 1
+starting_width = width - 1
 if (starting_height == 0):
 	starting_height += 1
 if (starting_height == height-1):
@@ -259,14 +259,14 @@ for i in range(width-1, 0, -1):
 	if (maze[height-2][i] == '0'):
 		maze[height-1][i] = '0'
 		break
-al = random.randint(2,7)
+al = random.randint(2, height - 2)
 for i in range(1,al):
 	maze[al][i] = cell
 
 maze[0][0] = salida
-maze[9][9] = entrada
+maze[height - 1][width - 1] = entrada
 maze[0][1] = cell
-maze[9][8] = cell
+maze[height - 1][width - 2] = cell
 
 # Print final maze
 # printMaze(maze)
