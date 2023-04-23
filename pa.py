@@ -1,4 +1,5 @@
 from funciones import existeEstadoEnLista, Estado
+from collections import deque
 
 def hijoNodoactual(laberinto: int, y: int, x: int, estadoActual: Estado, listaPendientes, listaVisitados):
     #Realiza todos los pasos de agregar a la lista cuando se busca en las cuatro direcciones
@@ -13,11 +14,11 @@ def recorrerLabPA(laberinto: int):
     x = 0
     y = 0
     listaVisitados = []
-    listaPendientes = []
+    listaPendientes = deque()
     listaPendientes.append(inicio)
 
     while(listaPendientes and listaPendientes[0].estado != 'F'):
-        estadoActual = listaPendientes.pop(0)
+        estadoActual = listaPendientes.popleft()
         if estadoActual.estado == '0' or estadoActual.estado == 'I':
             if estadoActual.y > 0:    # Recorrer arriba
                 x = estadoActual.x
