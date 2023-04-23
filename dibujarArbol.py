@@ -3,6 +3,12 @@ import matplotlib.pyplot as plt
 from anytree import Node
 
 array=[]
+nodosB=[]
+nodosI=[]
+nodos0=[]
+nodosF=[]
+nodosX=[]
+
 
 def dibujarArbol(nodo: Node):
     array = []
@@ -11,12 +17,32 @@ def dibujarArbol(nodo: Node):
     G.add_edges_from(array)
     pos = hierarchy_pos(G)
     nx.draw_networkx_nodes(G,pos, node_size = 500)
+
+    # nodes
+    options = {"edgecolors": "tab:gray", "node_size": 500, "alpha": 0.9, "margins" : 0}
+    nx.draw_networkx_nodes(G, pos, nodelist=nodosB, node_color="tab:olive", **options)
+    nx.draw_networkx_nodes(G, pos, nodelist=nodos0, node_color="tab:blue", **options)
+    nx.draw_networkx_nodes(G, pos, nodelist=nodosX, node_color="tab:red", **options)
+    nx.draw_networkx_nodes(G, pos, nodelist=nodosI, node_color="tab:purple", **options)
+    nx.draw_networkx_nodes(G, pos, nodelist=nodosF, node_color="tab:purple", **options)
+
     nx.draw_networkx_edges(G,pos, edgelist= G.edges(), edge_color = 'black')
     nx.draw_networkx_labels(G,pos)
+    
     plt.show()
 
 def getArbol (nodo: Node):
     pre = str(nodo.id) + nodo.name 
+    if(nodo.est == 'B'):
+        nodosB.append(pre)
+    if(nodo.est == 'I'):
+        nodosI.append(pre)
+    if(nodo.est == '0'):
+        nodos0.append(pre)
+    if(nodo.est == 'F'):
+        nodosF.append(pre)
+    if(nodo.est == 'X'):
+        nodosX.append(pre)
     for child in nodo.children:
         getArbol(child)
         pos = str(child.id) + child.name
