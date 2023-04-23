@@ -1,25 +1,56 @@
-import numpy as np
-
-from anytree import Node, RenderTree, findall_by_attr, PreOrderIter
+from anytree import Node, RenderTree, PreOrderIter
 from colorama import Fore
 
-contNodos = 0
+class Estado:
+    def __init__(self, x, y, estado, nivel, padre):
+        self.x = x
+        self.y = y
+        self.estado = estado
+        self.nivel = nivel
+        self.padre = padre
+    def __str__(self):
+        if self.padre:
+            return f"({self.x}, {self.y}) - {self.estado} - Padre: ({self.padre.x}, {self.padre.y})"
+        else:
+            return f"({self.x}, {self.y}) - {self.estado} - Padre: NO TIENE"
 
-def crearNodo(x: int, y: int, estado: str, nivel: int):
-    global contNodos
-    if estado == 'I':
-        contNodos = 0
+def existeEstadoEnLista(lista, x, y):
+    existe = False
+    for estado in lista:
+        if estado.x == x and estado.y == y:
+            existe = True
+            break
+    return existe
+
+def crearNodo(id: int, x: int, y: int, estado: str, nivel: int):
     nombre = "(" + str(x) + ", " + str(y) + ")"
-    contNodos = contNodos + 1
-    nuevoNodo = Node(name = nombre, cordX = x, cordY = y, est = estado, id = contNodos, level = nivel)
+    nuevoNodo = Node(name = nombre, cordX = x, cordY = y, est = estado, id = id, level = nivel)
     return nuevoNodo
 
-def existeNodo(arbol: Node, x: int, y: int):
-    existe = True
-    nombre = "(" + str(x) + ", " + str(y) + ")"
-    if len(findall_by_attr(arbol, nombre, name = 'name')) == 0:
-        existe = False
-    return existe
+def getNodo(arbol: Node, x: int, y: int):
+    nodoBuscado = None
+    for nodo in PreOrderIter(arbol):
+        if nodo.cordX == x and nodo.cordY == y:
+            nodoBuscado = nodo
+            break
+    return nodoBuscado
+
+def crearArbolExpansion(visitados, pendientes):
+    id = 1
+    for estado in visitados:
+        nuevoNodo = crearNodo(id, estado.x, estado.y, estado.estado, estado.nivel)
+        id = id + 1
+        if estado.padre:
+            nuevoNodo.parent = getNodo(nodoAnterior.root, estado.padre.x, estado.padre.y)
+        nodoAnterior = nuevoNodo
+    for estado in pendientes:
+        nuevoNodo = crearNodo(id, estado.x, estado.y, estado.estado, estado.nivel)
+        id = id + 1
+        if estado.padre:
+            nuevoNodo.parent = getNodo(nodoAnterior.root, estado.padre.x, estado.padre.y)
+        nodoAnterior = nuevoNodo
+    return nodoAnterior.root
+
 
 def imprimirArbol(arbol: Node):
     for pre, _, node in RenderTree(arbol):
@@ -79,10 +110,10 @@ def getCaminoSolucion(arbol: Node):
         while nodoActual.parent != None:
             nodos.insert(0, nodoActual)
             nodoActual = nodoActual.parent
-        solucion = crearNodo(9, 9, 'I', 1)
+        solucion = crearNodo(1, 9, 9, 'I', 1)
         nodoAnt = solucion
         for nodo in nodos:
-            nuevoNodo = crearNodo(nodo.cordX, nodo.cordY, nodo.est, nodo.level)
+            nuevoNodo = crearNodo(nodoAnt.id + 1, nodo.cordX, nodo.cordY, nodo.est, nodo.level)
             nuevoNodo.parent = nodoAnt
             nodoAnt = nuevoNodo
     return solucion

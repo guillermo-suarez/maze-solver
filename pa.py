@@ -1,52 +1,40 @@
-from funciones import crearNodo, existeNodo
-from anytree import Node, LevelOrderIter
+from funciones import existeEstadoEnLista, Estado
+from collections import deque
 
-def hijoNodoactual(laberinto: int, y: int, x: int, nodoActual: Node, arbolPA: Node, nodosAceptados: Node):
-    #Realiza todos los pasos de agregar un nodo al árbol y a la lista cuando se busca en las cuatro direcciones
-    nivel = nodoActual.level + 1
-    termino = False
-    celda = laberinto[y][x]
-    if (celda == '0' or celda == 'I') and existeNodo(arbolPA, x, y):
-        celda = 'B'
-    nuevoNodo = crearNodo(x, y, celda, nivel)
-    nuevoNodo.parent = nodoActual
-    agregoNodo = True
-    match nuevoNodo.est:
-        case 'F':
-            termino = True
-        case '0':
-            nodosAceptados.append(nuevoNodo)
-    return agregoNodo, termino
+def hijoNodoactual(laberinto: int, y: int, x: int, estadoActual: Estado, listaPendientes, listaVisitados):
+    #Realiza todos los pasos de agregar a la lista cuando se busca en las cuatro direcciones
+    if not existeEstadoEnLista(listaPendientes, x, y) and not existeEstadoEnLista(listaVisitados, x, y):
+        celda = laberinto[y][x]
+        nuevoEstado = Estado(x, y, celda, estadoActual.nivel + 1, estadoActual)
+        listaPendientes.append(nuevoEstado)
 
-def recorrerLabPA(arbolPA: Node, laberinto: int):
+def recorrerLabPA(laberinto: int):
     #Permite recorrer el laberinto mediante la técnica de primero en amplitud
-    termino = False
-    agregoNodo = True #Bandera que permite controlar si se agregó por lo menos un nodo. Por si no hay salida del laberinto
+    inicio = Estado(9, 9, 'I', 1, None)
     x = 0
     y = 0
-    nodosAceptados = [] #Lista que solamente incluye los nodos cuyo estado sea 0
-    nodosAceptados.append(arbolPA)
+    listaVisitados = []
+    listaPendientes = deque()
+    listaPendientes.append(inicio)
 
-    while (not termino and agregoNodo):
-        agregoNodo = False
-        for nodoActual in LevelOrderIter(arbolPA): #Recorre únicamente los nodos hojas
-            for nodo in nodosAceptados:
-                if nodoActual == nodo:
-                    if (nodoActual.cordY > 0 and not termino):    # Recorrer arriba
-                        x = nodoActual.cordX
-                        y = nodoActual.cordY - 1
-                        agregoNodo,termino = hijoNodoactual(laberinto,y,x,nodoActual,arbolPA,nodosAceptados)
-                    if (nodoActual.cordX > 0 and not termino):    # Recorrer izquierda
-                        x = nodoActual.cordX - 1
-                        y = nodoActual.cordY
-                        agregoNodo,termino = hijoNodoactual(laberinto,y,x,nodoActual,arbolPA,nodosAceptados)
-                    if (nodoActual.cordY < 9 and not termino):    # Recorrer abajo
-                        x = nodoActual.cordX
-                        y = nodoActual.cordY + 1
-                        agregoNodo,termino = hijoNodoactual(laberinto,y,x,nodoActual,arbolPA,nodosAceptados)
-                    if (nodoActual.cordX < 9 and not termino):    # Recorrer derecha
-                        x = nodoActual.cordX + 1
-                        y = nodoActual.cordY
-                        agregoNodo,termino = hijoNodoactual(laberinto,y,x,nodoActual,arbolPA,nodosAceptados)
-                    nodosAceptados.remove(nodoActual)   #Se quita de la lista aquel nodo con el que ya se haya trabajado
-    return termino
+    while(listaPendientes and listaPendientes[0].estado != 'F'):
+        estadoActual = listaPendientes.popleft()
+        if estadoActual.estado == '0' or estadoActual.estado == 'I':
+            if estadoActual.y > 0:    # Recorrer arriba
+                x = estadoActual.x
+                y = estadoActual.y - 1
+                hijoNodoactual(laberinto, y, x, estadoActual, listaPendientes, listaVisitados)
+            if estadoActual.x > 0:    # Recorrer izquierda
+                x = estadoActual.x - 1
+                y = estadoActual.y
+                hijoNodoactual(laberinto, y, x, estadoActual, listaPendientes, listaVisitados)
+            if estadoActual.y < 9:    # Recorrer abajo
+                x = estadoActual.x
+                y = estadoActual.y + 1
+                hijoNodoactual(laberinto, y, x, estadoActual, listaPendientes, listaVisitados)
+            if estadoActual.x < 9:    # Recorrer derecha
+                x = estadoActual.x + 1
+                y = estadoActual.y
+                hijoNodoactual(laberinto, y, x, estadoActual, listaPendientes, listaVisitados)
+        listaVisitados.append(estadoActual)
+    return listaVisitados, listaPendientes
