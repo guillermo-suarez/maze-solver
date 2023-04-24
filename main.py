@@ -1,30 +1,22 @@
 from genlab import maze
 from colorama import Fore
-from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMatrizRecorrida, getCaminoSolucion
-from pp import busquedaPP
+import dibujarArbol as draw
 
-print("\n" + Fore.WHITE + "LABERINTO A RECORRER:\n")
-imprimirMatriz(maze)
+arbolPP = crearNodo(9, 9, 'I', 1)
+terminoPP = recorrerLabPP(arbolPP, arbolPP, maze)
+print(Fore.WHITE + "PRIMERO EN PROFUNDIDAD:\n")
+if not terminoPP:
+    print(Fore.WHITE + "¡No tiene solución!")
+else:
+    imprimirArbol(arbolPP)
+    draw.dibujarArbol(arbolPP)
 
-visitados, pendientes = busquedaPP(maze)
 
-print("\n" + Fore.WHITE + "VISITADOS")
-for x in visitados:
-    print(x)
-print("\n" + Fore.WHITE + "PENDIENTES")
-for x in pendientes:
-    print(x)
-
-arbolPP = crearArbolExpansion(visitados, pendientes)
-print("\nARBOL DE EXPANSIÓN:\n")
-imprimirArbol(arbolPP)
-
-matriz = getMatrizRecorrida(arbolPP)
-print("\nMATRIZ RECORRIDA:\n")
-imprimirMatriz(matriz)
-
-solucion = getCaminoSolucion(arbolPP)
-imprimirArbol(solucion)
-
-matrizSolucion = getMatrizRecorrida(solucion)
-imprimirMatriz(matrizSolucion)
+arbolPA = crearNodo(9, 9, 'I', 1)
+terminoPA = recorrerLabPA(arbolPA, maze)
+print(Fore.WHITE + "PRIMERO EN AMPLITUD:\n")
+if not terminoPA:
+    print(Fore.WHITE + "¡No tiene solución!")
+else:
+    imprimirArbol(arbolPA)
+    draw.dibujarArbol(arbolPA)
