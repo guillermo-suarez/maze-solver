@@ -13,6 +13,15 @@ class Estado:
             return f"({self.x}, {self.y}) - {self.estado} - Padre: ({self.padre.x}, {self.padre.y})"
         else:
             return f"({self.x}, {self.y}) - {self.estado} - Padre: NO TIENE"
+        
+def hijoNodoActual(laberinto: int, y: int, x: int, estadoActual: Estado, listaPendientes, listaVisitados):
+    #Realiza todos los pasos de agregar a la lista cuando se busca en las cuatro direcciones
+    if not existeEstadoEnLista(listaPendientes, x, y) and not existeEstadoEnLista(listaVisitados, x, y):
+        celda = laberinto[y][x]
+        nuevoEstado = Estado(x, y, celda, estadoActual.nivel + 1, estadoActual)
+        return nuevoEstado
+    else:
+        return None
 
 def existeEstadoEnLista(lista, x, y):
     existe = False
@@ -68,18 +77,22 @@ def imprimirArbol(arbol: Node):
         print("[#%s] %s | N: %s | E: %s" % (node.id, node.name, node.level, node.est))
     print("\n")
 
-def getMatrizRecorrida(arbol: Node):
+def getMatrizRecorrida(arbol: Node, filas: int, columnas: int):
     lab = []
-    for x in range(0, 10):
-        fila = ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N']
+    for x in range(0, filas):
+        fila = []
+        for y in range (0, columnas):
+            fila.append('N')
         lab.append(fila)
     for nodo in PreOrderIter(arbol):
         lab[nodo.cordY][nodo.cordX] = nodo.est
     return lab
 
 def imprimirMatriz(matriz):
-    for i in range(0, 10):
-        for j in range(0, 10):
+    filas = len(matriz)
+    columnas = len(matriz[0])
+    for i in range(0, filas):
+        for j in range(0, columnas):
             if (matriz[i][j] == 'I' or matriz[i][j] == 'F'):
                 print(Fore.BLUE, end = "")
             elif (matriz[i][j] == '0'):
@@ -110,7 +123,7 @@ def getCaminoSolucion(arbol: Node):
         while nodoActual.parent != None:
             nodos.insert(0, nodoActual)
             nodoActual = nodoActual.parent
-        solucion = crearNodo(1, 9, 9, 'I', 1)
+        solucion = crearNodo(1, arbol.root.cordX, arbol.root.cordY, 'I', 1)
         nodoAnt = solucion
         for nodo in nodos:
             nuevoNodo = crearNodo(nodoAnt.id + 1, nodo.cordX, nodo.cordY, nodo.est, nodo.level)
