@@ -3,6 +3,7 @@ from colorama import Fore
 from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMatrizRecorrida, getCaminoSolucion
 from pp import recorrerLabPP
 from pa import recorrerLabPA
+from dibujarArbol import dibujarArbol
 
 print("\n" + Fore.WHITE + "LABERINTO A RECORRER:\n")
 imprimirMatriz(maze)
@@ -59,3 +60,6 @@ imprimirArbol(solucionPA)
 matrizSolucionPA = getMatrizRecorrida(solucionPA, filas, columnas)
 print(Fore.WHITE + "\n[PA] CAMINO SOLUCIÓN:\n")
 imprimirMatriz(matrizSolucionPA)
+
+dibujarArbol(arbolPA)
+dibujarArbol(arbolPP)
