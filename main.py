@@ -4,7 +4,6 @@ from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMat
 from pp import recorrerLabPP
 from pa import recorrerLabPA
 from anytree.exporter import UniqueDotExporter
-import dibujarArbol as draw
 
 print("\n" + Fore.WHITE + "LABERINTO A RECORRER:\n")
 imprimirMatriz(maze)
