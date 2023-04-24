@@ -3,6 +3,8 @@ from colorama import Fore
 from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMatrizRecorrida, getCaminoSolucion
 from pp import recorrerLabPP
 from pa import recorrerLabPA
+from anytree.exporter import UniqueDotExporter
+import dibujarArbol as draw
 
 print("\n" + Fore.WHITE + "LABERINTO A RECORRER:\n")
 imprimirMatriz(maze)
@@ -12,50 +14,62 @@ columnas = len(maze[0])
 
 visitadosPP, pendientesPP = recorrerLabPP(maze)
 
-print("\n" + Fore.WHITE + "[PP] VISITADOS")
-for x in visitadosPP:
-    print(x)
-print("\n" + Fore.WHITE + "[PP] PENDIENTES")
-for x in pendientesPP:
-    print(x)
+# print("\n" + Fore.WHITE + "[PP] VISITADOS")
+# for x in visitadosPP:
+#     print(x)
+# print("\n" + Fore.WHITE + "[PP] PENDIENTES")
+# for x in pendientesPP:
+#     print(x)
 
 arbolPP = crearArbolExpansion(visitadosPP, pendientesPP)
 print(Fore.WHITE + "\n[PP] ÁRBOL DE EXPANSIÓN:\n")
 imprimirArbol(arbolPP)
+print(Fore.WHITE)
 
-matrizPP = getMatrizRecorrida(arbolPP, filas, columnas)
-print(Fore.WHITE + "\n[PP] MATRIZ RECORRIDA:\n")
-imprimirMatriz(matrizPP)
+arbolPPDot = UniqueDotExporter(arbolPP, nodeattrfunc = lambda n: 'label = "#%s\n%s\n%s", color = %s' % (n.id, n.name, n.est, "green" if n.est == '0' else ("red" if n.est == 'X' else "blue")))
+for line in arbolPPDot:
+    print(line)
+arbolPPDot.to_picture("expPP.png")
 
-solucionPP = getCaminoSolucion(arbolPP)
-print(Fore.WHITE + "\n[PP] ÁRBOL SOLUCIÓN:\n")
-imprimirArbol(solucionPP)
+# matrizPP = getMatrizRecorrida(arbolPP, filas, columnas)
+# print(Fore.WHITE + "\n[PP] MATRIZ RECORRIDA:\n")
+# imprimirMatriz(matrizPP)
 
-matrizSolucionPP = getMatrizRecorrida(solucionPP, filas, columnas)
-print(Fore.WHITE + "\n[PP] CAMINO SOLUCIÓN:\n")
-imprimirMatriz(matrizSolucionPP)
+# solucionPP = getCaminoSolucion(arbolPP)
+# print(Fore.WHITE + "\n[PP] ÁRBOL SOLUCIÓN:\n")
+# imprimirArbol(solucionPP)
 
-visitadosPA, pendientesPA = recorrerLabPA(maze)
+# UniqueDotExporter(solucionPP, nodeattrfunc = lambda n: 'label = "#%s\n%s\n%s"' % (n.id, n.name, n.est)).to_picture("solPP.png")
 
-print("\n" + Fore.WHITE + "[PA] VISITADOS")
-for x in visitadosPA:
-    print(x)
-print("\n" + Fore.WHITE + "[PA] PENDIENTES")
-for x in pendientesPA:
-    print(x)
+# matrizSolucionPP = getMatrizRecorrida(solucionPP, filas, columnas)
+# print(Fore.WHITE + "\n[PP] CAMINO SOLUCIÓN:\n")
+# imprimirMatriz(matrizSolucionPP)
 
-arbolPA = crearArbolExpansion(visitadosPA, pendientesPA)
-print(Fore.WHITE + "\n[PA] ARBOL DE EXPANSIÓN:\n")
-imprimirArbol(arbolPA)
+# visitadosPA, pendientesPA = recorrerLabPA(maze)
 
-matrizPA = getMatrizRecorrida(arbolPA, filas, columnas)
-print(Fore.WHITE + "\n[PA] MATRIZ RECORRIDA:\n")
-imprimirMatriz(matrizPA)
+# print("\n" + Fore.WHITE + "[PA] VISITADOS")
+# for x in visitadosPA:
+#     print(x)
+# print("\n" + Fore.WHITE + "[PA] PENDIENTES")
+# for x in pendientesPA:
+#     print(x)
 
-solucionPA = getCaminoSolucion(arbolPA)
-print(Fore.WHITE + "\n[PA] ÁRBOL SOLUCIÓN:\n")
-imprimirArbol(solucionPA)
+# arbolPA = crearArbolExpansion(visitadosPA, pendientesPA)
+# print(Fore.WHITE + "\n[PA] ARBOL DE EXPANSIÓN:\n")
+# imprimirArbol(arbolPA)
 
-matrizSolucionPA = getMatrizRecorrida(solucionPA, filas, columnas)
-print(Fore.WHITE + "\n[PA] CAMINO SOLUCIÓN:\n")
-imprimirMatriz(matrizSolucionPA)
+# UniqueDotExporter(arbolPA, nodeattrfunc = lambda n: 'label = "#%s\n%s\n%s"' % (n.id, n.name, n.est)).to_picture("expPA.png")
+
+# matrizPA = getMatrizRecorrida(arbolPA, filas, columnas)
+# print(Fore.WHITE + "\n[PA] MATRIZ RECORRIDA:\n")
+# imprimirMatriz(matrizPA)
+
+# solucionPA = getCaminoSolucion(arbolPA)
+# print(Fore.WHITE + "\n[PA] ÁRBOL SOLUCIÓN:\n")
+# imprimirArbol(solucionPA)
+
+# UniqueDotExporter(solucionPA, nodeattrfunc = lambda n: 'label = "#%s\n%s\n%s"' % (n.id, n.name, n.est)).to_picture("solPA.png")
+
+# matrizSolucionPA = getMatrizRecorrida(solucionPA, filas, columnas)
+# print(Fore.WHITE + "\n[PA] CAMINO SOLUCIÓN:\n")
+# imprimirMatriz(matrizSolucionPA)
