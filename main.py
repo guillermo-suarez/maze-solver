@@ -22,14 +22,12 @@ visitadosPP, pendientesPP = recorrerLabPP(maze)
 #     print(x)
 
 arbolPP = crearArbolExpansion(visitadosPP, pendientesPP)
-print(Fore.WHITE + "\n[PP] ÁRBOL DE EXPANSIÓN:\n")
+print(Fore.WHITE + "[PP] ÁRBOL DE EXPANSIÓN:\n")
 imprimirArbol(arbolPP)
-print(Fore.WHITE)
 
-arbolPPDot = UniqueDotExporter(arbolPP, nodeattrfunc = lambda n: 'label = "#%s\n%s\n%s", color = %s' % (n.id, n.name, n.est, "green" if n.est == '0' else ("red" if n.est == 'X' else "blue")))
-for line in arbolPPDot:
-    print(line)
+arbolPPDot = UniqueDotExporter(arbolPP, nodeattrfunc = lambda n: 'label = "#%s\n%s\n%s\nNivel: %s", color = %s' % (n.id, n.name, n.est, n.level, "green" if n.est == '0' else ("red" if n.est == 'X' else "blue")))
 arbolPPDot.to_picture("expPP.png")
+print("Revisar expPP.png")
 
 # matrizPP = getMatrizRecorrida(arbolPP, filas, columnas)
 # print(Fore.WHITE + "\n[PP] MATRIZ RECORRIDA:\n")

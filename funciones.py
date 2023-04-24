@@ -75,7 +75,7 @@ def imprimirArbol(arbol: Node):
         elif node.est == 'X':
             print(Fore.RED, end="")
         print("[#%s] %s | N: %s | E: %s" % (node.id, node.name, node.level, node.est))
-    print("\n")
+    print(Fore.WHITE)
 
 def getMatrizRecorrida(arbol: Node, filas: int, columnas: int):
     lab = []
@@ -105,6 +105,7 @@ def imprimirMatriz(matriz):
                 print(Fore.WHITE, end = "")
             print(str(matriz[i][j]), end = " ")
         print('\n')
+    print(Fore.WHITE)
 
 def getNodoFinal(arbol: Node):
     nodoFinal = None
