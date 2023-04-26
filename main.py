@@ -3,6 +3,7 @@ from colorama import Fore
 from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMatrizRecorrida, getCaminoSolucion, arbolAPng
 from pp import recorrerLabPP
 from pa import recorrerLabPA
+import PySimpleGUI as sg
 
 print("\n" + Fore.WHITE + "LABERINTO A RECORRER:\n")
 imprimirMatriz(maze)
@@ -66,3 +67,15 @@ imprimirMatriz(matrizSolucionPA)
 
 arbolAPng(arbolPP, "expPP.png")
 arbolAPng(arbolPA, "expPA.png")
+
+sg.theme("DarkAmber")
+img = [[sg.Image(source = "expPP.png")]]
+miLayout = [[sg.Column(img, size = (1440, 810), scrollable = True)]]
+ventana = sg.Window("Title", miLayout)
+
+while True:
+    event, values = ventana.read()
+    if event == sg.WIN_CLOSED:
+        break
+
+ventana.close()
