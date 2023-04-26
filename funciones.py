@@ -1,4 +1,5 @@
 from anytree import Node, RenderTree, PreOrderIter
+from anytree.exporter import DotExporter
 from colorama import Fore
 
 class Estado:
@@ -15,7 +16,6 @@ class Estado:
             return f"({self.x}, {self.y}) - {self.estado} - Padre: NO TIENE"
         
 def hijoNodoActual(laberinto: int, y: int, x: int, estadoActual: Estado, listaPendientes, listaVisitados):
-    #Realiza todos los pasos de agregar a la lista cuando se busca en las cuatro direcciones
     if not existeEstadoEnLista(listaPendientes, x, y) and not existeEstadoEnLista(listaVisitados, x, y):
         celda = laberinto[y][x]
         nuevoEstado = Estado(x, y, celda, estadoActual.nivel + 1, estadoActual)
@@ -75,7 +75,7 @@ def imprimirArbol(arbol: Node):
         elif node.est == 'X':
             print(Fore.RED, end="")
         print("[#%s] %s | N: %s | E: %s" % (node.id, node.name, node.level, node.est))
-    print("\n")
+    print(Fore.WHITE)
 
 def getMatrizRecorrida(arbol: Node, filas: int, columnas: int):
     lab = []
@@ -105,6 +105,7 @@ def imprimirMatriz(matriz):
                 print(Fore.WHITE, end = "")
             print(str(matriz[i][j]), end = " ")
         print('\n')
+    print(Fore.WHITE)
 
 def getNodoFinal(arbol: Node):
     nodoFinal = None
@@ -130,4 +131,10 @@ def getCaminoSolucion(arbol: Node):
             nuevoNodo.parent = nodoAnt
             nodoAnt = nuevoNodo
     return solucion
-    
+
+def arbolAPng(arbol: Node, path: str):
+    config = []
+    config.append("bgcolor = \"#ffffff00\"")
+    config.append("edge[color = white]")
+    arbolDot = DotExporter(arbol, nodeattrfunc = lambda n: 'label = "#%s\n%s\n%s\nNivel: %s", style = filled, fillcolor = %s' % (n.id, n.name, n.est, n.level, "green" if n.est == '0' else ("red" if n.est == 'X' else "blue")), options = config)
+    arbolDot.to_picture(path)

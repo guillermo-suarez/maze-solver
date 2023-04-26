@@ -1,6 +1,6 @@
 from genlab import maze
 from colorama import Fore
-from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMatrizRecorrida, getCaminoSolucion
+from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMatrizRecorrida, getCaminoSolucion, arbolAPng
 from pp import recorrerLabPP
 from pa import recorrerLabPA
 
@@ -9,6 +9,8 @@ imprimirMatriz(maze)
 
 filas = len(maze)
 columnas = len(maze[0])
+
+# PP
 
 visitadosPP, pendientesPP = recorrerLabPP(maze)
 
@@ -20,7 +22,7 @@ for x in pendientesPP:
     print(x)
 
 arbolPP = crearArbolExpansion(visitadosPP, pendientesPP)
-print(Fore.WHITE + "\n[PP] ÁRBOL DE EXPANSIÓN:\n")
+print(Fore.WHITE + "[PP] ÁRBOL DE EXPANSIÓN:\n")
 imprimirArbol(arbolPP)
 
 matrizPP = getMatrizRecorrida(arbolPP, filas, columnas)
@@ -34,6 +36,8 @@ imprimirArbol(solucionPP)
 matrizSolucionPP = getMatrizRecorrida(solucionPP, filas, columnas)
 print(Fore.WHITE + "\n[PP] CAMINO SOLUCIÓN:\n")
 imprimirMatriz(matrizSolucionPP)
+
+# PA
 
 visitadosPA, pendientesPA = recorrerLabPA(maze)
 
@@ -59,3 +63,6 @@ imprimirArbol(solucionPA)
 matrizSolucionPA = getMatrizRecorrida(solucionPA, filas, columnas)
 print(Fore.WHITE + "\n[PA] CAMINO SOLUCIÓN:\n")
 imprimirMatriz(matrizSolucionPA)
+
+arbolAPng(arbolPP, "expPP.png")
+arbolAPng(arbolPA, "expPA.png")
