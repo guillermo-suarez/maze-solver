@@ -1,4 +1,4 @@
-from funciones import Estado, hijoNodoActual
+from funciones import Estado, hijoNodoActual, removerRepetidos
 from collections import deque
 
 def recorrerLabPA(laberinto: int):
@@ -9,11 +9,11 @@ def recorrerLabPA(laberinto: int):
     x = 0
     y = 0
     listaVisitados = []
-    listaPendientes = deque()
+    listaPendientes = []
     listaPendientes.append(inicio)
 
     while(listaPendientes and listaPendientes[0].estado != 'F'):
-        estadoActual = listaPendientes.popleft()
+        estadoActual = listaPendientes.pop(0)
         if estadoActual.estado == '0' or estadoActual.estado == 'I':
             if estadoActual.y > 0:    # Recorrer arriba
                 x = estadoActual.x
@@ -39,5 +39,6 @@ def recorrerLabPA(laberinto: int):
                 nuevoEstado = hijoNodoActual(laberinto, y, x, estadoActual, listaPendientes, listaVisitados)
                 if(nuevoEstado is not None):
                     listaPendientes.append(nuevoEstado)
+        listaPendientes = removerRepetidos(listaPendientes)
         listaVisitados.append(estadoActual)
     return listaVisitados, listaPendientes

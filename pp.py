@@ -1,4 +1,4 @@
-from funciones import Estado, hijoNodoActual
+from funciones import Estado, hijoNodoActual, removerRepetidos
 from collections import deque
 
 def recorrerLabPP(laberinto: int):
@@ -6,13 +6,13 @@ def recorrerLabPP(laberinto: int):
     columnas = len(laberinto[0]) - 1
     inicio = Estado(columnas, filas, 'I', 1, None)
     listaVisitados = []
-    listaPendientes = deque()
+    listaPendientes = []
 
     listaPendientes.append(inicio)
     indice = 0
     
     while(listaPendientes and listaPendientes[0].estado != 'F'):
-        estadoActual = listaPendientes.popleft()
+        estadoActual = listaPendientes.pop(0)
         if estadoActual.estado != 'X':
             if estadoActual.y > 0:
                 x = estadoActual.x
@@ -43,5 +43,6 @@ def recorrerLabPP(laberinto: int):
                     listaPendientes.insert(indice, nuevoEstado)
                     indice = indice + 1
         indice = 0
+        listaPendientes = removerRepetidos(listaPendientes)
         listaVisitados.append(estadoActual)
     return listaVisitados, listaPendientes
