@@ -40,9 +40,9 @@ def existeEstadoEnLista(lista, x, y):
             break
     return existe
 
-def crearNodo(id: int, x: int, y: int, estado: str, nivel: int):
+def crearNodo(id: int, x: int, y: int, estado: str, nivel: int, pendiente: bool):
     nombre = "(" + str(x) + ", " + str(y) + ")"
-    nuevoNodo = Node(name = nombre, cordX = x, cordY = y, est = estado, id = id, level = nivel)
+    nuevoNodo = Node(name = nombre, cordX = x, cordY = y, est = estado, id = id, level = nivel, pend = pendiente)
     return nuevoNodo
 
 def getNodo(arbol: Node, x: int, y: int):
@@ -56,13 +56,13 @@ def getNodo(arbol: Node, x: int, y: int):
 def crearArbolExpansion(visitados, pendientes):
     id = 1
     for estado in visitados:
-        nuevoNodo = crearNodo(id, estado.x, estado.y, estado.estado, estado.nivel)
+        nuevoNodo = crearNodo(id, estado.x, estado.y, estado.estado, estado.nivel, False)
         id = id + 1
         if estado.padre:
             nuevoNodo.parent = getNodo(nodoAnterior.root, estado.padre.x, estado.padre.y)
         nodoAnterior = nuevoNodo
     for estado in pendientes:
-        nuevoNodo = crearNodo(id, estado.x, estado.y, estado.estado, estado.nivel)
+        nuevoNodo = crearNodo(id, estado.x, estado.y, estado.estado, estado.nivel, True)
         id = id + 1
         if estado.padre:
             nuevoNodo.parent = getNodo(nodoAnterior.root, estado.padre.x, estado.padre.y)
