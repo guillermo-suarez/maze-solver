@@ -16,12 +16,21 @@ class Estado:
             return f"({self.x}, {self.y}) - {self.estado} - Padre: NO TIENE"
         
 def hijoNodoActual(laberinto: int, y: int, x: int, estadoActual: Estado, listaPendientes, listaVisitados):
-    if not existeEstadoEnLista(listaPendientes, x, y) and not existeEstadoEnLista(listaVisitados, x, y):
+    if not existeEstadoEnLista(listaVisitados, x, y):
         celda = laberinto[y][x]
         nuevoEstado = Estado(x, y, celda, estadoActual.nivel + 1, estadoActual)
         return nuevoEstado
     else:
         return None
+    
+def removerRepetidos(lista):
+    noRepetidos = []
+    for estado in lista:
+        if not existeEstadoEnLista(noRepetidos, estado.x, estado.y):
+            noRepetidos.append(estado)
+        else:
+            lista.remove(estado)
+    return lista
 
 def existeEstadoEnLista(lista, x, y):
     existe = False
