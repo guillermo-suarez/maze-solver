@@ -41,4 +41,8 @@ def recorrerLabPA(laberinto: int):
                     listaPendientes.append(nuevoEstado)
         listaPendientes = removerRepetidos(listaPendientes)
         listaVisitados.append(estadoActual)
+    
+    if listaPendientes[0].estado == 'F':
+        listaVisitados.append(listaPendientes.pop(0))
+    
     return listaVisitados, listaPendientes

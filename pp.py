@@ -10,6 +10,8 @@ def recorrerLabPP(laberinto: int):
 
     listaPendientes.append(inicio)
     indice = 0
+
+    cont = 0
     
     while(listaPendientes and listaPendientes[0].estado != 'F'):
         estadoActual = listaPendientes.pop(0)
@@ -45,4 +47,8 @@ def recorrerLabPP(laberinto: int):
         indice = 0
         listaPendientes = removerRepetidos(listaPendientes)
         listaVisitados.append(estadoActual)
+
+    if listaPendientes[0].estado == 'F':
+        listaVisitados.append(listaPendientes.pop(0))
+    
     return listaVisitados, listaPendientes
