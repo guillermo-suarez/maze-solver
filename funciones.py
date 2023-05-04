@@ -133,17 +133,25 @@ def getCaminoSolucion(arbol: Node):
         while nodoActual.parent != None:
             nodos.insert(0, nodoActual)
             nodoActual = nodoActual.parent
-        solucion = crearNodo(1, arbol.root.cordX, arbol.root.cordY, 'I', 1)
+        solucion = crearNodo(1, arbol.root.cordX, arbol.root.cordY, 'I', 1, False)
         nodoAnt = solucion
         for nodo in nodos:
-            nuevoNodo = crearNodo(nodoAnt.id + 1, nodo.cordX, nodo.cordY, nodo.est, nodo.level)
+            nuevoNodo = crearNodo(nodoAnt.id + 1, nodo.cordX, nodo.cordY, nodo.est, nodo.level, False)
             nuevoNodo.parent = nodoAnt
             nodoAnt = nuevoNodo
     return solucion
 
 def arbolAPng(arbol: Node, path: str):
     config = []
-    config.append("bgcolor = \"#ffffff00\"")
+    config.append("bgcolor = transparent")
     config.append("edge[color = white]")
-    arbolDot = DotExporter(arbol, nodeattrfunc = lambda n: 'label = "#%s\n%s\n%s\nNivel: %s", style = filled, fillcolor = %s' % (n.id, n.name, n.est, n.level, "green" if n.est == '0' else ("red" if n.est == 'X' else "blue")), options = config)
+    arbolDot = DotExporter(arbol,
+                           nodeattrfunc = lambda n: 'label = "#%s\n%s", style = %s, fillcolor = %s, color = %s, fontcolor = white'
+                           % (n.id, n.name,
+                              "dashed" if n.pend else "filled",
+                              "darkgreen" if n.est == '0' else ("darkred" if n.est == 'X' else "darkblue"),
+                              "white" if n.pend else "white"),
+                           edgeattrfunc = lambda n, c: 'style = %s'
+                           % ("dashed" if c.pend else "solid"),
+                           options = config)
     arbolDot.to_picture(path)
