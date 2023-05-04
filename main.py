@@ -68,22 +68,22 @@ imprimirMatriz(matrizSolucionPA)
 arbolAPng(arbolPP, "expPP.png")
 arbolAPng(arbolPA, "expPA.png")
 
-sg.theme("DarkAmber")
+# sg.theme("DarkAmber")
 
-img1 = [[sg.Image(source = "expPP.png")]]
-layout1 = [[sg.Column(img1, size = (1920, 1080), scrollable = True)]]
-ventana1 = sg.Window("Árbol PP", layout1, finalize = True)
+# img1 = [[sg.Image(source = "expPP.png")]]
+# layout1 = [[sg.Column(img1, size = (1920, 1080), scrollable = True)]]
+# ventana1 = sg.Window("Árbol PP", layout1, finalize = True)
 
-img2 = [[sg.Image(source = "expPA.png")]]
-layout2 = [[sg.Column(img2, size = (1920, 1080), scrollable = True)]]
-ventana2 = sg.Window("Árbol PA", layout2, finalize = True)
+# img2 = [[sg.Image(source = "expPA.png")]]
+# layout2 = [[sg.Column(img2, size = (1920, 1080), scrollable = True)]]
+# ventana2 = sg.Window("Árbol PA", layout2, finalize = True)
 
-while True:
-    ventana, evento, valores = sg.read_all_windows()
-    if ventana == sg.WIN_CLOSED:
-        break
-    if evento == sg.WIN_CLOSED:
-        ventana.close()
+# while True:
+#     ventana, evento, valores = sg.read_all_windows()
+#     if ventana == sg.WIN_CLOSED:
+#         break
+#     if evento == sg.WIN_CLOSED:
+#         ventana.close()
 
-ventana1.close()
-ventana2.close()
+# ventana1.close()
+# ventana2.close()

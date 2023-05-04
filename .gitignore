@@ -3,3 +3,6 @@
 
 # Ingorar archivos .png
 *.png
+
+# Ignorar la carpeta docs, en donde guardamos pdf útiles pero no necesarios de versionar
+/docs
