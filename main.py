@@ -1,19 +1,21 @@
-from genlab import maze
+from genlab import getMaze
 from colorama import Fore
 from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMatrizRecorrida, getCaminoSolucion, arbolAPng
 from pp import recorrerLabPP
 from pa import recorrerLabPA
 import PySimpleGUI as sg
 
-print("\n" + Fore.WHITE + "LABERINTO A RECORRER:\n")
-imprimirMatriz(maze)
+filas = 10
+columnas = 10
 
-filas = len(maze)
-columnas = len(maze[0])
+laberinto = getMaze(filas, columnas)
+
+print("\n" + Fore.WHITE + "LABERINTO A RECORRER:\n")
+imprimirMatriz(laberinto)
 
 # PP
 
-visitadosPP, pendientesPP = recorrerLabPP(maze)
+visitadosPP, pendientesPP = recorrerLabPP(laberinto)
 
 print("\n" + Fore.WHITE + "[PP] VISITADOS")
 for x in visitadosPP:
@@ -40,7 +42,7 @@ imprimirMatriz(matrizSolucionPP)
 
 # PA
 
-visitadosPA, pendientesPA = recorrerLabPA(maze)
+visitadosPA, pendientesPA = recorrerLabPA(laberinto)
 
 print("\n" + Fore.WHITE + "[PA] VISITADOS")
 for x in visitadosPA:
