@@ -75,9 +75,11 @@ sg.theme("DarkAmber")
 sg.set_options(window_location = (0,0))
 
 img1 = [[sg.Image(source = "expPP.png")]]
-layout1 = [[sg.Text("HOLA", background_color = "white")], [sg.Column(img1, scrollable = True)]]
-ventana1 = sg.Window("Árbol de expansión PP", layout1, size = (int(0.9 * 1920), int(0.9 * 1080)), margins = (0, 0), finalize = True)
+layout1 = [[sg.Column(img1, size = (1920, 1080), scrollable = True)]]
+ventana1 = sg.Window("Árbol de expansión PP", layout1, margins = (0, 0), resizable = False, finalize = True)
 ventana1.maximize()
+ventana1.TKroot.attributes('-fullscreen', False)
+ventana1.refresh()
 
 # img2 = [[sg.Image(source = "expPA.png")]]
 # layout2 = [[sg.Column(img2, size = (1920, 1080), scrollable = True)]]

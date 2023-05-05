@@ -146,7 +146,7 @@ def arbolAPng(arbol: Node, path: str):
     config.append("bgcolor = transparent")
     config.append("edge[color = white]")
     arbolDot = DotExporter(arbol,
-                           nodeattrfunc = lambda n: 'label = "#%s\n%s", style = %s, fillcolor = %s, color = %s, fontcolor = white'
+                           nodeattrfunc = lambda n: 'label = "#%s\n%s", style = %s, fillcolor = %s, color = %s, fontcolor = white, fontname = \"Arial\"'
                            % (n.id, n.name,
                               "dashed" if n.pend else "filled",
                               "darkgreen" if n.est == '0' else ("darkred" if n.est == 'X' else "darkblue"),
