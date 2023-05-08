@@ -71,50 +71,55 @@ def crearArbolExpansion(visitados, pendientes):
 
 
 def imprimirArbol(arbol: Node):
-    for pre, _, node in RenderTree(arbol):
-        print(Fore.WHITE + "%s" % (pre), end="")
-        if node.est == 'I':
-            print(Fore.BLUE, end="")
-        elif node.est == '0':
-            print(Fore.WHITE, end="")
-        elif node.est == 'F':
-            print(Fore.GREEN, end="")
-        elif node.est == 'B':
-            print(Fore.YELLOW, end="")
-        elif node.est == 'X':
-            print(Fore.RED, end="")
-        print("[#%s] %s | N: %s | E: %s" % (node.id, node.name, node.level, node.est))
-    print(Fore.WHITE)
+    if arbol:
+        for pre, _, node in RenderTree(arbol):
+            print(Fore.WHITE + "%s" % (pre), end="")
+            if node.est == 'I':
+                print(Fore.BLUE, end="")
+            elif node.est == '0':
+                print(Fore.WHITE, end="")
+            elif node.est == 'F':
+                print(Fore.GREEN, end="")
+            elif node.est == 'B':
+                print(Fore.YELLOW, end="")
+            elif node.est == 'X':
+                print(Fore.RED, end="")
+            print("[#%s] %s | N: %s | E: %s" % (node.id, node.name, node.level, node.est))
+        print(Fore.WHITE)
 
 def getMatrizRecorrida(arbol: Node, filas: int, columnas: int):
-    lab = []
-    for x in range(0, filas):
-        fila = []
-        for y in range (0, columnas):
-            fila.append('N')
-        lab.append(fila)
-    for nodo in PreOrderIter(arbol):
-        lab[nodo.cordY][nodo.cordX] = nodo.est
-    return lab
+    if arbol:
+        lab = []
+        for x in range(0, filas):
+            fila = []
+            for y in range (0, columnas):
+                fila.append('N')
+            lab.append(fila)
+        for nodo in PreOrderIter(arbol):
+            lab[nodo.cordY][nodo.cordX] = nodo.est
+        return lab
+    else:
+        return None
 
 def imprimirMatriz(matriz):
-    filas = len(matriz)
-    columnas = len(matriz[0])
-    for i in range(0, filas):
-        for j in range(0, columnas):
-            if (matriz[i][j] == 'I' or matriz[i][j] == 'F'):
-                print(Fore.BLUE, end = "")
-            elif (matriz[i][j] == '0'):
-                print(Fore.GREEN, end = "")
-            elif(matriz[i][j] == 'B'):
-                print(Fore.YELLOW, end = "")	
-            elif(matriz[i][j] == 'X'):
-                print(Fore.RED, end = "")	
-            else:
-                print(Fore.WHITE, end = "")
-            print(str(matriz[i][j]), end = " ")
-        print('\n')
-    print(Fore.WHITE)
+    if matriz:
+        filas = len(matriz)
+        columnas = len(matriz[0])
+        for i in range(0, filas):
+            for j in range(0, columnas):
+                if (matriz[i][j] == 'I' or matriz[i][j] == 'F'):
+                    print(Fore.BLUE, end = "")
+                elif (matriz[i][j] == '0'):
+                    print(Fore.GREEN, end = "")
+                elif(matriz[i][j] == 'B'):
+                    print(Fore.YELLOW, end = "")	
+                elif(matriz[i][j] == 'X'):
+                    print(Fore.RED, end = "")	
+                else:
+                    print(Fore.WHITE, end = "")
+                print(str(matriz[i][j]), end = " ")
+            print('\n')
+        print(Fore.WHITE)
 
 def getNodoFinal(arbol: Node):
     nodoFinal = None

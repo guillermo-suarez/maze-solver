@@ -3,13 +3,17 @@ from colorama import Fore
 from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMatrizRecorrida, getCaminoSolucion, arbolAPng
 from pp import recorrerLabPP
 from pa import recorrerLabPA
+from mostrarArbol import crearVentanaArbol
+
 import PySimpleGUI as sg
-from PIL import Image
 
 filas = 10
 columnas = 10
 
 laberinto = getMaze(filas, columnas)
+
+# Al descomentar esta línea nos aseguramos que el laberinto no tenga solución
+# laberinto[0][1] = 'X'
 
 print("\n" + Fore.WHITE + "LABERINTO A RECORRER:\n")
 imprimirMatriz(laberinto)
@@ -71,30 +75,19 @@ imprimirMatriz(matrizSolucionPA)
 arbolAPng(arbolPP, "expPP.png")
 arbolAPng(arbolPA, "expPA.png")
 
-im = Image.open("expPP.png")
-width, height = im.size
-
-if width > 1820:
-    width = 1820
-if height > 1080:
-    height = 1080
-
-sg.theme("DarkAmber")
-
-img1 = [[sg.Image(source = "expPP.png")]]
-layout1 = [[sg.Column(img1, size = (width, height), scrollable = True)]]
-ventana1 = sg.Window("Árbol de expansión PP", layout1, margins = (0, 0), location = (0, 0), resizable = False, finalize = True)
-
-# img2 = [[sg.Image(source = "expPA.png")]]
-# layout2 = [[sg.Column(img2, size = (1920, 1080), scrollable = True)]]
-# ventana2 = sg.Window("Árbol PA", layout2, finalize = True)
+ventanaPP = crearVentanaArbol("expPP.png", "PP")
+ventanaPA = crearVentanaArbol("expPA.png", "PA")
 
 while True:
-    ventana, evento, valores = sg.read_all_windows()
-    if ventana == sg.WIN_CLOSED:
-        break
+    ventana, evento, valor = sg.read_all_windows()
     if evento == sg.WIN_CLOSED:
-        ventana.close()
-
-# ventana1.close()
-# ventana2.close()
+        if ventana == ventanaPP:
+            ventanaPP.close()
+            ventanaPP = None
+            if ventanaPA == None:
+                break
+        elif ventana == ventanaPA:
+            ventanaPA.close()
+            ventanaPA = None
+            if ventanaPP == None:
+                break
