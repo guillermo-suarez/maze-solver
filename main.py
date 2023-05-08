@@ -4,6 +4,7 @@ from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMat
 from pp import recorrerLabPP
 from pa import recorrerLabPA
 import PySimpleGUI as sg
+from PIL import Image
 
 filas = 10
 columnas = 10
@@ -70,11 +71,19 @@ imprimirMatriz(matrizSolucionPA)
 arbolAPng(arbolPP, "expPP.png")
 arbolAPng(arbolPA, "expPA.png")
 
+im = Image.open("expPP.png")
+width, height = im.size
+
+if width > 1820:
+    width = 1820
+if height > 1080:
+    height = 1080
+
 sg.theme("DarkAmber")
 
-img1 = [[sg.Text("HOLA")], [sg.Image(source = "expPP.png")]]
-layout1 = [[sg.Column(img1, size = (1820, 980), scrollable = True)]]
-ventana1 = sg.Window("Árbol de expansión PP", layout1, margins = (0, 0), location = (0, 0), finalize = True)
+img1 = [[sg.Image(source = "expPP.png")]]
+layout1 = [[sg.Column(img1, size = (width, height), scrollable = True)]]
+ventana1 = sg.Window("Árbol de expansión PP", layout1, margins = (0, 0), location = (0, 0), resizable = False, finalize = True)
 
 # img2 = [[sg.Image(source = "expPA.png")]]
 # layout2 = [[sg.Column(img2, size = (1920, 1080), scrollable = True)]]
