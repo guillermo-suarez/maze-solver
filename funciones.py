@@ -150,6 +150,28 @@ def arbolAPng(arbol: Node, path: str):
     config = []
     config.append("bgcolor = transparent")
     config.append("edge[color = white]")
+    config.append('''
+    {
+        mindist=0;
+        ranksep=0;
+        nodesep=0;
+
+        node[shape = box, margin="0,0", width = 1, height = 1, color = white, fontcolor = white];
+        edge[style=invis];
+
+        Legend[width=2];
+        Legend -> Foo;
+        Legend -> FooValue;
+        Foo -> Bar;
+        FooValue -> BarValue
+        Bar -> Baz;
+        BarValue -> BazValue;
+
+        edge [constraint=false];
+        Foo -> FooValue;
+        Bar -> BarValue
+        Baz -> BazValue;
+    }''')
     arbolDot = DotExporter(arbol,
                            nodeattrfunc = lambda n: 'label = "#%s\n%s", style = %s, fillcolor = %s, color = %s, fontcolor = white, fontname = \"Arial\"'
                            % (n.id, n.name,
