@@ -42,7 +42,7 @@ def recorrerLabPA(laberinto: int):
         listaPendientes = removerRepetidos(listaPendientes)
         listaVisitados.append(estadoActual)
     
-    if listaPendientes[0].estado == 'F':
+    if listaPendientes:
         listaVisitados.append(listaPendientes.pop(0))
     
     return listaVisitados, listaPendientes
