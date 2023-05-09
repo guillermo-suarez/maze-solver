@@ -3,12 +3,12 @@ from colorama import Fore
 from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMatrizRecorrida, getCaminoSolucion, arbolAPng
 from pp import recorrerLabPP
 from pa import recorrerLabPA
-from mostrarArbol import crearVentanaArbol
+from ventanas import crearVentanaArbol
 
 import PySimpleGUI as sg
 
-filas = 10
-columnas = 10
+filas = 20
+columnas = 20
 
 laberinto = getMaze(filas, columnas)
 
