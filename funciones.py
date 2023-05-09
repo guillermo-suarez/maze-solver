@@ -2,6 +2,10 @@ from anytree import Node, RenderTree, PreOrderIter
 from anytree.exporter import DotExporter
 from colorama import Fore
 
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+
 class Estado:
     def __init__(self, x, y, estado, nivel, padre):
         self.x = x
@@ -182,3 +186,35 @@ def arbolAPng(arbol: Node, path: str):
                            % ("dashed" if c.pend else "solid"),
                            options = config)
     arbolDot.to_picture(path)
+
+def laberintoAPng(laberinto, filas: int, columnas: int, path: str):
+
+
+    array = np.zeros((filas, columnas))
+
+    for i in range(0, columnas):
+        for j in range(0, filas):
+            if laberinto[j][i] == 'X':
+                array[j][i] = -1.0
+            elif laberinto[j][i] == '0':
+                array[j][i] = 0.0
+            elif laberinto[j][i] == 'I' or laberinto[j][i] == 'F':
+                array[j][i] = 1.0
+
+    cmap = colors.ListedColormap(['red', 'green', 'blue'])
+    bounds = [-1.0, 0.0, 1.0, 2.0]
+    norm = colors.BoundaryNorm(bounds, cmap.N)
+
+    fig, ax = plt.subplots()
+    ax.imshow(array, cmap = cmap, norm = norm)
+
+    ax.grid(which = 'minor', axis = 'both', linestyle = '-', color = 'white', linewidth = 2)
+    plt.xticks(range(columnas), range(columnas), color = 'white')
+    plt.yticks(range(filas), range(filas), color = 'white')
+    ax.set_xticks([x - 0.5 for x in range(1, columnas)], minor = True)
+    ax.set_yticks([y - 0.5 for y in range(1, filas)], minor = True)
+    ax.spines['top'].set_color('white')
+    ax.spines['bottom'].set_color('white')
+    ax.spines['left'].set_color('white')
+    ax.spines['right'].set_color('white')
+    plt.savefig(path, bbox_inches = 'tight', transparent = True)

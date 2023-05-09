@@ -1,19 +1,21 @@
 from genlab import getMaze
 from colorama import Fore
-from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMatrizRecorrida, getCaminoSolucion, arbolAPng
+from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMatrizRecorrida, getCaminoSolucion, arbolAPng, laberintoAPng
 from pp import recorrerLabPP
 from pa import recorrerLabPA
 from ventanas import crearVentanaArbol
 
 import PySimpleGUI as sg
 
-filas = 20
-columnas = 20
+filas = 10
+columnas = 10
 
 laberinto = getMaze(filas, columnas)
 
 # Al descomentar esta línea nos aseguramos que el laberinto no tenga solución
 # laberinto[0][1] = 'X'
+
+laberintoAPng(laberinto, filas, columnas, "lab.png")
 
 print("\n" + Fore.WHITE + "LABERINTO A RECORRER:\n")
 imprimirMatriz(laberinto)
