@@ -163,7 +163,7 @@ def arbolAPng(arbol: Node, path: str):
 
         Verde -> Rojo;
         Rojo -> Azul;
-        Azul -> Trazos;
+        Azul -> TrazosA;
 
         VerdeT -> RojoT;
         RojoT -> AzulT;
