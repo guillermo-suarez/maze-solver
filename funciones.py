@@ -154,27 +154,35 @@ def arbolAPng(arbol: Node, path: str):
     config = []
     config.append("bgcolor = transparent")
     config.append("edge[color = white]")
-    config.append('''subgraph REF
-    {
-        label = "Referencias";
-
-        node[shape = box, margin="0,0", width = 1, height = 1, color = white, fontcolor = white];
-        edge[style=invis];
-
-        Verde -> Rojo;
-        Rojo -> Azul;
-        Azul -> Trazos;
-
-        VerdeT -> RojoT;
-        RojoT -> AzulT;
-        AzulT -> TrazosT;
-
-        Verde -> VerdeT;
-        Rojo -> RojoT;
-        Azul -> AzulT;
-        Trazos -> TrazosT;
-
-        edge [constraint=false];
+    config.append('''subgraph REF {
+        pos = "0,0!"
+        Referencias[shape=none, color=white, margin=0, width=2, label=<
+            <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+                <TH>
+                    <TD COLSPAN="3" COLOR="white"><FONT FACE="Arial" COLOR="white" POINT-SIZE="32"><B>Referencias</B></FONT></TD>
+                </TH>
+                <TR>
+                    <TD COLSPAN="2" COLOR="white">
+                        <TABLE BORDER="0">
+                            <TR>
+                                <TD BORDER="1" STYLE="rounded" COLOR="white" BGCOLOR="darkgreen">       </TD>
+                            </TR>
+                        </TABLE>
+                    </TD>
+                    <TD COLSPAN="1" ALIGN="LEFT" COLOR="white"><FONT FACE="Arial" COLOR="white" POINT-SIZE="24">Celda del laberinto libre (camino)</FONT></TD>
+                </TR>
+                <TR>
+                    <TD COLSPAN="2" COLOR="white">
+                        <TABLE BORDER="0">
+                            <TR>
+                                <TD BORDER="1" STYLE="rounded" COLOR="white" BGCOLOR="darkred"></TD>
+                            </TR>
+                        </TABLE>
+                    </TD>
+                    <TD COLSPAN="1" ALIGN="LEFT" COLOR="white"><FONT FACE="Arial" COLOR="white" POINT-SIZE="24">Celda del laberinto bloqueada (pared)</FONT></TD>
+                </TR>
+            </TABLE>
+        >]
     }''')
     arbolDot = DotExporter(arbol,
                            nodeattrfunc = lambda n: 'label = "#%s\n%s", style = %s, fillcolor = %s, color = %s, fontcolor = white, fontname = \"Arial\"'
