@@ -46,7 +46,7 @@ def pruebaOptimo():
         ['X','X','X','X','X','X','X','X','X','0'],
         ['X','X','X','X','X','X','X','X','X','0'],
         ['X','X','X','X','X','X','X','X','X','0'],
-        ['X','X','X','X','X','X','X','0','F','I']
+        ['X','X','X','X','X','X','X','F','0','I']
     ]
     visitadosPP, pendientesPP = recorrerLabPP(laberinto)
     visitadosPA, pendientesPA = recorrerLabPA(laberinto)
