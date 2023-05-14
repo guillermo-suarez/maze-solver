@@ -139,5 +139,3 @@ def pruebaCantNodos():
     print('Cantidad de nodos promedio:')
     print('\tPrimero en profundidad: ', promedioPP)
     print('\tPrimero en amplitud: ', promedioPA)
-
-pruebaOptimo()
