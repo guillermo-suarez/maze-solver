@@ -1,7 +1,7 @@
 from genlab import getMaze
 from pp import recorrerLabPP
 from pa import recorrerLabPA
-from funciones import crearArbolExpansion, imprimirArbol, imprimirMatriz
+from funciones import crearArbolExpansion
 from anytree import LevelOrderIter
 import time
 
@@ -33,6 +33,7 @@ def pruebaTiempo():
     print('Promedio primero en profundidad: ', promedioPP)
     print('Promedio primero en amplitud: ', promedioPA)
 
+
 def pruebaOptimo():
     #Procedimiento que busca probar si PP y PA encuentran la misma salida
     laberinto = [
@@ -45,24 +46,26 @@ def pruebaOptimo():
         ['X','X','X','X','X','X','X','X','X','0'],
         ['X','X','X','X','X','X','X','X','X','0'],
         ['X','X','X','X','X','X','X','X','X','0'],
-        ['X','X','X','X','X','X','X','F','0','I']
+        ['X','X','X','X','X','X','X','0','F','I']
     ]
     visitadosPP, pendientesPP = recorrerLabPP(laberinto)
     visitadosPA, pendientesPA = recorrerLabPA(laberinto)
     arbolPP = crearArbolExpansion(visitadosPP, pendientesPP)
     arbolPA = crearArbolExpansion(visitadosPA, pendientesPA)
+    print('Primero en profundidad')
     for nodo in LevelOrderIter(arbolPP):
         if nodo.est == 'F':
-            print('Primero en profundidad')
-            print('La salida fue en la casilla [',nodo.cordX,'][',nodo.cordY,']')
-            print('La profundidad del árbol es de',nodo.depth)
+            print('\tLa salida de la casilla [',nodo.cordX,'][',nodo.cordY,'] fue encontrada.')
+            print('\tLa profundidad del árbol allí es de',nodo.depth)
+    print('Primero en amplitud')
     for nodo in LevelOrderIter(arbolPA):
         if nodo.est == 'F':
-            print('Primero en amplitud')
-            print('La salida fue en la casilla [',nodo.cordX,'][',nodo.cordY,']')
-            print('La profundidad del árbol es de',nodo.depth)
+            print('\tLa salida de la casilla [',nodo.cordX,'][',nodo.cordY,'] fue encontrada.')
+            print('\tLa profundidad del árbol allí es de',nodo.depth)
+
 
 def pruebaEspacio():
+    #Procedimiento que busca factor de ramificación y profundidad máxima de PP y PA
     filas = columnas = 10
     rango = 10000
     bMaxPP = bMaxPA = 0 #Factor de ramificación máximo de todos los laberintos
@@ -70,6 +73,7 @@ def pruebaEspacio():
     encontrado = False
 
     for i in range(rango):
+        #print("Vuelta ", i)
         laberinto = getMaze(filas, columnas)
         visitadosPP, pendientesPP = recorrerLabPP(laberinto)
         visitadosPA, pendientesPA = recorrerLabPA(laberinto)
@@ -90,12 +94,12 @@ def pruebaEspacio():
                 dMaxPA = nodo.depth
                 encontrado = False
     print('Prueba de',rango,'laberintos')
-    print('\tPrimero en profundidad:')
-    print('\t\tbMax = ',bMaxPP)
-    print('\t\tdMax = ',dMaxPP)
-    print('\tPrimero en amplitud:')
-    print('\t\tbMax = ',bMaxPA)
-    print('\t\tdMax = ',dMaxPA)
+    print('Primero en profundidad:')
+    print('\tbMax = ',bMaxPP)
+    print('\tdMax = ',dMaxPP)
+    print('Primero en amplitud:')
+    print('\tbMax = ',bMaxPA)
+    print('\tdMax = ',dMaxPA)
     if bMaxPP == bMaxPP and dMaxPP == dMaxPA:
         print('Ambos algoritmos poseen la misma complejidad')
     else:
@@ -103,3 +107,33 @@ def pruebaEspacio():
         print('La complejidad máxima de primero en amplitud es de', bMaxPA**dMaxPA)
 
 
+def pruebaCantNodos():
+    filas = columnas = 10
+    rango = 10000
+    acumuladoPP = acumuladoPA = promedioPP = promedioPA = 0
+    idMax = 0
+
+    for i in range(rango):
+        #print("Vuelta ", i)
+        laberinto = getMaze(filas, columnas)
+        visitadosPP, pendientesPP = recorrerLabPP(laberinto)
+        visitadosPA, pendientesPA = recorrerLabPA(laberinto)
+        arbolPP = crearArbolExpansion(visitadosPP, pendientesPP)
+        arbolPA = crearArbolExpansion(visitadosPA, pendientesPA)
+        for nodo in arbolPP.leaves:
+            if nodo.id > idMax:
+                idMax = nodo.id
+        acumuladoPP += idMax
+        idMax = 0
+        for nodo in arbolPA.leaves:
+            if nodo.id > idMax:
+                idMax = nodo.id
+        acumuladoPA += idMax
+        idMax = 0
+    
+    promedioPP = acumuladoPP // rango
+    promedioPA = acumuladoPA // rango
+
+    print('Cantidad de nodos promedio:')
+    print('\tPrimero en profundidad: ', promedioPP)
+    print('\tPrimero en amplitud: ', promedioPA)
