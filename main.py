@@ -1,19 +1,28 @@
-from genlab import maze
+from genlab import getMaze
 from colorama import Fore
-from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMatrizRecorrida, getCaminoSolucion, arbolAPng
+from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMatrizRecorrida, getCaminoSolucion, arbolAPng, laberintoAPng
 from pp import recorrerLabPP
 from pa import recorrerLabPA
+from ventanas import crearVentanaArbol
+
 import PySimpleGUI as sg
 
-print("\n" + Fore.WHITE + "LABERINTO A RECORRER:\n")
-imprimirMatriz(maze)
+filas = 10
+columnas = 10
 
-filas = len(maze)
-columnas = len(maze[0])
+laberinto = getMaze(filas, columnas)
+
+# Al descomentar esta línea nos aseguramos que el laberinto no tenga solución
+# laberinto[0][1] = 'X'
+
+laberintoAPng(laberinto, filas, columnas, "lab.png")
+
+print("\n" + Fore.WHITE + "LABERINTO A RECORRER:\n")
+imprimirMatriz(laberinto)
 
 # PP
 
-visitadosPP, pendientesPP = recorrerLabPP(maze)
+visitadosPP, pendientesPP = recorrerLabPP(laberinto)
 
 print("\n" + Fore.WHITE + "[PP] VISITADOS")
 for x in visitadosPP:
@@ -40,7 +49,7 @@ imprimirMatriz(matrizSolucionPP)
 
 # PA
 
-visitadosPA, pendientesPA = recorrerLabPA(maze)
+visitadosPA, pendientesPA = recorrerLabPA(laberinto)
 
 print("\n" + Fore.WHITE + "[PA] VISITADOS")
 for x in visitadosPA:
@@ -68,22 +77,19 @@ imprimirMatriz(matrizSolucionPA)
 arbolAPng(arbolPP, "expPP.png")
 arbolAPng(arbolPA, "expPA.png")
 
-sg.theme("DarkAmber")
-
-img1 = [[sg.Image(source = "expPP.png")]]
-layout1 = [[sg.Column(img1, size = (1920, 1080), scrollable = True)]]
-ventana1 = sg.Window("Árbol PP", layout1, finalize = True)
-
-img2 = [[sg.Image(source = "expPA.png")]]
-layout2 = [[sg.Column(img2, size = (1920, 1080), scrollable = True)]]
-ventana2 = sg.Window("Árbol PA", layout2, finalize = True)
+ventanaPP = crearVentanaArbol("expPP.png", "PP")
+ventanaPA = crearVentanaArbol("expPA.png", "PA")
 
 while True:
-    ventana, evento, valores = sg.read_all_windows()
-    if ventana == sg.WIN_CLOSED:
-        break
+    ventana, evento, valor = sg.read_all_windows()
     if evento == sg.WIN_CLOSED:
-        ventana.close()
-
-ventana1.close()
-ventana2.close()
+        if ventana == ventanaPP:
+            ventanaPP.close()
+            ventanaPP = None
+            if ventanaPA == None:
+                break
+        elif ventana == ventanaPA:
+            ventanaPA.close()
+            ventanaPA = None
+            if ventanaPP == None:
+                break
