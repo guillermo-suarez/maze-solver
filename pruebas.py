@@ -1,6 +1,8 @@
-from genlab import getMaze, printMaze
+from genlab import getMaze
 from pp import recorrerLabPP
 from pa import recorrerLabPA
+from funciones import crearArbolExpansion
+from anytree import Node, LevelOrderIter
 import time
 
 def pruebaTiempo():
@@ -31,4 +33,33 @@ def pruebaTiempo():
     print('Promedio primero en profundidad: ', promedioPP)
     print('Promedio primero en amplitud: ', promedioPA)
 
-pruebaTiempo()
+def pruebaOptimo():
+    #Procedimiento que busca probar si PP y PA encuentran la misma salida
+    laberinto = [
+        ['F','0','0','0','0','0','0','0','0','0'],
+        ['X','X','X','X','X','X','X','X','X','0'],
+        ['X','X','X','X','X','X','X','X','X','0'],
+        ['X','X','X','X','X','X','X','X','X','0'],
+        ['X','X','X','X','X','X','X','X','X','0'],
+        ['X','X','X','X','X','X','X','X','X','0'],
+        ['X','X','X','X','X','X','X','X','X','0'],
+        ['X','X','X','X','X','X','X','X','X','0'],
+        ['X','X','X','X','X','X','X','X','X','0'],
+        ['X','X','X','X','X','X','X','F','0','I']
+    ]
+    visitadosPP, pendientesPP = recorrerLabPP(laberinto)
+    visitadosPA, pendientesPA = recorrerLabPA(laberinto)
+    arbolPP = crearArbolExpansion(visitadosPP, pendientesPP)
+    arbolPA = crearArbolExpansion(visitadosPA, pendientesPA)
+    for nodo in LevelOrderIter(arbolPP):
+        if nodo.est == 'F':
+            print('Primero en profundidad')
+            print('La salida fue en la casilla [',nodo.cordX,'][',nodo.cordY,']')
+            print('La profundidad del árbol es de',nodo.depth)
+    for nodo in LevelOrderIter(arbolPA):
+        if nodo.est == 'F':
+            print('Primero en amplitud')
+            print('La salida fue en la casilla [',nodo.cordX,'][',nodo.cordY,']')
+            print('La profundidad del árbol es de',nodo.depth)
+
+pruebaOptimo()
