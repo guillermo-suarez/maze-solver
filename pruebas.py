@@ -1,4 +1,4 @@
-from genlab import getMaze
+from genlab import getMaze, printMaze
 from pp import recorrerLabPP
 from pa import recorrerLabPA
 from funciones import crearArbolExpansion
@@ -35,7 +35,7 @@ def pruebaTiempo():
 
 
 def pruebaOptimo():
-    #Procedimiento que busca probar si PP y PA encuentran la misma salida
+    #Procedimiento que busca probar que salida/s encuentran PP y PA
     laberinto = [
         ['F','0','0','0','0','0','0','0','0','0'],
         ['X','X','X','X','X','X','X','X','X','0'],
@@ -47,7 +47,8 @@ def pruebaOptimo():
         ['X','X','X','X','X','X','X','X','X','0'],
         ['X','X','X','X','X','X','X','X','X','0'],
         ['X','X','X','X','X','X','X','F','0','I']
-    ]
+    ]   #Cambiar F a [8][9] para obtener otro resultado
+    printMaze(laberinto)
     visitadosPP, pendientesPP = recorrerLabPP(laberinto)
     visitadosPA, pendientesPA = recorrerLabPA(laberinto)
     arbolPP = crearArbolExpansion(visitadosPP, pendientesPP)
@@ -66,7 +67,7 @@ def pruebaOptimo():
 
 def pruebaEspacio():
     #Procedimiento que busca factor de ramificación y profundidad máxima de PP y PA
-    filas = columnas = 10
+    filas = columnas = 10   #Advertencia: en matriz de 100x100 cada vuelta dura más de un minuto
     rango = 10000
     bMaxPP = bMaxPA = 0 #Factor de ramificación máximo de todos los laberintos
     dMaxPP = dMaxPA = 0 #Profundidad de la salida del árbol con el bMax
@@ -108,6 +109,7 @@ def pruebaEspacio():
 
 
 def pruebaCantNodos():
+    #Procedimiento que busca medir complejidad espacial mediante cantidad de nodos
     filas = columnas = 10
     rango = 10000
     acumuladoPP = acumuladoPA = promedioPP = promedioPA = 0
@@ -120,7 +122,7 @@ def pruebaCantNodos():
         visitadosPA, pendientesPA = recorrerLabPA(laberinto)
         arbolPP = crearArbolExpansion(visitadosPP, pendientesPP)
         arbolPA = crearArbolExpansion(visitadosPA, pendientesPA)
-        for nodo in arbolPP.leaves:
+        for nodo in arbolPP.leaves: #se decide iterar sobre las hojas para reducir espacio de búsqueda
             if nodo.id > idMax:
                 idMax = nodo.id
         acumuladoPP += idMax
@@ -131,9 +133,11 @@ def pruebaCantNodos():
         acumuladoPA += idMax
         idMax = 0
     
-    promedioPP = acumuladoPP // rango
+    promedioPP = acumuladoPP // rango   #dado que los nodos son enteros se decide utilizar división entera
     promedioPA = acumuladoPA // rango
 
     print('Cantidad de nodos promedio:')
     print('\tPrimero en profundidad: ', promedioPP)
     print('\tPrimero en amplitud: ', promedioPA)
+
+pruebaOptimo()
