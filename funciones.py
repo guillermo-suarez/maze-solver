@@ -44,9 +44,9 @@ def existeEstadoEnLista(lista, x, y):
             break
     return existe
 
-def crearNodo(id: int, x: int, y: int, estado: str, nivel: int, pendiente: bool):
+def crearNodo(id: int, x: int, y: int, estado: str, nivel: int):
     nombre = "(" + str(x) + ", " + str(y) + ")"
-    nuevoNodo = Node(name = nombre, cordX = x, cordY = y, est = estado, id = id, level = nivel, pend = pendiente)
+    nuevoNodo = Node(name = nombre, cordX = x, cordY = y, est = estado, id = id, level = nivel, esSolucion = False)
     return nuevoNodo
 
 def getNodo(arbol: Node, x: int, y: int):
@@ -60,13 +60,13 @@ def getNodo(arbol: Node, x: int, y: int):
 def crearArbolExpansion(visitados, pendientes):
     id = 1
     for estado in visitados:
-        nuevoNodo = crearNodo(id, estado.x, estado.y, estado.estado, estado.nivel, False)
+        nuevoNodo = crearNodo(id, estado.x, estado.y, estado.estado, estado.nivel)
         id = id + 1
         if estado.padre:
             nuevoNodo.parent = getNodo(nodoAnterior.root, estado.padre.x, estado.padre.y)
         nodoAnterior = nuevoNodo
     for estado in pendientes:
-        nuevoNodo = crearNodo(id, estado.x, estado.y, estado.estado, estado.nivel, True)
+        nuevoNodo = crearNodo(id, estado.x, estado.y, 'P', estado.nivel)
         id = id + 1
         if estado.padre:
             nuevoNodo.parent = getNodo(nodoAnterior.root, estado.padre.x, estado.padre.y)
@@ -84,7 +84,7 @@ def imprimirArbol(arbol: Node):
                 print(Fore.WHITE, end="")
             elif node.est == 'F':
                 print(Fore.GREEN, end="")
-            elif node.est == 'B':
+            elif node.est == 'P':
                 print(Fore.YELLOW, end="")
             elif node.est == 'X':
                 print(Fore.RED, end="")
@@ -140,12 +140,14 @@ def getCaminoSolucion(arbol: Node):
         nodoActual = nodoFinal
         nodos = []
         while nodoActual.parent != None:
+            nodoActual.esSolucion = True
             nodos.insert(0, nodoActual)
             nodoActual = nodoActual.parent
-        solucion = crearNodo(1, arbol.root.cordX, arbol.root.cordY, 'I', 1, False)
+        nodoActual.esSolucion = True
+        solucion = crearNodo(1, arbol.root.cordX, arbol.root.cordY, 'I', 1)
         nodoAnt = solucion
         for nodo in nodos:
-            nuevoNodo = crearNodo(nodoAnt.id + 1, nodo.cordX, nodo.cordY, nodo.est, nodo.level, False)
+            nuevoNodo = crearNodo(nodoAnt.id + 1, nodo.cordX, nodo.cordY, nodo.est, nodo.level)
             nuevoNodo.parent = nodoAnt
             nodoAnt = nuevoNodo
     return solucion
@@ -217,11 +219,12 @@ def arbolAPng(arbol: Node, path: str):
     arbolDot = DotExporter(arbol,
                            nodeattrfunc = lambda n: 'label = "#%s\n%s", style = %s, fillcolor = %s, color = %s, fontcolor = white, fontname = \"Arial\"'
                            % (n.id, n.name,
-                              "dashed" if n.pend else "filled",
+                              "dashed" if n.est == 'P' else "filled",
                               "darkgreen" if n.est == '0' else ("darkred" if n.est == 'X' else "darkblue"),
-                              "white" if n.pend else "white"),
-                           edgeattrfunc = lambda n, c: 'style = %s'
-                           % ("dashed" if c.pend else "solid"),
+                              "yellow" if n.esSolucion else "white"),
+                           edgeattrfunc = lambda n, c: 'style = %s, color = %s'
+                           % ("dashed" if c.est == 'P' else "solid",
+                              "yellow" if c.esSolucion else "white"),
                            options = config)
     arbolDot.to_picture(path)
 
