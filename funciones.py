@@ -100,7 +100,11 @@ def getMatrizRecorrida(arbol: Node, filas: int, columnas: int):
                 fila.append('N')
             lab.append(fila)
         for nodo in PreOrderIter(arbol):
-            lab[nodo.cordY][nodo.cordX] = nodo.est
+            print(nodo.esSolucion)
+            if nodo.esSolucion == True and nodo.est == '0':
+                lab[nodo.cordY][nodo.cordX] = 'S'
+            else:
+                lab[nodo.cordY][nodo.cordX] = nodo.est
         return lab
     else:
         return None
@@ -115,7 +119,7 @@ def imprimirMatriz(matriz):
                     print(Fore.BLUE, end = "")
                 elif (matriz[i][j] == '0'):
                     print(Fore.GREEN, end = "")
-                elif(matriz[i][j] == 'B'):
+                elif(matriz[i][j] == 'P'):
                     print(Fore.YELLOW, end = "")	
                 elif(matriz[i][j] == 'X'):
                     print(Fore.RED, end = "")	
@@ -230,7 +234,6 @@ def arbolAPng(arbol: Node, path: str):
 
 def laberintoAPng(laberinto, filas: int, columnas: int, path: str):
 
-
     array = np.zeros((filas, columnas))
 
     for i in range(0, columnas):
@@ -241,9 +244,15 @@ def laberintoAPng(laberinto, filas: int, columnas: int, path: str):
                 array[j][i] = 0.0
             elif laberinto[j][i] == 'I' or laberinto[j][i] == 'F':
                 array[j][i] = 1.0
+            elif laberinto[j][i] == 'P':
+                array[j][i] = 2.0
+            elif laberinto[j][i] == 'S':
+                array[j][i] = 3.0
+            else:
+                array[j][i] = 4.0
 
-    cmap = colors.ListedColormap(['red', 'green', 'blue'])
-    bounds = [-1.0, 0.0, 1.0, 2.0]
+    cmap = colors.ListedColormap(['red', 'green', 'blue', 'yellow', 'orange', 'black'])
+    bounds = [-1.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0]
     norm = colors.BoundaryNorm(bounds, cmap.N)
 
     fig, ax = plt.subplots()

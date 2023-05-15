@@ -35,11 +35,15 @@ arbolPP = crearArbolExpansion(visitadosPP, pendientesPP)
 print(Fore.WHITE + "[PP] ÁRBOL DE EXPANSIÓN:\n")
 imprimirArbol(arbolPP)
 
+solucionPP = getCaminoSolucion(arbolPP)
+
 matrizPP = getMatrizRecorrida(arbolPP, filas, columnas)
 print(Fore.WHITE + "\n[PP] MATRIZ RECORRIDA:\n")
 imprimirMatriz(matrizPP)
 
-solucionPP = getCaminoSolucion(arbolPP)
+laberintoAPng(matrizPP, filas, columnas, "labPP.png")
+
+
 print(Fore.WHITE + "\n[PP] ÁRBOL SOLUCIÓN:\n")
 imprimirArbol(solucionPP)
 
@@ -62,11 +66,14 @@ arbolPA = crearArbolExpansion(visitadosPA, pendientesPA)
 print(Fore.WHITE + "\n[PA] ARBOL DE EXPANSIÓN:\n")
 imprimirArbol(arbolPA)
 
+solucionPA = getCaminoSolucion(arbolPA)
+
 matrizPA = getMatrizRecorrida(arbolPA, filas, columnas)
 print(Fore.WHITE + "\n[PA] MATRIZ RECORRIDA:\n")
 imprimirMatriz(matrizPA)
 
-solucionPA = getCaminoSolucion(arbolPA)
+laberintoAPng(matrizPA, filas, columnas, "labPA.png")
+
 print(Fore.WHITE + "\n[PA] ÁRBOL SOLUCIÓN:\n")
 imprimirArbol(solucionPA)
 
@@ -77,19 +84,19 @@ imprimirMatriz(matrizSolucionPA)
 arbolAPng(arbolPP, "expPP.png")
 arbolAPng(arbolPA, "expPA.png")
 
-ventanaPP = crearVentanaArbol("expPP.png", "PP")
-ventanaPA = crearVentanaArbol("expPA.png", "PA")
+# ventanaPP = crearVentanaArbol("expPP.png", "PP")
+# ventanaPA = crearVentanaArbol("expPA.png", "PA")
 
-while True:
-    ventana, evento, valor = sg.read_all_windows()
-    if evento == sg.WIN_CLOSED:
-        if ventana == ventanaPP:
-            ventanaPP.close()
-            ventanaPP = None
-            if ventanaPA == None:
-                break
-        elif ventana == ventanaPA:
-            ventanaPA.close()
-            ventanaPA = None
-            if ventanaPP == None:
-                break
+# while True:
+#     ventana, evento, valor = sg.read_all_windows()
+#     if evento == sg.WIN_CLOSED:
+#         if ventana == ventanaPP:
+#             ventanaPP.close()
+#             ventanaPP = None
+#             if ventanaPA == None:
+#                 break
+#         elif ventana == ventanaPA:
+#             ventanaPA.close()
+#             ventanaPA = None
+#             if ventanaPP == None:
+#                 break
