@@ -7,13 +7,13 @@ def recorrerLabPP(laberinto: int):
     inicio = Estado(columnas, filas, 'I', 1, None)
     listaVisitados = []
     listaPendientes = []
-
     listaPendientes.append(inicio)
-    indice = 0
+    iteraciones = []
 
-    cont = 0
+    indice = 0
     
     while(listaPendientes and listaPendientes[0].estado != 'F'):
+        iteraciones.append(list(listaPendientes))
         estadoActual = listaPendientes.pop(0)
         if estadoActual.estado != 'X':
             if estadoActual.y > 0:
@@ -49,6 +49,7 @@ def recorrerLabPP(laberinto: int):
         listaVisitados.append(estadoActual)
 
     if listaPendientes:
+        iteraciones.append(list(listaPendientes))
         listaVisitados.append(listaPendientes.pop(0))
     
-    return listaVisitados, listaPendientes
+    return iteraciones, listaVisitados, listaPendientes

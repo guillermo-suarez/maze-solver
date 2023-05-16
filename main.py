@@ -6,6 +6,8 @@ from pa import recorrerLabPA
 from ventanas import crearVentanaArbol
 
 import PySimpleGUI as sg
+import graphviz
+import matplotlib.pyplot as plt
 
 filas = 10
 columnas = 10
@@ -22,74 +24,146 @@ imprimirMatriz(laberinto)
 
 # PP
 
-visitadosPP, pendientesPP = recorrerLabPP(laberinto)
+iterPP, visitadosPP, pendientesPP = recorrerLabPP(laberinto)
 
-print("\n" + Fore.WHITE + "[PP] VISITADOS")
-for x in visitadosPP:
-    print(x)
-print("\n" + Fore.WHITE + "[PP] PENDIENTES")
-for x in pendientesPP:
-    print(x)
+# i = 0
+# for iter in iterPP:
+#     print("Iteración en t_" + str(i))
+#     for x in iter:
+#         print(x)
+#     i = i + 1
 
-arbolPP = crearArbolExpansion(visitadosPP, pendientesPP)
-print(Fore.WHITE + "[PP] ÁRBOL DE EXPANSIÓN:\n")
-imprimirArbol(arbolPP)
+max = 0
 
-matrizPP = getMatrizRecorrida(arbolPP, filas, columnas)
-print(Fore.WHITE + "\n[PP] MATRIZ RECORRIDA:\n")
-imprimirMatriz(matrizPP)
+for iter in iterPP:
+    if len(iter) > max:
+        max = len(iter)
 
-solucionPP = getCaminoSolucion(arbolPP)
-print(Fore.WHITE + "\n[PP] ÁRBOL SOLUCIÓN:\n")
-imprimirArbol(solucionPP)
+i = 0
+datos = []
+labels = []
+for iter in iterPP:
+    labels.append("$t_" + str(i) + "$")
+    i = i + 1
+    fila = []
+    for j in range(0, max):
+        if j >= len(iter):
+            fila.append("")
+        else:
+            if iter[j].padre:
+                fila.append("$(" + str(iter[j].x) + ", " + str(iter[j].y) + ")^{" + "(" + str(iter[j].padre.x) + ", " + str(iter[j].padre.y) + ")}$")
+            else:
+                fila.append("$(" + str(iter[j].x) + ", " + str(iter[j].y) + ")$")
+    datos.append(fila)
 
-matrizSolucionPP = getMatrizRecorrida(solucionPP, filas, columnas)
-print(Fore.WHITE + "\n[PP] CAMINO SOLUCIÓN:\n")
-imprimirMatriz(matrizSolucionPP)
+fig, ax = plt.subplots()
+ax.set_axis_off()
+table = ax.table(
+    cellText = datos,
+    rowLabels = labels,
+    rowLoc = 'center',
+    cellLoc = 'center',
+    loc = 'upper left'
+)
+plt.savefig("asd.png", bbox_inches = 'tight', transparent = True, dpi = 450)
 
-# PA
+# dot = graphviz.Graph()
+# dot.attr(rankdir = 'LR')
+# dot.node_attr['shape'] = 'box'
+# dot.node_attr['style'] = 'filled'
+# dot.node_attr['fillcolor'] = 'white'
 
-visitadosPA, pendientesPA = recorrerLabPA(laberinto)
+# i = 0
+# for iter in iterPP:
+#     dot.attr('node', fillcolor = 'yellow')
+#     dot.node(name = "h" + str(i), label = "t" + str(i))
+#     dot.attr('node', fillcolor = 'white')
+#     if i > 0:
+#         dot.edge(tail_name = "h" + str(i - 1), head_name = "h" + str(i))
+#     for j in range(0, max):
+#         if len(iter) > j:
+#             est = iter[j]
+#             if est.padre:
+#                 dot.node(name = str(i) + "." + str(j), label = "(" + str(est.x) + ", " + str(est.y) + ")^(" + str(est.padre.x) + ", " + str(est.padre.y) + ")")
+#             else:
+#                 dot.node(name = str(i) + "." + str(j), label = "(" + str(est.x) + ", " + str(est.y) + ")")
+#         else:
+#             dot.node(name = str(i) + "." + str(j), label = "")
+#         if j > 0:
+#             dot.edge(tail_name = str(i) + "." + str(j - 1), head_name = str(i) + "." + str(j))
+#         else:
+#             dot.edge(tail_name = "h" + str(i), head_name = str(i) + "." + str(j))
+#         if i > 0:
+#             dot.edge(tail_name = str(i - 1) + "." + str(j), head_name = str(i) + "." + str(j))
+#     i = i + 1
+# dot.view()
 
-print("\n" + Fore.WHITE + "[PA] VISITADOS")
-for x in visitadosPA:
-    print(x)
-print("\n" + Fore.WHITE + "[PA] PENDIENTES")
-for x in pendientesPA:
-    print(x)
+# print("\n" + Fore.WHITE + "[PP] VISITADOS")
+# for x in visitadosPP:
+#     print(x)
+# print("\n" + Fore.WHITE + "[PP] PENDIENTES")
+# for x in pendientesPP:
+#     print(x)
 
-arbolPA = crearArbolExpansion(visitadosPA, pendientesPA)
-print(Fore.WHITE + "\n[PA] ARBOL DE EXPANSIÓN:\n")
-imprimirArbol(arbolPA)
+# arbolPP = crearArbolExpansion(visitadosPP, pendientesPP)
+# print(Fore.WHITE + "[PP] ÁRBOL DE EXPANSIÓN:\n")
+# imprimirArbol(arbolPP)
 
-matrizPA = getMatrizRecorrida(arbolPA, filas, columnas)
-print(Fore.WHITE + "\n[PA] MATRIZ RECORRIDA:\n")
-imprimirMatriz(matrizPA)
+# matrizPP = getMatrizRecorrida(arbolPP, filas, columnas)
+# print(Fore.WHITE + "\n[PP] MATRIZ RECORRIDA:\n")
+# imprimirMatriz(matrizPP)
 
-solucionPA = getCaminoSolucion(arbolPA)
-print(Fore.WHITE + "\n[PA] ÁRBOL SOLUCIÓN:\n")
-imprimirArbol(solucionPA)
+# solucionPP = getCaminoSolucion(arbolPP)
+# print(Fore.WHITE + "\n[PP] ÁRBOL SOLUCIÓN:\n")
+# imprimirArbol(solucionPP)
 
-matrizSolucionPA = getMatrizRecorrida(solucionPA, filas, columnas)
-print(Fore.WHITE + "\n[PA] CAMINO SOLUCIÓN:\n")
-imprimirMatriz(matrizSolucionPA)
+# matrizSolucionPP = getMatrizRecorrida(solucionPP, filas, columnas)
+# print(Fore.WHITE + "\n[PP] CAMINO SOLUCIÓN:\n")
+# imprimirMatriz(matrizSolucionPP)
 
-arbolAPng(arbolPP, "expPP.png")
-arbolAPng(arbolPA, "expPA.png")
+# # PA
 
-ventanaPP = crearVentanaArbol("expPP.png", "PP")
-ventanaPA = crearVentanaArbol("expPA.png", "PA")
+# iterPA, visitadosPA, pendientesPA = recorrerLabPA(laberinto)
 
-while True:
-    ventana, evento, valor = sg.read_all_windows()
-    if evento == sg.WIN_CLOSED:
-        if ventana == ventanaPP:
-            ventanaPP.close()
-            ventanaPP = None
-            if ventanaPA == None:
-                break
-        elif ventana == ventanaPA:
-            ventanaPA.close()
-            ventanaPA = None
-            if ventanaPP == None:
-                break
+# print("\n" + Fore.WHITE + "[PA] VISITADOS")
+# for x in visitadosPA:
+#     print(x)
+# print("\n" + Fore.WHITE + "[PA] PENDIENTES")
+# for x in pendientesPA:
+#     print(x)
+
+# arbolPA = crearArbolExpansion(visitadosPA, pendientesPA)
+# print(Fore.WHITE + "\n[PA] ARBOL DE EXPANSIÓN:\n")
+# imprimirArbol(arbolPA)
+
+# matrizPA = getMatrizRecorrida(arbolPA, filas, columnas)
+# print(Fore.WHITE + "\n[PA] MATRIZ RECORRIDA:\n")
+# imprimirMatriz(matrizPA)
+
+# solucionPA = getCaminoSolucion(arbolPA)
+# print(Fore.WHITE + "\n[PA] ÁRBOL SOLUCIÓN:\n")
+# imprimirArbol(solucionPA)
+
+# matrizSolucionPA = getMatrizRecorrida(solucionPA, filas, columnas)
+# print(Fore.WHITE + "\n[PA] CAMINO SOLUCIÓN:\n")
+# imprimirMatriz(matrizSolucionPA)
+
+# arbolAPng(arbolPP, "expPP.png")
+# arbolAPng(arbolPA, "expPA.png")
+
+# ventanaPP = crearVentanaArbol("expPP.png", "PP")
+# ventanaPA = crearVentanaArbol("expPA.png", "PA")
+
+# while True:
+#     ventana, evento, valor = sg.read_all_windows()
+#     if evento == sg.WIN_CLOSED:
+#         if ventana == ventanaPP:
+#             ventanaPP.close()
+#             ventanaPP = None
+#             if ventanaPA == None:
+#                 break
+#         elif ventana == ventanaPA:
+#             ventanaPA.close()
+#             ventanaPA = None
+#             if ventanaPP == None:
+#                 break
