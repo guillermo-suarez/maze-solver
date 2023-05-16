@@ -100,7 +100,6 @@ def getMatrizRecorrida(arbol: Node, filas: int, columnas: int):
                 fila.append('N')
             lab.append(fila)
         for nodo in PreOrderIter(arbol):
-            print(nodo.esSolucion)
             if nodo.esSolucion == True and nodo.est == '0':
                 lab[nodo.cordY][nodo.cordX] = 'S'
             else:
@@ -122,7 +121,9 @@ def imprimirMatriz(matriz):
                 elif(matriz[i][j] == 'P'):
                     print(Fore.YELLOW, end = "")	
                 elif(matriz[i][j] == 'X'):
-                    print(Fore.RED, end = "")	
+                    print(Fore.RED, end = "")
+                elif(matriz[i][j] == 'S'):
+                    print(Fore.CYAN, end = "")	
                 else:
                     print(Fore.WHITE, end = "")
                 print(str(matriz[i][j]), end = " ")
@@ -155,6 +156,21 @@ def getCaminoSolucion(arbol: Node):
             nuevoNodo.parent = nodoAnt
             nodoAnt = nuevoNodo
     return solucion
+
+def marcarCaminoSolucion(laberinto, arbol: Node):
+    solucion = copiarLaberinto(laberinto)
+    if arbol:
+        for pre, _, node in RenderTree(arbol):
+            if node.esSolucion and node.est == '0':
+                solucion[node.cordY][node.cordX] = 'S'
+    return solucion
+
+def copiarLaberinto(laberinto):
+    copia = []
+    for fila in laberinto:
+        copiaFila = list(fila)
+        copia.append(copiaFila)
+    return copia
 
 def arbolAPng(arbol: Node, path: str):
     config = []
@@ -239,26 +255,26 @@ def laberintoAPng(laberinto, filas: int, columnas: int, path: str):
     for i in range(0, columnas):
         for j in range(0, filas):
             if laberinto[j][i] == 'X':
-                array[j][i] = -1.0
+                array[j][i] = 0
             elif laberinto[j][i] == '0':
-                array[j][i] = 0.0
+                array[j][i] = 1
             elif laberinto[j][i] == 'I' or laberinto[j][i] == 'F':
-                array[j][i] = 1.0
+                array[j][i] = 2
             elif laberinto[j][i] == 'P':
-                array[j][i] = 2.0
+                array[j][i] = 3
             elif laberinto[j][i] == 'S':
-                array[j][i] = 3.0
+                array[j][i] = 4
             else:
-                array[j][i] = 4.0
+                array[j][i] = 5
 
-    cmap = colors.ListedColormap(['red', 'green', 'blue', 'yellow', 'orange', 'black'])
-    bounds = [-1.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0]
+    cmap = colors.ListedColormap(['grey', 'white', 'blue', 'yellow', 'green', 'black'])
+    bounds = [0, 1, 2, 3, 4, 5, 6]
     norm = colors.BoundaryNorm(bounds, cmap.N)
 
     fig, ax = plt.subplots()
     ax.imshow(array, cmap = cmap, norm = norm)
 
-    ax.grid(which = 'minor', axis = 'both', linestyle = '-', color = 'white', linewidth = 2)
+    ax.grid(which = 'minor', axis = 'both', linestyle = '-', color = 'black', linewidth = 2)
     plt.xticks(range(columnas), range(columnas), color = 'white')
     plt.yticks(range(filas), range(filas), color = 'white')
     ax.set_xticks([x - 0.5 for x in range(1, columnas)], minor = True)
