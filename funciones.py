@@ -259,3 +259,45 @@ def laberintoAPng(laberinto, filas: int, columnas: int, path: str):
     ax.spines['left'].set_color('white')
     ax.spines['right'].set_color('white')
     plt.savefig(path, bbox_inches = 'tight', transparent = True)
+
+def iteracionesAPng(iteraciones: list, path: str):
+    
+    filas = len(iteraciones)
+    columnas = 0
+
+    for iter in iteraciones:
+        if len(iter) > columnas:
+            columnas = len(iter)
+
+    i = 0
+    datos = []
+    labels = []
+    for iter in iteraciones:
+        labels.append("$t_{" + str(i) + "}$")
+        i = i + 1
+        fila = []
+        for j in range(0, columnas):
+            if j >= len(iter):
+                fila.append("")
+            else:
+                if iter[j].padre:
+                    fila.append("$(" + str(iter[j].x) + ", " + str(iter[j].y) + ")^{" + "(" + str(iter[j].padre.x) + ", " + str(iter[j].padre.y) + ")}$")
+                else:
+                    fila.append("$(" + str(iter[j].x) + ", " + str(iter[j].y) + ")$")
+        datos.append(fila)
+
+    fig, ax = plt.subplots()
+    ax.set_axis_off()
+    table = ax.table(
+        cellText = datos,
+        rowLabels = labels,
+        rowLoc = 'center',
+        rowColours = ['grey'] * i,
+        cellLoc = 'center',
+        loc = 'upper left'
+    )
+
+    for i in range(0, filas):
+        table[(i, 0)].set_facecolor('yellow')
+
+    plt.savefig(path, bbox_inches = 'tight', transparent = True, dpi = 450)
