@@ -1,6 +1,6 @@
 from genlab import getMaze
 from colorama import Fore
-from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMatrizRecorrida, getCaminoSolucion, arbolAPng, laberintoAPng, iteracionesAPng
+from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMatrizRecorrida, getCaminoSolucion, arbolAPng, laberintoAPng, marcarCaminoSolucion, iteracionesAPng
 from pp import recorrerLabPP
 from pa import recorrerLabPA
 from ventanas import crearVentanaArbol
@@ -14,9 +14,7 @@ columnas = 10
 laberinto = getMaze(filas, columnas)
 
 # Al descomentar esta línea nos aseguramos que el laberinto no tenga solución
-laberinto[0][1] = 'X'
-
-laberintoAPng(laberinto, filas, columnas, "lab.png")
+# laberinto[0][1] = 'X'
 
 # print("\n" + Fore.WHITE + "LABERINTO A RECORRER:\n")
 # imprimirMatriz(laberinto)
@@ -33,8 +31,10 @@ iterPP, visitadosPP, pendientesPP = recorrerLabPP(laberinto)
 #     print(x)
 
 arbolPP = crearArbolExpansion(visitadosPP, pendientesPP)
-# print(Fore.WHITE + "[PP] ÁRBOL DE EXPANSIÓN:\n")
-# imprimirArbol(arbolPP)
+print(Fore.WHITE + "[PP] ÁRBOL DE EXPANSIÓN:\n")
+imprimirArbol(arbolPP)
+
+getCaminoSolucion(arbolPP)
 
 matrizPP = getMatrizRecorrida(arbolPP, filas, columnas)
 # print(Fore.WHITE + "\n[PP] MATRIZ RECORRIDA:\n")
@@ -67,18 +67,21 @@ matrizPA = getMatrizRecorrida(arbolPA, filas, columnas)
 # print(Fore.WHITE + "\n[PA] MATRIZ RECORRIDA:\n")
 # imprimirMatriz(matrizPA)
 
-solucionPA = getCaminoSolucion(arbolPA)
-# print(Fore.WHITE + "\n[PA] ÁRBOL SOLUCIÓN:\n")
-# imprimirArbol(solucionPA)
+labPA = marcarCaminoSolucion(laberinto, arbolPA)
+print(Fore.WHITE + "\n[PA] MATRIZ SOLUCIÓN:\n")
+imprimirMatriz(labPA)
 
-matrizSolucionPA = getMatrizRecorrida(solucionPA, filas, columnas)
-# print(Fore.WHITE + "\n[PA] CAMINO SOLUCIÓN:\n")
-# imprimirMatriz(matrizSolucionPA)
+# Crear PNGs necesarios
+
+laberintoAPng(laberinto, filas, columnas, "lab.png")
 
 arbolAPng(arbolPP, "expPP.png")
-iteracionesAPng(iterPP, "iterPP.png")
+laberintoAPng(matrizPP, filas, columnas, "labPP.png")
+laberintoAPng(labPP, filas, columnas, "labPPSolucion.png")
+
 arbolAPng(arbolPA, "expPA.png")
-iteracionesAPng(iterPA, "iterPA.png")
+laberintoAPng(matrizPA, filas, columnas, "labPA.png")
+laberintoAPng(labPA, filas, columnas, "labPASolucion.png")
 
 # ventanaPP = crearVentanaArbol("expPP.png", "PP")
 # ventanaPA = crearVentanaArbol("expPA.png", "PA")
