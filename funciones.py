@@ -300,4 +300,4 @@ def iteracionesAPng(iteraciones: list, path: str):
     for i in range(0, filas):
         table[(i, 0)].set_facecolor('yellow')
 
-    plt.savefig(path, bbox_inches = 'tight', transparent = True, dpi = 450)
+    plt.savefig(path, bbox_inches = 'tight', transparent = True, dpi = 300)

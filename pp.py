@@ -51,5 +51,7 @@ def recorrerLabPP(laberinto: int):
     if listaPendientes:
         iteraciones.append(list(listaPendientes))
         listaVisitados.append(listaPendientes.pop(0))
+    else:
+        iteraciones.append([])
     
     return iteraciones, listaVisitados, listaPendientes

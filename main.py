@@ -14,7 +14,7 @@ columnas = 10
 laberinto = getMaze(filas, columnas)
 
 # Al descomentar esta línea nos aseguramos que el laberinto no tenga solución
-# laberinto[0][1] = 'X'
+laberinto[0][1] = 'X'
 
 laberintoAPng(laberinto, filas, columnas, "lab.png")
 
