@@ -71,7 +71,15 @@ def crearArbolExpansion(visitados, pendientes):
         if estado.padre:
             nuevoNodo.parent = getNodo(nodoAnterior.root, estado.padre.x, estado.padre.y)
         nodoAnterior = nuevoNodo
-    return nodoAnterior.root
+    arbolExpansion = nodoAnterior.root
+    nodoFinal = getNodoFinal(arbolExpansion)
+    if nodoFinal != None:
+        nodoActual = nodoFinal
+        while nodoActual.parent != None:
+            nodoActual.esSolucion = True
+            nodoActual = nodoActual.parent
+        nodoActual.esSolucion = True
+    return arbolExpansion
 
 
 def imprimirArbol(arbol: Node):
@@ -315,14 +323,23 @@ def iteracionesAPng(iteraciones: list, path: str):
     ax.set_axis_off()
     table = ax.table(
         cellText = datos,
-        rowLabels = labels,
-        rowLoc = 'center',
-        rowColours = ['grey'] * i,
+        # rowLabels = labels,
+        # rowLoc = 'center',
+        # rowColours = ['grey'] * i,
         cellLoc = 'center',
         loc = 'upper left'
     )
 
+    table.auto_set_font_size(False)
+    table.set_fontsize(2)
+    table.auto_set_column_width(col = list(range(0, columnas)))
+    for i in range(0, filas):
+        for j in range(0, columnas):
+            table[i, j].set_height(0.017)
+            table[i, j].set_edgecolor('white')
+            table[i, j].set_linewidth(0.1)
+
     for i in range(0, filas):
         table[(i, 0)].set_facecolor('yellow')
 
-    plt.savefig(path, bbox_inches = 'tight', transparent = True, dpi = 300)
+    plt.savefig(path, bbox_inches = 'tight', transparent = True, dpi = 450)

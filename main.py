@@ -22,6 +22,11 @@ laberinto = getMaze(filas, columnas)
 # PP
 
 iterPP, visitadosPP, pendientesPP = recorrerLabPP(laberinto)
+arbolPP = crearArbolExpansion(visitadosPP, pendientesPP)
+# matrizPP = getMatrizRecorrida(arbolPP, filas, columnas)
+# solucionPP = getCaminoSolucion(arbolPP)
+# matrizSolucionPP = getMatrizRecorrida(solucionPP, filas, columnas)
+labPP = marcarCaminoSolucion(laberinto, arbolPP)
 
 # print("\n" + Fore.WHITE + "[PP] VISITADOS")
 # for x in visitadosPP:
@@ -29,28 +34,25 @@ iterPP, visitadosPP, pendientesPP = recorrerLabPP(laberinto)
 # print("\n" + Fore.WHITE + "[PP] PENDIENTES")
 # for x in pendientesPP:
 #     print(x)
-
-arbolPP = crearArbolExpansion(visitadosPP, pendientesPP)
-print(Fore.WHITE + "[PP] ÁRBOL DE EXPANSIÓN:\n")
-imprimirArbol(arbolPP)
-
-getCaminoSolucion(arbolPP)
-
-matrizPP = getMatrizRecorrida(arbolPP, filas, columnas)
+# print(Fore.WHITE + "[PP] ÁRBOL DE EXPANSIÓN:\n")
+# imprimirArbol(arbolPP)
 # print(Fore.WHITE + "\n[PP] MATRIZ RECORRIDA:\n")
 # imprimirMatriz(matrizPP)
-
-solucionPP = getCaminoSolucion(arbolPP)
 # print(Fore.WHITE + "\n[PP] ÁRBOL SOLUCIÓN:\n")
 # imprimirArbol(solucionPP)
-
-matrizSolucionPP = getMatrizRecorrida(solucionPP, filas, columnas)
 # print(Fore.WHITE + "\n[PP] CAMINO SOLUCIÓN:\n")
 # imprimirMatriz(matrizSolucionPP)
+# print(Fore.WHITE + "\n[PP] MATRIZ SOLUCIÓN:\n")
+# imprimirMatriz(labPP)
 
-# # PA
+# PA
 
 iterPA, visitadosPA, pendientesPA = recorrerLabPA(laberinto)
+arbolPA = crearArbolExpansion(visitadosPA, pendientesPA)
+# matrizPA = getMatrizRecorrida(arbolPA, filas, columnas)
+# solucionPP = getCaminoSolucion(arbolPA)
+# matrizSolucionPA = getMatrizRecorrida(solucionPP, filas, columnas)
+labPA = marcarCaminoSolucion(laberinto, arbolPA)
 
 # print("\n" + Fore.WHITE + "[PA] VISITADOS")
 # for x in visitadosPA:
@@ -58,30 +60,30 @@ iterPA, visitadosPA, pendientesPA = recorrerLabPA(laberinto)
 # print("\n" + Fore.WHITE + "[PA] PENDIENTES")
 # for x in pendientesPA:
 #     print(x)
-
-arbolPA = crearArbolExpansion(visitadosPA, pendientesPA)
 # print(Fore.WHITE + "\n[PA] ARBOL DE EXPANSIÓN:\n")
 # imprimirArbol(arbolPA)
-
-matrizPA = getMatrizRecorrida(arbolPA, filas, columnas)
 # print(Fore.WHITE + "\n[PA] MATRIZ RECORRIDA:\n")
 # imprimirMatriz(matrizPA)
-
-labPA = marcarCaminoSolucion(laberinto, arbolPA)
-print(Fore.WHITE + "\n[PA] MATRIZ SOLUCIÓN:\n")
-imprimirMatriz(labPA)
+# print(Fore.WHITE + "\n[PA] ÁRBOL SOLUCIÓN:\n")
+# imprimirArbol(solucionPA)
+# print(Fore.WHITE + "\n[PA] CAMINO SOLUCIÓN:\n")
+# imprimirMatriz(matrizSolucionPA)
+# print(Fore.WHITE + "\n[PA] MATRIZ SOLUCIÓN:\n")
+# imprimirMatriz(labPA)
 
 # Crear PNGs necesarios
 
-laberintoAPng(laberinto, filas, columnas, "lab.png")
+laberintoAPng(laberinto, filas, columnas, "img/lab.png")
 
-arbolAPng(arbolPP, "expPP.png")
-laberintoAPng(matrizPP, filas, columnas, "labPP.png")
-laberintoAPng(labPP, filas, columnas, "labPPSolucion.png")
+arbolAPng(arbolPP, "img/PP-arbol-exp.png")
+# laberintoAPng(matrizPP, filas, columnas, "img/labPP.png")
+laberintoAPng(labPP, filas, columnas, "img/PP-lab-solucion.png")
+iteracionesAPng(iterPP, "img/PP-tabla-iteraciones.png")
 
-arbolAPng(arbolPA, "expPA.png")
-laberintoAPng(matrizPA, filas, columnas, "labPA.png")
-laberintoAPng(labPA, filas, columnas, "labPASolucion.png")
+arbolAPng(arbolPA, "img/PA-arbol-exp.png")
+# laberintoAPng(matrizPA, filas, columnas, "img/labPA.png")
+laberintoAPng(labPA, filas, columnas, "img/PA-lab-solucion.png")
+iteracionesAPng(iterPA, "img/PA-tabla-iteraciones.png")
 
 # ventanaPP = crearVentanaArbol("expPP.png", "PP")
 # ventanaPA = crearVentanaArbol("expPA.png", "PA")
