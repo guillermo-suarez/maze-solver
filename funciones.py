@@ -3,6 +3,8 @@ from anytree.exporter import DotExporter
 from colorama import Fore
 
 import numpy as np
+import matplotlib as mpl
+import matplotlib.ticker as mplt
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 
@@ -71,7 +73,15 @@ def crearArbolExpansion(visitados, pendientes):
         if estado.padre:
             nuevoNodo.parent = getNodo(nodoAnterior.root, estado.padre.x, estado.padre.y)
         nodoAnterior = nuevoNodo
-    return nodoAnterior.root
+    arbolExpansion = nodoAnterior.root
+    nodoFinal = getNodoFinal(arbolExpansion)
+    if nodoFinal != None:
+        nodoActual = nodoFinal
+        while nodoActual.parent != None:
+            nodoActual.esSolucion = True
+            nodoActual = nodoActual.parent
+        nodoActual.esSolucion = True
+    return arbolExpansion
 
 
 def imprimirArbol(arbol: Node):
@@ -284,3 +294,59 @@ def laberintoAPng(laberinto, filas: int, columnas: int, path: str):
     ax.spines['left'].set_color('white')
     ax.spines['right'].set_color('white')
     plt.savefig(path, bbox_inches = 'tight', transparent = True)
+
+def iteracionesAPng(iteraciones: list, path: str):
+    
+    filas = len(iteraciones)
+    columnas = 0
+
+    for iter in iteraciones:
+        if len(iter) > columnas:
+            columnas = len(iter)
+
+    i = 0
+    datos = []
+    labels = []
+    for iter in iteraciones:
+        fila = []
+        fila.append("$t_{" + str(i) + "}$")
+        i = i + 1
+        for j in range(0, columnas):
+            if j >= len(iter):
+                fila.append("")
+            else:
+                if iter[j].padre:
+                    fila.append("$(" + str(iter[j].x) + ", " + str(iter[j].y) + ")^{" + "(" + str(iter[j].padre.x) + ", " + str(iter[j].padre.y) + ")}$")
+                else:
+                    fila.append("$(" + str(iter[j].x) + ", " + str(iter[j].y) + ")$")
+        datos.append(fila)
+
+    columnas = columnas + 1
+
+    mpl.rcParams['text.color'] = 'white'
+    fig, ax = plt.subplots()
+    ax.set_axis_off()
+    table = ax.table(
+        cellText = datos,
+        cellColours = [['none'] * columnas] * filas,
+        # rowLabels = labels,
+        # rowLoc = 'center',
+        # rowColours = ['grey'] * i,
+        cellLoc = 'center',
+        loc = 'upper left'
+    )
+
+    table.auto_set_font_size(False)
+    table.set_fontsize(8)
+    table.auto_set_column_width(col = list(range(0, columnas)))
+    for i in range(0, filas):
+        for j in range(0, columnas):
+            table[i, j].set_height(0.075)
+            table[i, j].set_edgecolor('white')
+            table[i, j].set_linewidth(0.2)
+
+    for i in range(0, filas):
+        table[(i, 0)].set_facecolor('black')
+        table[(i, 1)].set_facecolor('darkblue')
+
+    plt.savefig(path, bbox_inches = 'tight', transparent = True, dpi = 150)
