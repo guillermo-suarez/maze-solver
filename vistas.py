@@ -54,8 +54,8 @@ def make_windowArbol(tipo):
     layout2 = [[]]
     screen = sg.Window("Árbol de expansión " + tipo, layout2, margins = (0, 0), location = (0, 0), resizable = False, finalize = True)
     ancho, alto = screen.get_screen_size()
-    anchoC = int(ancho * 0.75)
-    altoC = int(alto * 0.87)
+    anchoC = int(ancho * 0.85)
+    altoC = int(alto * 0.98)
     screen.close()
     layout = [
         [sg.Button(button_text= 'Ver en forma de laberinto',
@@ -64,7 +64,7 @@ def make_windowArbol(tipo):
                 size=(15,2))],
         [sg.Column(column, scrollable=True, key='Column', size=(anchoC, altoC))]
     ]    
-    window = sg.Window('Arbol ' + tipo, layout, modal=True, element_justification='c', resizable=False, margins = (0, 0), location=(ancho*0.12, 0), size=(int(ancho*0.85), int(alto*0.9)) ,no_titlebar=False)
+    window = sg.Window('Arbol ' + tipo, layout, modal=True, element_justification='c', resizable=False, margins = (0, 0), location=(ancho*0.1, alto*0.01), size=(int(ancho*0.85), int(alto*0.95)) ,no_titlebar=False)
     while True:
         event, values = window.read()
         if event == 'Exit' or event == sg.WIN_CLOSED:
