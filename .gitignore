@@ -4,8 +4,9 @@
 # Ingorar archivos .png
 *.png
 
-# Ignorar la carpeta docs, en donde guardamos pdf útiles pero no necesarios de versionar
-/docs
+# Ignorar archivos .spec
+*.spec
 
-# Ignorar archivos .db
-*.db
+# Ignorar carpetas relacionadas a la compilación
+/dist
+/build
