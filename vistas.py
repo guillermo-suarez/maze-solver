@@ -3,6 +3,8 @@ from genlab import getMaze
 from funciones import arbolAPng, laberintoAPng, crearArbolExpansion, getMatrizRecorrida, getCaminoSolucion
 from pp import recorrerLabPP
 from pa import recorrerLabPA
+import pyautogui
+
 
 def generarLaberintoYArbol():
     filas = 10
@@ -24,9 +26,13 @@ def generarLaberintoYArbol():
     arbolAPng(arbolPP, "expPP.png")
     arbolAPng(arbolPA, "expPA.png")
 
+def getScreenSize():
+     width, height= pyautogui.size()
+     return width, height
+
 def make_windowIteraciones(tipo):
     layout = [
-        [sg.Text(text='Iteraciones: ')]
+        [sg.Text(text='Iteraciones: ', font=('Calibri'))]
         ]
     window = sg.Window('Iteraciones ' + tipo, layout, modal=True, element_justification='c')
     while True:
@@ -36,7 +42,7 @@ def make_windowIteraciones(tipo):
 
 def make_windowLaberintoRecorrido(tipo):
     layout = [
-        [sg.Text(text='Laberinto Recorrido: ')]
+        [sg.Text(text='Laberinto Recorrido: ', font=('Calibri'))]
         ]
     window = sg.Window('Laberinto Recorrido ' + tipo, layout, modal=True, element_justification='c')
     while True:
@@ -50,21 +56,17 @@ def make_windowArbol(tipo):
     else:
         img = 'expPA.png'
     column = [[sg.Image(filename=img, key='Image')]]
-
-    layout2 = [[]]
-    screen = sg.Window("Árbol de expansión " + tipo, layout2, margins = (0, 0), location = (0, 0), resizable = False, finalize = True)
-    ancho, alto = screen.get_screen_size()
+    ancho, alto = getScreenSize()
     anchoC = int(ancho * 0.85)
     altoC = int(alto * 0.98)
-    screen.close()
     layout = [
         [sg.Button(button_text= 'Ver en forma de laberinto',
-                size=(15,2)), 
+                size=(15,2), font=('Calibri')), 
                 sg.Button(button_text= 'Ver iteraciones',
-                size=(15,2))],
+                size=(15,2), font=('Calibri'))],
         [sg.Column(column, scrollable=True, key='Column', size=(anchoC, altoC))]
     ]    
-    window = sg.Window('Arbol ' + tipo, layout, modal=True, element_justification='c', resizable=False, margins = (0, 0), location=(ancho*0.1, alto*0.01), size=(int(ancho*0.85), int(alto*0.95)) ,no_titlebar=False)
+    window = sg.Window('Árbol ' + tipo, layout, modal=True, element_justification='c', resizable=False, margins = (0, 0), location=(ancho*0.1, alto*0.01), size=(int(ancho*0.85), int(alto*0.95)) ,no_titlebar=False)
     while True:
         event, values = window.read()
         if event == 'Exit' or event == sg.WIN_CLOSED:
@@ -104,10 +106,10 @@ def make_windowLaberinto():
                 alternating_row_color='black')],
                 [sg.Text(' ')],
                 [sg.Button(button_text='Resolver por PP',
-                size=(15,2)), 
+                size=(15,2), font=('Calibri')), 
                 sg.Button(button_text='Resolver por PA', 
-                        size=(15,2))],
-                [sg.Button(button_text='Generar nuevo laberinto', size=(32,2))]                
+                        size=(15,2), font=('Calibri'))],
+                [sg.Button(button_text='Generar nuevo laberinto', size=(32,2), font=('Calibri'))]                
               ]
     window= sg.Window('Laberinto', layout, modal=True, element_justification='c')
     while True:
@@ -137,9 +139,9 @@ layout = [[sg.Text(text = 'Trabajo Práctico Integrador',
                    justification= 'center')], 
           [sg.Text(' ')],  
           [sg.Button(button_text='Generar laberinto',
-                     size=(15,2)), 
+                     size=(15,2), font=('Calibri')), 
                     sg.Button(button_text='Salir',
-                              size=(15,2))],
+                              size=(15,2), font=('Calibri'))],
           [sg.Text(' ')],  
           [sg.Text(' ')],  
           [sg.Text(text = 'Malazotto, Soledad - Mezio, Santiago - Suárez, Guillermo',
