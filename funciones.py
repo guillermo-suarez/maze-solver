@@ -3,6 +3,8 @@ from anytree.exporter import DotExporter
 from colorama import Fore
 
 import numpy as np
+import matplotlib as mpl
+import matplotlib.ticker as mplt
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 
@@ -306,9 +308,9 @@ def iteracionesAPng(iteraciones: list, path: str):
     datos = []
     labels = []
     for iter in iteraciones:
-        labels.append("$t_{" + str(i) + "}$")
-        i = i + 1
         fila = []
+        fila.append("$t_{" + str(i) + "}$")
+        i = i + 1
         for j in range(0, columnas):
             if j >= len(iter):
                 fila.append("")
@@ -319,10 +321,14 @@ def iteracionesAPng(iteraciones: list, path: str):
                     fila.append("$(" + str(iter[j].x) + ", " + str(iter[j].y) + ")$")
         datos.append(fila)
 
+    columnas = columnas + 1
+
+    mpl.rcParams['text.color'] = 'white'
     fig, ax = plt.subplots()
     ax.set_axis_off()
     table = ax.table(
         cellText = datos,
+        cellColours = [['none'] * columnas] * filas,
         # rowLabels = labels,
         # rowLoc = 'center',
         # rowColours = ['grey'] * i,
@@ -331,15 +337,16 @@ def iteracionesAPng(iteraciones: list, path: str):
     )
 
     table.auto_set_font_size(False)
-    table.set_fontsize(2)
+    table.set_fontsize(8)
     table.auto_set_column_width(col = list(range(0, columnas)))
     for i in range(0, filas):
         for j in range(0, columnas):
-            table[i, j].set_height(0.017)
+            table[i, j].set_height(0.075)
             table[i, j].set_edgecolor('white')
-            table[i, j].set_linewidth(0.1)
+            table[i, j].set_linewidth(0.2)
 
     for i in range(0, filas):
-        table[(i, 0)].set_facecolor('yellow')
+        table[(i, 0)].set_facecolor('black')
+        table[(i, 1)].set_facecolor('darkblue')
 
-    plt.savefig(path, bbox_inches = 'tight', transparent = True, dpi = 450)
+    plt.savefig(path, bbox_inches = 'tight', transparent = True, dpi = 150)
