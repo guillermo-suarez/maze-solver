@@ -63,9 +63,8 @@ def make_windowArbol(tipo):
                 sg.Button(button_text= 'Ver iteraciones',
                 size=(15,2))],
         [sg.Column(column, scrollable=True, key='Column', size=(anchoC, altoC))]
-    ]
-    
-    window = sg.Window('Arbol ' + tipo, layout, modal=True, element_justification='c', resizable=False, margins = (0, 0), location=(ancho*0.12, 0), no_titlebar=False)
+    ]    
+    window = sg.Window('Arbol ' + tipo, layout, modal=True, element_justification='c', resizable=False, margins = (0, 0), location=(ancho*0.12, 0), size=(int(ancho*0.85), int(alto*0.9)) ,no_titlebar=False)
     while True:
         event, values = window.read()
         if event == 'Exit' or event == sg.WIN_CLOSED:
