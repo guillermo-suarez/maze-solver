@@ -43,9 +43,10 @@ def make_windowIteraciones(tipo):
 
 def make_windowLaberintoRecorrido(tipo):
     layout = [
-        [sg.Text(text='Laberinto Recorrido: ', font=('Calibri'))]
+        [sg.Text(text='Laberinto Recorrido: ', font=('Calibri'))],
+        [sg.Image(filename='lab'+tipo+'Solucion.png', key='Image')]
         ]
-    window = sg.Window('Laberinto Recorrido ' + tipo, layout, modal=True, element_justification='c')
+    window = sg.Window('Laberinto Recorrido ' + tipo, layout, modal=False, element_justification='c')
     while True:
         event, values = window.read()
         if event == 'Exit' or event == sg.WIN_CLOSED:
@@ -60,12 +61,12 @@ def make_windowArbol(tipo):
     im = Image.open(path)
     imgAncho, imgAlto = im.size
     imgAncho = imgAncho+35
-    scrAncho, scrAlto = getScreenSize()
-    if(imgAncho>scrAncho):
-        ancho = scrAncho * 0.75
+    srcAncho, srcAlto = getScreenSize()
+    if(imgAncho>srcAncho):
+        ancho = srcAncho - 15
     else:
         ancho = imgAncho
-    alto= scrAlto - 75
+    alto= srcAlto - 75
     layout = [
         [sg.Button(button_text= 'Ver en forma de laberinto',
                 size=(15,2), font=('Calibri')), 
@@ -73,7 +74,7 @@ def make_windowArbol(tipo):
                 size=(15,2), font=('Calibri'))],
         [sg.Column(column, scrollable=True, key='Column', size=(ancho, alto))]
     ]    
-    window = sg.Window('Árbol ' + tipo, layout, modal=True, element_justification='c', resizable=False, margins = (0, 0), location=(ancho*0.15, 0), size=(int(ancho), int(alto)) ,no_titlebar=False)
+    window = sg.Window('Árbol ' + tipo, layout, modal=True, element_justification='c', resizable=False, margins = (0, 0), location=(int((srcAncho - ancho)/2), 0), size=(int(ancho), int(alto)) ,no_titlebar=False)
     while True:
         event, values = window.read()
         if event == 'Exit' or event == sg.WIN_CLOSED:
