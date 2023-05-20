@@ -73,17 +73,17 @@ labPA = marcarCaminoSolucion(laberinto, arbolPA)
 
 # Crear PNGs necesarios
 
-laberintoAPng(laberinto, filas, columnas, "img/lab.png")
+laberintoAPng(laberinto, filas, columnas, "lab.png")
 
-arbolAPng(arbolPP, "img/PP-arbol-exp.png")
+arbolAPng(arbolPP, "PP-arbol-exp.png")
 # laberintoAPng(matrizPP, filas, columnas, "img/labPP.png")
-laberintoAPng(labPP, filas, columnas, "img/PP-lab-solucion.png")
-iteracionesAPng(iterPP, "img/PP-tabla-iteraciones.png")
+laberintoAPng(labPP, filas, columnas, "PP-lab-solucion.png")
+iteracionesAPng(iterPP, "PP-tabla-iteraciones.png")
 
-arbolAPng(arbolPA, "img/PA-arbol-exp.png")
+arbolAPng(arbolPA, "PA-arbol-exp.png")
 # laberintoAPng(matrizPA, filas, columnas, "img/labPA.png")
-laberintoAPng(labPA, filas, columnas, "img/PA-lab-solucion.png")
-iteracionesAPng(iterPA, "img/PA-tabla-iteraciones.png")
+laberintoAPng(labPA, filas, columnas, "PA-lab-solucion.png")
+iteracionesAPng(iterPA, "PA-tabla-iteraciones.png")
 
 # ventanaPP = crearVentanaArbol("expPP.png", "PP")
 # ventanaPA = crearVentanaArbol("expPA.png", "PA")
