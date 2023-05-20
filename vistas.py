@@ -55,10 +55,10 @@ def make_windowArbol(tipo):
                 size=(15,2)), 
                 sg.Button(button_text= 'Ver iteraciones',
                 size=(15,2))],
-        [sg.Column(column, size=(1500, 2000), scrollable=True, key='Column')],
+        [sg.Column(column, scrollable=True, key='Column')],
         [sg.FileBrowse('Load', enable_events=True)]
     ]
-    window = sg.Window('Arbol ' + tipo, layout, modal=True, element_justification='c', resizable=True)
+    window = sg.Window('Arbol ' + tipo, layout, modal=True, element_justification='c', resizable=False, margins = (0, 0))
     while True:
         event, values = window.read()
         if event == 'Exit' or event == sg.WIN_CLOSED:
@@ -84,7 +84,7 @@ def make_windowLaberinto():
         ['Inicio y Fin'],
     ]
     layout = [[sg.Text(text ='Laberinto:',
-                font=('Times New Roman', 30),
+                font=('Calibri', 30),
                 size= 30, 
                 expand_x= True,
                 justification= 'center')],
@@ -119,13 +119,13 @@ def make_windowLaberinto():
 
 sg.theme('DarkGrey2')
 layout = [[sg.Text(text = 'Trabajo Práctico Integrador',
-                   font=('Times New Roman', 30),
+                   font=('Calibri', 30),
                    size= 30, 
                    expand_x= True,
                    justification= 'center')],     
           [sg.Text(' ')],  
           [sg.Text(text = 'Algoritmos de búsqueda', 
-                   font=('Times New Roman', 20),
+                   font=('Calibri', 20),
                    size= 20, 
                    expand_x= True,
                    justification= 'center')], 
@@ -137,7 +137,7 @@ layout = [[sg.Text(text = 'Trabajo Práctico Integrador',
           [sg.Text(' ')],  
           [sg.Text(' ')],  
           [sg.Text(text = 'Malazotto, Soledad - Mezio, Santiago - Suárez, Guillermo',
-                   font=('Times New Roman', 10),
+                   font=('Calibri', 10),
                    size= 10, 
                    expand_x= True,
                    justification= 'center')]]
