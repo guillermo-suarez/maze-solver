@@ -58,7 +58,7 @@ def make_windowArbol(tipo):
     column = [[sg.Image(filename=img, key='Image')]]
     ancho, alto = getScreenSize()
     anchoC = int(ancho * 0.85)
-    altoC = int(alto * 0.98)
+    altoC = int(alto - 75)
     layout = [
         [sg.Button(button_text= 'Ver en forma de laberinto',
                 size=(15,2), font=('Calibri')), 
@@ -66,7 +66,7 @@ def make_windowArbol(tipo):
                 size=(15,2), font=('Calibri'))],
         [sg.Column(column, scrollable=True, key='Column', size=(anchoC, altoC))]
     ]    
-    window = sg.Window('Árbol ' + tipo, layout, modal=True, element_justification='c', resizable=False, margins = (0, 0), location=(ancho*0.1, alto*0.01), size=(int(ancho*0.85), int(alto*0.95)) ,no_titlebar=False)
+    window = sg.Window('Árbol ' + tipo, layout, modal=True, element_justification='c', resizable=False, margins = (0, 0), location=(ancho*0.075, 0), size=(int(ancho*0.85), int(alto-75)) ,no_titlebar=False)
     while True:
         event, values = window.read()
         if event == 'Exit' or event == sg.WIN_CLOSED:
