@@ -4,6 +4,7 @@ from funciones import arbolAPng, laberintoAPng, crearArbolExpansion, getMatrizRe
 from pp import recorrerLabPP
 from pa import recorrerLabPA
 import pyautogui
+from PIL import Image
 
 
 def generarLaberintoYArbol():
@@ -52,21 +53,27 @@ def make_windowLaberintoRecorrido(tipo):
 
 def make_windowArbol(tipo):    
     if tipo == 'PP':
-        img = 'expPP.png'
+        path = 'expPP.png'
     else:
-        img = 'expPA.png'
-    column = [[sg.Image(filename=img, key='Image')]]
-    ancho, alto = getScreenSize()
-    anchoC = int(ancho * 0.85)
-    altoC = int(alto - 75)
+        path = 'expPA.png'
+    column = [[sg.Image(filename=path, key='Image')]]
+    im = Image.open(path)
+    imgAncho, imgAlto = im.size
+    imgAncho = imgAncho+35
+    scrAncho, scrAlto = getScreenSize()
+    if(imgAncho>scrAncho):
+        ancho = scrAncho * 0.75
+    else:
+        ancho = imgAncho
+    alto= scrAlto - 75
     layout = [
         [sg.Button(button_text= 'Ver en forma de laberinto',
                 size=(15,2), font=('Calibri')), 
                 sg.Button(button_text= 'Ver iteraciones',
                 size=(15,2), font=('Calibri'))],
-        [sg.Column(column, scrollable=True, key='Column', size=(anchoC, altoC))]
+        [sg.Column(column, scrollable=True, key='Column', size=(ancho, alto))]
     ]    
-    window = sg.Window('Árbol ' + tipo, layout, modal=True, element_justification='c', resizable=False, margins = (0, 0), location=(ancho*0.075, 0), size=(int(ancho*0.85), int(alto-75)) ,no_titlebar=False)
+    window = sg.Window('Árbol ' + tipo, layout, modal=True, element_justification='c', resizable=False, margins = (0, 0), location=(ancho*0.15, 0), size=(int(ancho), int(alto)) ,no_titlebar=False)
     while True:
         event, values = window.read()
         if event == 'Exit' or event == sg.WIN_CLOSED:
