@@ -1,6 +1,6 @@
 from genlab import getMaze
 from colorama import Fore
-from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMatrizRecorrida, getCaminoSolucion, arbolAPng, laberintoAPng, marcarCaminoSolucion, iteracionesAPng
+from funciones import imprimirMatriz, crearArbolExpansion, imprimirArbol, getMatrizRecorrida, getCaminoSolucion, arbolAPng, laberintoAPng, marcarCaminoSolucion, iteracionesAPng, crearReferenciasLaberintos
 from pp import recorrerLabPP
 from pa import recorrerLabPA
 from ventanas import crearVentanaArbol
@@ -74,6 +74,7 @@ labPA = marcarCaminoSolucion(laberinto, arbolPA)
 # Crear PNGs necesarios
 
 laberintoAPng(laberinto, filas, columnas, "lab.png")
+crearReferenciasLaberintos()
 
 arbolAPng(arbolPP, "PP-arbol-exp.png")
 # laberintoAPng(matrizPP, filas, columnas, "img/labPP.png")
