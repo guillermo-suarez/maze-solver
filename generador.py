@@ -3,8 +3,6 @@ from funciones import crearArbolExpansion, arbolAPng, laberintoAPng, marcarCamin
 from pp import recorrerLabPP
 from pa import recorrerLabPA
 
-
-
 def generarLaberintoYArboles():
     filas = 10
     columnas = 10
@@ -21,5 +19,8 @@ def generarLaberintoYArboles():
     arbolAPng(arbolPA, "PA-arbol-exp.png")
     laberintoAPng(labPA, filas, columnas, "PA-lab-solucion.png")
     crearReferenciasLaberintos()
-    #iteracionesAPng(iterPP, "PP-tabla-iteraciones.png")
-    #iteracionesAPng(iterPA, "PA-tabla-iteraciones.png")
+    
+    # iteracionesAPng(iterPP, "PP-tabla-iteraciones.png")
+    # iteracionesAPng(iterPA, "PA-tabla-iteraciones.png")
+
+    return iterPP, iterPA
