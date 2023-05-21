@@ -21,10 +21,5 @@ def generarLaberintoYArboles():
     arbolAPng(arbolPA, "PA-arbol-exp.png")
     laberintoAPng(labPA, filas, columnas, "PA-lab-solucion.png")
     crearReferenciasLaberintos()
-    return iterPP, iterPA
-
-def generarIteraciones(tipo, iter):    
-    if tipo == 'PP':
-        iteracionesAPng(iter, "PP-tabla-iteraciones.png")
-    else:
-        iteracionesAPng(iter, "PA-tabla-iteraciones.png")
+    #iteracionesAPng(iterPP, "PP-tabla-iteraciones.png")
+    #iteracionesAPng(iterPA, "PA-tabla-iteraciones.png")

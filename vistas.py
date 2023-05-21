@@ -1,26 +1,26 @@
 import PySimpleGUI as sg
-from generador import generarLaberintoYArboles, generarIteraciones
-import pyautogui
+from generador import generarLaberintoYArboles
 from PIL import Image
+import pyautogui
 
 def getScreenSize():
      width, height= pyautogui.size()
      return width, height
 
 def call_vistas():
-    iterPP, iterPA = generarLaberintoYArboles()
+    sg.theme('DarkGrey2')
+    generarLaberintoYArboles()  
     window = make_main()
-    while True:                             # The Event Loop
+    while True:              
         event, values = window.read() 
         if event == sg.WIN_CLOSED or event == 'Salir':
             break      
         if event == 'Generar laberinto':
             window.close()
-            make_windowLaberinto(iterPP, iterPA )
+            make_windowLaberinto()
         window.close()
 
-def make_main():
-    sg.theme('DarkGrey2')
+def make_main():    
     layout = [[sg.Text(text = 'Trabajo Práctico Integrador',
                    font=('Calibri', 30),
                    size= 30, 
@@ -46,7 +46,7 @@ def make_main():
                    justification= 'center')]]
     return sg.Window('maze-solver', layout, size=(715,300), element_justification='c')      
     
-def make_windowLaberinto(iterPP, iterPA):    
+def make_windowLaberinto():    
     srcAncho, srcAlto = getScreenSize()   
     layout = [[sg.Text(text ='Laberinto',
                 font=('Calibri', 30),
@@ -120,8 +120,6 @@ def make_windowLaberinto(iterPP, iterPA):
                 elif event[i] == 'Ver iteraciones':
                     if i == 1:
                         if not active[3]:
-                            sg.Popup('Por favor espere hasta que se termine de generar la imagen.', title='Advertencia')
-                            generarIteraciones('PP', iterPP)
                             im = Image.open('PP-tabla-iteraciones.png')
                             imgAncho, imgAlto = im.size
                             imgAncho = imgAncho    
@@ -135,8 +133,6 @@ def make_windowLaberinto(iterPP, iterPA):
                             finalize=True, resizable=False, margins=(0,0), location=(int((srcAncho-ancho)/2),0),  element_justification='c')  
                     if i == 2:
                         if not active[4]:
-                            sg.Popup('Por favor espere hasta que se termine de generar la imagen.', title='Advertencia')
-                            generarIteraciones('PA', iterPA)
                             active[4] = True 
                             im = Image.open('PA-tabla-iteraciones.png')
                             imgAncho, imgAlto = im.size
