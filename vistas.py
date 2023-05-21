@@ -141,6 +141,7 @@ def make_windowLaberinto(iterPP, iterPA):
 def layoutIteracion(iteraciones):
 
     superscript = str.maketrans("()0123456789", "⁽⁾⁰¹²³⁴⁵⁶⁷⁸⁹")
+    subscript = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
 
     filas = len(iteraciones)
     columnas = 0
@@ -159,7 +160,7 @@ def layoutIteracion(iteraciones):
     i = 0
     for iter in iteraciones:
         fila = []
-        fila.append("t" + str(i))
+        fila.append("t" + str(i).translate(subscript))
         i = i + 1
         for est in iter:
             if est.padre:
@@ -176,7 +177,10 @@ def layoutIteracion(iteraciones):
                           vertical_scroll_only = False,
                           enable_events = False,
                           expand_x=True,
-                          expand_y=True,)]]
+                          expand_y=True,
+                          justification= 'center',
+                          auto_size_columns=True,
+                          col_widths=6)]]
     return layout
 
 def layoutLaberinto(tipo):
