@@ -39,13 +39,12 @@ def make_main():
                     sg.Button(button_text='Salir',
                               size=(15,2), font=('Calibri'))],
           [sg.Text(' ')],  
-          [sg.Text(' ')],  
           [sg.Text(text = 'Malazotto, Soledad - Mezio, Santiago - Suárez, Guillermo',
                    font=('Calibri', 10),
                    size= 10, 
                    expand_x= True,
                    justification= 'center')]]
-    return sg.Window('maze-solver', layout, size=(715,300), element_justification='c')      
+    return sg.Window('TPI Inteligencia Artificial I', layout, size=(715,300), element_justification='c')      
     
 def make_windowLaberinto(iterPP, iterPA):    
     srcAncho, srcAlto = getScreenSize()   
