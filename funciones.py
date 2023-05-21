@@ -4,7 +4,6 @@ from colorama import Fore
 
 import numpy as np
 import matplotlib as mpl
-import matplotlib.ticker as mplt
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 
@@ -21,7 +20,7 @@ class Estado:
         else:
             return f"({self.x}, {self.y}) - {self.estado} - Padre: NO TIENE"
         
-def hijoNodoActual(laberinto: int, y: int, x: int, estadoActual: Estado, listaPendientes, listaVisitados):
+def hijoNodoActual(laberinto: int, y: int, x: int, estadoActual: Estado, listaVisitados):
     if not existeEstadoEnLista(listaVisitados, x, y):
         celda = laberinto[y][x]
         nuevoEstado = Estado(x, y, celda, estadoActual.nivel + 1, estadoActual)
@@ -83,63 +82,6 @@ def crearArbolExpansion(visitados, pendientes):
         nodoActual.esSolucion = True
     return arbolExpansion
 
-
-def imprimirArbol(arbol: Node):
-    if arbol:
-        for pre, _, node in RenderTree(arbol):
-            print(Fore.WHITE + "%s" % (pre), end="")
-            if node.est == 'I':
-                print(Fore.BLUE, end="")
-            elif node.est == '0':
-                print(Fore.WHITE, end="")
-            elif node.est == 'F':
-                print(Fore.GREEN, end="")
-            elif node.est == 'P':
-                print(Fore.YELLOW, end="")
-            elif node.est == 'X':
-                print(Fore.RED, end="")
-            print("[#%s] %s | N: %s | E: %s" % (node.id, node.name, node.level, node.est))
-        print(Fore.WHITE)
-
-def getMatrizRecorrida(arbol: Node, filas: int, columnas: int):
-    if arbol:
-        lab = []
-        for x in range(0, filas):
-            fila = []
-            for y in range (0, columnas):
-                fila.append('N')
-            lab.append(fila)
-        for nodo in PreOrderIter(arbol):
-            if nodo.esSolucion == True and nodo.est == '0':
-                lab[nodo.cordY][nodo.cordX] = 'S'
-            else:
-                lab[nodo.cordY][nodo.cordX] = nodo.est
-        return lab
-    else:
-        return None
-
-def imprimirMatriz(matriz):
-    if matriz:
-        filas = len(matriz)
-        columnas = len(matriz[0])
-        for i in range(0, filas):
-            for j in range(0, columnas):
-                if (matriz[i][j] == 'I' or matriz[i][j] == 'F'):
-                    print(Fore.BLUE, end = "")
-                elif (matriz[i][j] == '0'):
-                    print(Fore.GREEN, end = "")
-                elif(matriz[i][j] == 'P'):
-                    print(Fore.YELLOW, end = "")	
-                elif(matriz[i][j] == 'X'):
-                    print(Fore.RED, end = "")
-                elif(matriz[i][j] == 'S'):
-                    print(Fore.CYAN, end = "")	
-                else:
-                    print(Fore.WHITE, end = "")
-                print(str(matriz[i][j]), end = " ")
-            print('\n')
-        print(Fore.WHITE)
-
 def getNodoFinal(arbol: Node):
     nodoFinal = None
     for nodo in arbol.leaves:
@@ -147,25 +89,6 @@ def getNodoFinal(arbol: Node):
             nodoFinal = nodo
             break
     return nodoFinal
-
-def getCaminoSolucion(arbol: Node):
-    solucion = None
-    nodoFinal = getNodoFinal(arbol)
-    if nodoFinal != None:
-        nodoActual = nodoFinal
-        nodos = []
-        while nodoActual.parent != None:
-            nodoActual.esSolucion = True
-            nodos.insert(0, nodoActual)
-            nodoActual = nodoActual.parent
-        nodoActual.esSolucion = True
-        solucion = crearNodo(1, arbol.root.cordX, arbol.root.cordY, 'I', 1)
-        nodoAnt = solucion
-        for nodo in nodos:
-            nuevoNodo = crearNodo(nodoAnt.id + 1, nodo.cordX, nodo.cordY, nodo.est, nodo.level)
-            nuevoNodo.parent = nodoAnt
-            nodoAnt = nuevoNodo
-    return solucion
 
 def marcarCaminoSolucion(laberinto, arbol: Node):
     solucion = copiarLaberinto(laberinto)
@@ -294,62 +217,7 @@ def laberintoAPng(laberinto, filas: int, columnas: int, path: str):
     ax.spines['left'].set_color('white')
     ax.spines['right'].set_color('white')
     plt.savefig(path, bbox_inches = 'tight', transparent = True)
-
-def iteracionesAPng(iteraciones: list, path: str):
-    
-    filas = len(iteraciones)
-    columnas = 0
-
-    for iter in iteraciones:
-        if len(iter) > columnas:
-            columnas = len(iter)
-
-    i = 0
-    datos = []
-    labels = []
-    for iter in iteraciones:
-        fila = []
-        fila.append("$t_{" + str(i) + "}$")
-        i = i + 1
-        for j in range(0, columnas):
-            if j >= len(iter):
-                fila.append("")
-            else:
-                if iter[j].padre:
-                    fila.append("$(" + str(iter[j].x) + ", " + str(iter[j].y) + ")^{" + "(" + str(iter[j].padre.x) + ", " + str(iter[j].padre.y) + ")}$")
-                else:
-                    fila.append("$(" + str(iter[j].x) + ", " + str(iter[j].y) + ")$")
-        datos.append(fila)
-
-    columnas = columnas + 1
-
-    mpl.rcParams['text.color'] = 'white'
-    fig, ax = plt.subplots()
-    ax.set_axis_off()
-    table = ax.table(
-        cellText = datos,
-        cellColours = [['none'] * columnas] * filas,
-        # rowLabels = labels,
-        # rowLoc = 'center',
-        # rowColours = ['grey'] * i,
-        cellLoc = 'center',
-        loc = 'upper left'
-    )
-
-    table.auto_set_font_size(False)
-    table.set_fontsize(8)
-    table.auto_set_column_width(col = list(range(0, columnas)))
-    for i in range(0, filas):
-        for j in range(0, columnas):
-            table[i, j].set_height(0.075)
-            table[i, j].set_edgecolor('white')
-            table[i, j].set_linewidth(0.2)
-
-    for i in range(0, filas):
-        table[(i, 0)].set_facecolor('black')
-        table[(i, 1)].set_facecolor('darkblue')
-
-    plt.savefig(path, bbox_inches = 'tight', transparent = True, dpi = 150)
+    plt.close()
 
 def crearReferenciasLaberintos():
     mpl.rcParams['text.color'] = 'white'
@@ -373,6 +241,7 @@ def crearReferenciasLaberintos():
     table[(1, 0)].set_facecolor('grey')
     table[(2, 0)].set_facecolor('darkblue')
     plt.savefig('refLab.png', bbox_inches = 'tight', transparent = True, dpi = 25)
+    plt.close()
     
     plt.figure().clear()
 
@@ -397,3 +266,4 @@ def crearReferenciasLaberintos():
     table[(2, 0)].set_facecolor('darkblue')
     table[(3, 0)].set_facecolor('darkgreen')
     plt.savefig('refLabComp.png', bbox_inches = 'tight', transparent = True, dpi = 25)
+    plt.close()
