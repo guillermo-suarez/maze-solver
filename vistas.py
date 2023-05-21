@@ -39,13 +39,12 @@ def make_main():
                     sg.Button(button_text='Salir',
                               size=(15,2), font=('Calibri'))],
           [sg.Text(' ')],  
-          [sg.Text(' ')],  
           [sg.Text(text = 'Malazotto, Soledad - Mezio, Santiago - Suárez, Guillermo',
                    font=('Calibri', 10),
                    size= 10, 
                    expand_x= True,
                    justification= 'center')]]
-    return sg.Window('maze-solver', layout, size=(715,300), element_justification='c')      
+    return sg.Window('TPI Inteligencia Artificial I', layout, size=(715,300), element_justification='c')      
     
 def make_windowLaberinto(iterPP, iterPA):    
     srcAncho, srcAlto = getScreenSize()   
@@ -67,7 +66,17 @@ def make_windowLaberinto(iterPP, iterPA):
                         size=(15,2), font=('Calibri'))],
                 [sg.Button(button_text='Generar nuevo laberinto', size=(32,2), font=('Calibri'))]                
               ]
-    window0= sg.Window('Laberinto', layout, element_justification='c')
+    im = Image.open('lab.png')
+    imAncho, imAlto = im.size    
+    print(imAlto)
+    im2 =  Image.open('refLab.png')
+    im2Ancho, im2Alto = im2.size  
+    print(im2Alto)
+    altoAux = srcAlto - (imAlto + im2Alto)  
+    print (altoAux)
+    alto = int(imAlto + im2Alto + (altoAux/2))
+    print(alto)
+    window0= sg.Window('Laberinto', layout, element_justification='c', size=(imAncho+35,alto))
     window  = [window0, None, None, None, None, None, None]
     active  = [True, False, False, False, False, False, False]
     event   = [None, None, None, None, None, None, None]
