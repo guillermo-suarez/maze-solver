@@ -143,13 +143,13 @@ def make_windowLaberinto(iterPP, iterPA):
                             active[4] = True
                             window[4] = sg.Window("Iteraciones PA", layoutIteracion(iterPA, 'PA'),
                                 finalize=True, resizable=False, margins=(0,0), location=(7,0),  element_justification='c', size=(srcAncho - 15, srcAlto - 75))  
-                elif event[i] == 'Generar nuevo laberinto':
-                    generarLaberintoYArboles()
-                    window[0]['-IMAGE-'].update('lab.png')
+                elif event[i] == 'Generar nuevo laberinto':  
                     for j in range (1, 7):
                         if active[j]:
                             window[j].close()
                             active[j] = False
+                    generarLaberintoYArboles()
+                    window[0]['-IMAGE-'].update('lab.png')
                 if i == 0 and active[i] == 0:
                     break
         if i == 0 and active[i] == 0:
