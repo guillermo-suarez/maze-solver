@@ -350,3 +350,50 @@ def iteracionesAPng(iteraciones: list, path: str):
         table[(i, 1)].set_facecolor('darkblue')
 
     plt.savefig(path, bbox_inches = 'tight', transparent = True, dpi = 150)
+
+def crearReferenciasLaberintos():
+    mpl.rcParams['text.color'] = 'white'
+    fig, ax = plt.subplots()
+    ax.set_axis_off()
+    table = ax.table(
+        cellText = [['       ', 'Libre'], ['       ', 'Pared'], ['       ', 'Inicio y fin']],
+        cellColours = [['none'] * 2] * 3,
+        cellLoc = 'left',
+        loc = 'upper left'
+    )
+    table.auto_set_font_size(False)
+    table.set_fontsize(48)
+    table.auto_set_column_width(col = [0, 1])
+    for i in range(0, 3):
+        for j in range(0, 2):
+            table[i, j].set_height(0.45)
+            table[i, j].set_edgecolor('white')
+            table[i, j].set_linewidth(2.0)
+    table[(0, 0)].set_facecolor('white')
+    table[(1, 0)].set_facecolor('grey')
+    table[(2, 0)].set_facecolor('darkblue')
+    plt.savefig('refLab.png', bbox_inches = 'tight', transparent = True, dpi = 25)
+    
+    plt.figure().clear()
+
+    fig, ax = plt.subplots()
+    ax.set_axis_off()
+    table = ax.table(
+        cellText = [['       ', 'Libre'], ['       ', 'Pared'], ['       ', 'Inicio y fin'], ['       ', 'Camino solución']],
+        cellColours = [['none'] * 2] * 4,
+        cellLoc = 'left',
+        loc = 'upper left'
+    )
+    table.auto_set_font_size(False)
+    table.set_fontsize(48)
+    table.auto_set_column_width(col = [0, 1])
+    for i in range(0, 4):
+        for j in range(0, 2):
+            table[i, j].set_height(0.45)
+            table[i, j].set_edgecolor('white')
+            table[i, j].set_linewidth(2.0)
+    table[(0, 0)].set_facecolor('white')
+    table[(1, 0)].set_facecolor('grey')
+    table[(2, 0)].set_facecolor('darkblue')
+    table[(3, 0)].set_facecolor('darkgreen')
+    plt.savefig('refLabComp.png', bbox_inches = 'tight', transparent = True, dpi = 25)
