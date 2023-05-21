@@ -47,26 +47,15 @@ def make_main():
                    justification= 'center')]]
     return sg.Window('maze-solver', layout, size=(715,300), element_justification='c')      
     
-def make_windowLaberinto(iterPP, iterPA):
-    toprow = ['Referencias']
-    rows = [
-        ['Celda bloqueada'],
-        ['Celda libre'],
-        ['Inicio y Fin'],
-    ]
+def make_windowLaberinto(iterPP, iterPA):    
+    srcAncho, srcAlto = getScreenSize()   
     layout = [[sg.Text(text ='Laberinto',
                 font=('Calibri', 30),
                 size= 30, 
                 expand_x= True,
                 justification= 'center')],
                 [sg.Image('lab.png', expand_x=True, expand_y=True, key = '-IMAGE-')],
-                [sg.Table(values=rows, 
-                headings=toprow,
-                auto_size_columns=True,
-                display_row_numbers=False,
-                num_rows=3,
-                row_colors=((0,'white', 'red'),(1,'white', 'green'), (2,'white', 'blue')),
-                alternating_row_color='black')],
+                [sg.Image('refLab.png', expand_x=True, expand_y=True, key = '-IMAGE-')],
                 [sg.Text(' ')],
                 [sg.Button(button_text='Resolver por PP',
                 size=(15,2), font=('Calibri')), 
@@ -75,13 +64,13 @@ def make_windowLaberinto(iterPP, iterPA):
                 [sg.Button(button_text='Generar nuevo laberinto', size=(32,2), font=('Calibri'))]                
               ]
     window0= sg.Window('Laberinto', layout, element_justification='c')
-    window  = [window0, None, None, None, None, None]
-    active  = [True, False, False, False, False, False]
-    event   = [None, None, None, None, None, None]
-    values  = [None, None, None, None, None, None]
+    window  = [window0, None, None, None, None, None, None]
+    active  = [True, False, False, False, False, False, False]
+    event   = [None, None, None, None, None, None, None]
+    values  = [None, None, None, None, None, None, None]
     #0=ventana laberinto, 1=PPArbol, 2=PAArbol, 3=IterPP, 4=IterPA, 5=LabSol
     while True:
-        for i in range(6):            
+        for i in range(7):            
             if active[i] and window[i] != None:
                 print(i)
                 event[i], values[i] = window[i].read(timeout=50)
@@ -95,42 +84,71 @@ def make_windowLaberinto(iterPP, iterPA):
                     else:
                         active[i] = False
                         window[i].close()
-                elif event[i] == 'Resolver por PP' and not active[1]:
+                elif event[i] == 'Resolver por PP' and not active[1]:      
+                    im = Image.open('PP-arbol-exp.png')
+                    imgAncho, imgAlto = im.size
+                    imgAncho = imgAncho+35         
+                    if(imgAncho>srcAncho):
+                        ancho = srcAncho - 15
+                    else:
+                        ancho = imgAncho
+                    alto= srcAlto - 75     
                     window[1] = sg.Window("Árbol PP", layoutArbol('PP'),
-                             finalize=True, location=(0,0))
-                    if window[1] != None:
-                        print('ok')
-                    print('Activamos ')
+                             finalize=True, location=(0,0), size=(ancho, alto))                    
                     active[1] = True
                 elif event[i] == 'Resolver por PA' and not active[2]:
-                    window[2] = sg.Window("Árbol PA", layoutArbol('PP'),
+                    im = Image.open('PA-arbol-exp.png')
+                    imgAncho, imgAlto = im.size
+                    imgAncho = imgAncho+35         
+                    if(imgAncho>srcAncho):
+                        ancho = srcAncho - 15
+                    else:
+                        ancho = imgAncho
+                    alto= srcAlto - 75     
+                    window[2] = sg.Window("Árbol PA", layoutArbol('PA'), size=(ancho, alto),
                     finalize=True, location=(0,0))
                     active[2] = True
-                elif event[i] == 'Ver laberinto solución':
-                    if not active[5]:
+                elif event[i] == 'Ver laberinto solución':                    
+                    if i == 1 and not active[5]:
                         active[5] = True
-                        if i == 1:
-                            tipo = 'PP'
-                        else:
-                            tipo = 'PA'
-                        window[5] = sg.Window("Ver laberinto solución", layoutLaberinto(tipo),
+                        window[5] = sg.Window("Laberinto solución PP", layoutLaberinto('PP'),
                              finalize=True, location=(0,0))
+                    if i == 2 and not active[6]:
+                        active[6] = True
+                        window[6] = sg.Window("Laberinto solución PA", layoutLaberinto('PA'),
+                             finalize=True, location=(0,0))    
                 elif event[i] == 'Ver iteraciones':
                     if i == 1:
                         if not active[3]:
+                            im = Image.open('PP-tabla-iteraciones.png')
+                            imgAncho, imgAlto = im.size
+                            imgAncho = imgAncho+35         
+                            if(imgAncho>srcAncho):
+                                ancho = srcAncho - 15
+                            else:
+                                ancho = imgAncho
+                            alto= srcAlto - 75     
                             active[3] = True 
                             generarIteraciones('PP', iterPP)
-                            window[3] = sg.Window("Iteraciones PP", layoutIteracion('PP'),
+                            window[3] = sg.Window("Iteraciones PP", layoutIteracion('PP'), size=(ancho, alto),
                             finalize=True, resizable=False, margins=(0,0), location=(0, 0))  
                     if i == 2:
                         if not active[4]:
                             active[4] = True 
-                            generarIteraciones('PA', iterPP)
-                            window[4] = sg.Window("Iteraciones PA", layoutIteracion('PA'),
+                            im = Image.open('PA-tabla-iteraciones.png')
+                            imgAncho, imgAlto = im.size
+                            imgAncho = imgAncho+35         
+                            if(imgAncho>srcAncho):
+                                ancho = srcAncho - 15
+                            else:
+                                ancho = imgAncho
+                            alto= srcAlto - 75     
+                            generarIteraciones('PA', iterPA)
+                            window[4] = sg.Window("Iteraciones PA", layoutIteracion('PA'), size=(ancho, alto),
                                 finalize=True, resizable=False, margins=(0,0), location=(0, 0))  
                 elif event[i] == 'Generar nuevo laberinto':
                     generarLaberintoYArboles()
-                    window['-IMAGE-'].update('lab.png')
+                    window[0]['-IMAGE-'].update('lab.png')
                 if i == 0 and active[i] == 0:
                     break
         if i == 0 and active[i] == 0:
@@ -148,7 +166,7 @@ def layoutIteracion(tipo):
         ancho = srcAncho - 15
     else:
         ancho = imgAncho
-    alto= srcAlto - 15
+    alto= srcAlto - 75
     layout = [
     [sg.Text(text='Iteraciones ', font=('Calibri'))],
     [sg.Column(column, scrollable=True, size=(ancho, alto), key='itercol')]
@@ -158,7 +176,8 @@ def layoutIteracion(tipo):
 def layoutLaberinto(tipo):
     layout = [
     [sg.Text(text='Laberinto Recorrido', font=('Calibri'))],    
-    [sg.Image(filename=tipo+'-lab-solucion.png', key='Image')]              
+    [sg.Image(filename=tipo+'-lab-solucion.png', key='Image')],
+    [sg.Image('refLabComp.png', expand_x=True, expand_y=True, key = '-IMAGE-')]              
     ]
     return layout
 

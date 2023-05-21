@@ -1,5 +1,5 @@
 from genlab import getMaze
-from funciones import crearArbolExpansion, arbolAPng, laberintoAPng, marcarCaminoSolucion, iteracionesAPng
+from funciones import crearArbolExpansion, arbolAPng, laberintoAPng, marcarCaminoSolucion, iteracionesAPng, crearReferenciasLaberintos
 from pp import recorrerLabPP
 from pa import recorrerLabPA
 
@@ -20,6 +20,7 @@ def generarLaberintoYArboles():
     laberintoAPng(labPP, filas, columnas, "PP-lab-solucion.png")
     arbolAPng(arbolPA, "PA-arbol-exp.png")
     laberintoAPng(labPA, filas, columnas, "PA-lab-solucion.png")
+    crearReferenciasLaberintos()
     return iterPP, iterPA
 
 def generarIteraciones(tipo, iter):    
