@@ -9,6 +9,7 @@ def getScreenSize():
 
 def call_vistas():
     sg.theme('DarkGrey2')
+    sg.set_options(font=("Calibri", 14))
     window = make_main()
     while True:              
         event, values = window.read() 
@@ -122,12 +123,12 @@ def make_windowLaberinto(iterPP, iterPA):
                         if not active[3]:    
                             active[3] = True
                             window[3] = sg.Window("Iteraciones PP", layoutIteracion(iterPP),
-                                finalize=True, resizable=True, margins=(0,0), location=(0,0),  element_justification='c')  
+                                finalize=True, resizable=False, margins=(0,0), location=(7,0),  element_justification='c', size=(srcAncho - 15, srcAlto - 75))  
                     if i == 2:
                         if not active[4]:
                             active[4] = True
                             window[4] = sg.Window("Iteraciones PA", layoutIteracion(iterPA),
-                                finalize=True, resizable=True, margins=(0,0), location=(0,0),  element_justification='c')  
+                                finalize=True, resizable=False, margins=(0,0), location=(7,0),  element_justification='c', size=(srcAncho - 15, srcAlto - 75))  
                 elif event[i] == 'Generar nuevo laberinto':
                     generarLaberintoYArboles()
                     window[0]['-IMAGE-'].update('lab.png')
@@ -138,6 +139,8 @@ def make_windowLaberinto(iterPP, iterPA):
     window0.close()
 
 def layoutIteracion(iteraciones):
+
+    superscript = str.maketrans("()0123456789", "⁽⁾⁰¹²³⁴⁵⁶⁷⁸⁹")
 
     filas = len(iteraciones)
     columnas = 0
@@ -160,7 +163,7 @@ def layoutIteracion(iteraciones):
         i = i + 1
         for est in iter:
             if est.padre:
-                fila.append("(" + str(est.x) + ", " + str(est.y) + ")^(" + str(est.padre.x) + ", " + str(est.padre.y) + ")")
+                fila.append("(" + str(est.x) + ", " + str(est.y) + ") "  + "(".translate(superscript) + str(est.padre.x).translate(superscript) + "⋅ " + str(est.padre.y).translate(superscript) + ")".translate(superscript))
             else:
                 fila.append("(" + str(est.x) + ", " + str(est.y) + ")")
         valores.append(list(fila))
@@ -171,7 +174,9 @@ def layoutIteracion(iteraciones):
                 [sg.Table(values = valores, 
                           headings = cabeceras,
                           vertical_scroll_only = False,
-                          enable_events = False)]]
+                          enable_events = False,
+                          expand_x=True,
+                          expand_y=True,)]]
     return layout
 
 def layoutLaberinto(tipo):
