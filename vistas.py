@@ -44,7 +44,7 @@ def make_main():
                    size= 10, 
                    expand_x= True,
                    justification= 'center')]]
-    return sg.Window('TPI Inteligencia Artificial I', layout, size=(715,300), element_justification='c')      
+    return sg.Window('TPI Inteligencia Artificial I', layout, element_justification='c')      
     
 def make_windowLaberinto(iterPP, iterPA):    
     srcAncho, srcAlto = getScreenSize()   
@@ -74,7 +74,7 @@ def make_windowLaberinto(iterPP, iterPA):
     print(im2Alto)
     altoAux = srcAlto - (imAlto + im2Alto)  
     print (altoAux)
-    alto = int(imAlto + im2Alto + (altoAux/2))
+    alto = int(imAlto + im2Alto + (altoAux/1.5))
     print(alto)
     window0= sg.Window('Laberinto', layout, element_justification='c', size=(imAncho+35,alto))
     window  = [window0, None, None, None, None, None, None]
