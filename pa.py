@@ -1,5 +1,4 @@
 from funciones import Estado, hijoNodoActual, removerRepetidos
-from collections import deque
 
 def recorrerLabPA(laberinto: int):
     filas = len(laberinto) - 1
@@ -20,25 +19,25 @@ def recorrerLabPA(laberinto: int):
             if estadoActual.y > 0:    # Recorrer arriba
                 x = estadoActual.x
                 y = estadoActual.y - 1
-                nuevoEstado = hijoNodoActual(laberinto, y, x, estadoActual, listaPendientes, listaVisitados)
+                nuevoEstado = hijoNodoActual(laberinto, y, x, estadoActual, listaVisitados)
                 if(nuevoEstado is not None):
                     listaPendientes.append(nuevoEstado)
             if estadoActual.x > 0:    # Recorrer izquierda
                 x = estadoActual.x - 1
                 y = estadoActual.y
-                nuevoEstado = hijoNodoActual(laberinto, y, x, estadoActual, listaPendientes, listaVisitados)
+                nuevoEstado = hijoNodoActual(laberinto, y, x, estadoActual, listaVisitados)
                 if(nuevoEstado is not None):
                     listaPendientes.append(nuevoEstado)
             if estadoActual.y < filas:    # Recorrer abajo
                 x = estadoActual.x
                 y = estadoActual.y + 1
-                nuevoEstado = hijoNodoActual(laberinto, y, x, estadoActual, listaPendientes, listaVisitados)
+                nuevoEstado = hijoNodoActual(laberinto, y, x, estadoActual, listaVisitados)
                 if(nuevoEstado is not None):
                     listaPendientes.append(nuevoEstado)
             if estadoActual.x < columnas:    # Recorrer derecha
                 x = estadoActual.x + 1
                 y = estadoActual.y
-                nuevoEstado = hijoNodoActual(laberinto, y, x, estadoActual, listaPendientes, listaVisitados)
+                nuevoEstado = hijoNodoActual(laberinto, y, x, estadoActual, listaVisitados)
                 if(nuevoEstado is not None):
                     listaPendientes.append(nuevoEstado)
         listaPendientes = removerRepetidos(listaPendientes)

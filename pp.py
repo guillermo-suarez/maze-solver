@@ -1,5 +1,4 @@
 from funciones import Estado, hijoNodoActual, removerRepetidos
-from collections import deque
 
 def recorrerLabPP(laberinto: int):
     filas = len(laberinto) - 1
@@ -19,28 +18,28 @@ def recorrerLabPP(laberinto: int):
             if estadoActual.y > 0:
                 x = estadoActual.x
                 y = estadoActual.y - 1
-                nuevoEstado = hijoNodoActual(laberinto, y, x, estadoActual, listaPendientes, listaVisitados)
+                nuevoEstado = hijoNodoActual(laberinto, y, x, estadoActual, listaVisitados)
                 if(nuevoEstado is not None):
                     listaPendientes.insert(indice, nuevoEstado)
                     indice = indice + 1
             if estadoActual.x > 0:
                 x = estadoActual.x - 1
                 y = estadoActual.y
-                nuevoEstado = hijoNodoActual(laberinto, y, x, estadoActual, listaPendientes, listaVisitados)
+                nuevoEstado = hijoNodoActual(laberinto, y, x, estadoActual, listaVisitados)
                 if(nuevoEstado is not None):
                     listaPendientes.insert(indice, nuevoEstado)
                     indice = indice + 1
             if estadoActual.y < filas:
                 x = estadoActual.x
                 y = estadoActual.y + 1
-                nuevoEstado = hijoNodoActual(laberinto, y, x, estadoActual, listaPendientes, listaVisitados)
+                nuevoEstado = hijoNodoActual(laberinto, y, x, estadoActual, listaVisitados)
                 if(nuevoEstado is not None):
                     listaPendientes.insert(indice, nuevoEstado)
                     indice = indice + 1
             if estadoActual.x < columnas:
                 x = estadoActual.x + 1
                 y = estadoActual.y
-                nuevoEstado = hijoNodoActual(laberinto, y, x, estadoActual, listaPendientes, listaVisitados)
+                nuevoEstado = hijoNodoActual(laberinto, y, x, estadoActual, listaVisitados)
                 if(nuevoEstado is not None):
                     listaPendientes.insert(indice, nuevoEstado)
                     indice = indice + 1
