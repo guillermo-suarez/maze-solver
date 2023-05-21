@@ -94,7 +94,7 @@ def make_windowLaberinto(iterPP, iterPA):
                         ancho = imgAncho
                     alto= srcAlto - 75     
                     window[1] = sg.Window("Árbol PP", layoutArbol('PP'),
-                             finalize=True, location=(0,0), size=(ancho, alto))                    
+                             finalize=True, location=(int((srcAncho-ancho)/2),0), size=(ancho, alto))                    
                     active[1] = True
                 elif event[i] == 'Resolver por PA' and not active[2]:
                     im = Image.open('PA-arbol-exp.png')
@@ -106,7 +106,7 @@ def make_windowLaberinto(iterPP, iterPA):
                         ancho = imgAncho
                     alto= srcAlto - 75     
                     window[2] = sg.Window("Árbol PA", layoutArbol('PA'), size=(ancho, alto),
-                    finalize=True, location=(0,0))
+                    finalize=True, location=(int((srcAncho-ancho)/2),0))
                     active[2] = True
                 elif event[i] == 'Ver laberinto solución':                    
                     if i == 1 and not active[5]:
@@ -131,7 +131,7 @@ def make_windowLaberinto(iterPP, iterPA):
                             active[3] = True 
                             generarIteraciones('PP', iterPP)
                             window[3] = sg.Window("Iteraciones PP", layoutIteracion('PP'), size=(ancho, alto),
-                            finalize=True, resizable=False, margins=(0,0), location=(0, 0))  
+                            finalize=True, resizable=False, margins=(0,0), location=(int((srcAncho-ancho)/2),0))  
                     if i == 2:
                         if not active[4]:
                             active[4] = True 
@@ -145,7 +145,7 @@ def make_windowLaberinto(iterPP, iterPA):
                             alto= srcAlto - 75     
                             generarIteraciones('PA', iterPA)
                             window[4] = sg.Window("Iteraciones PA", layoutIteracion('PA'), size=(ancho, alto),
-                                finalize=True, resizable=False, margins=(0,0), location=(0, 0))  
+                                finalize=True, resizable=False, margins=(0,0), location=(int((srcAncho-ancho)/2),0))  
                 elif event[i] == 'Generar nuevo laberinto':
                     generarLaberintoYArboles()
                     window[0]['-IMAGE-'].update('lab.png')
