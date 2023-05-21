@@ -67,7 +67,9 @@ def make_windowLaberinto(iterPP, iterPA):
                         size=(15,2), font=('Calibri'))],
                 [sg.Button(button_text='Generar nuevo laberinto', size=(32,2), font=('Calibri'))]                
               ]
-    window0= sg.Window('Laberinto', layout, element_justification='c')
+    im = Image.open('refLab.png')
+    imAncho, imAlto = im.size()
+    window0= sg.Window('Laberinto', layout, element_justification='c', size=(imAncho+35,srcAlto - 75))
     window  = [window0, None, None, None, None, None, None]
     active  = [True, False, False, False, False, False, False]
     event   = [None, None, None, None, None, None, None]
