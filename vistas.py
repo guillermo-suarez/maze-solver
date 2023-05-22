@@ -52,7 +52,7 @@ def make_windowLaberinto(iterPP, iterPA):
                 font=('Calibri', 30),
                 size= 30, 
                 justification= 'center')],
-                [sg.Image('lab.png', expand_y=True, key = '-IMAGE-'), sg.Image('refLab.png', expand_y=True, key = '-IMAGE-')],
+                [sg.Image('IMG-laberinto.png', expand_y=True, key = '-IMAGE-'), sg.Image('IMG-referencias-laberinto.png', expand_y=True, key = '-IMAGE-')],
                 [sg.Text(' ')],
                 [sg.Button(button_text='Resolver por PP',
                 size=(15,2), font=('Calibri')), 
@@ -93,7 +93,7 @@ def make_windowLaberinto(iterPP, iterPA):
                         active[i] = False
                         window[i].close()
                 elif event[i] == 'Resolver por PP' and not active[1]:      
-                    im = Image.open('PP-arbol-exp.png')
+                    im = Image.open('IMG-PP-arbol-expansion.png')
                     imgAncho, imgAlto = im.size
                     imgAncho = imgAncho+35         
                     if(imgAncho>srcAncho):
@@ -105,7 +105,7 @@ def make_windowLaberinto(iterPP, iterPA):
                              finalize=True, location=(int((srcAncho-ancho)/2),0), size=(ancho, alto),  element_justification='c')                    
                     active[1] = True
                 elif event[i] == 'Resolver por PA' and not active[2]:
-                    im = Image.open('PA-arbol-exp.png')
+                    im = Image.open('IMG-PA-arbol-expansion.png')
                     imgAncho, imgAlto = im.size
                     imgAncho = imgAncho+35         
                     if(imgAncho>srcAncho):
@@ -142,7 +142,7 @@ def make_windowLaberinto(iterPP, iterPA):
                             window[j].close()
                             active[j] = False
                     generarLaberintoYArboles()
-                    window[0]['-IMAGE-'].update('lab.png')
+                    window[0]['-IMAGE-'].update('IMG-laberinto.png')
                 if i == 0 and active[i] == 0:
                     break
         if i == 0 and active[i] == 0:
@@ -196,21 +196,21 @@ def layoutIteracion(iteraciones, tipo):
 
 def layoutLaberinto(tipo):
     layout = [[sg.Text(text='Laberinto Recorrido ' + tipo, font=('Calibri', 30), size= 30, expand_x= True, justification= 'center')],    
-            [sg.Image(filename=tipo+'-lab-solucion.png', key='Image'), sg.Image('refLabComp.png', expand_y=True, key = '-IMAGE-')]]
+            [sg.Image(filename = 'IMG-' + tipo + '-laberinto-solucion.png', key='Image'), sg.Image('IMG-referencias-laberinto-completo.png', expand_y=True, key = '-IMAGE-')]]
     return layout
 
 def layoutArbol(tipo):
-    path=tipo+'-arbol-exp.png'
+    path = 'IMG-' + tipo + '-arbol-expansion.png'
     column = [[sg.Image(filename=path, key='Image')]]
     im = Image.open(path)
     imgAncho, imgAlto = im.size
-    imgAncho = imgAncho+35
+    imgAncho = imgAncho + 35
     srcAncho, srcAlto = getScreenSize()
     if(imgAncho>srcAncho):
         ancho = srcAncho - 15
     else:
         ancho = imgAncho
-    alto= srcAlto - 75
+    alto = srcAlto - 75
     layout = [
         [[sg.Text(text='Árbol de expansión ' + tipo, font=('Calibri', 30), 
                 size= 30, 

@@ -14,11 +14,11 @@ def generarLaberintoYArboles():
     iterPA, visitadosPA, pendientesPA = recorrerLabPA(laberinto)
     arbolPA = crearArbolExpansion(visitadosPA, pendientesPA)
     labPA = marcarCaminoSolucion(laberinto, arbolPA)
-    laberintoAPng(laberinto, filas, columnas, "lab.png")
-    arbolAPng(arbolPP, "PP-arbol-exp.png")
-    laberintoAPng(labPP, filas, columnas, "PP-lab-solucion.png")
-    arbolAPng(arbolPA, "PA-arbol-exp.png")
-    laberintoAPng(labPA, filas, columnas, "PA-lab-solucion.png")
+    laberintoAPng(laberinto, filas, columnas, "IMG-laberinto.png")
+    arbolAPng(arbolPP, "IMG-PP-arbol-expansion.png")
+    laberintoAPng(labPP, filas, columnas, "IMG-PP-laberinto-solucion.png")
+    arbolAPng(arbolPA, "IMG-PA-arbol-expansion.png")
+    laberintoAPng(labPA, filas, columnas, "IMG-PA-laberinto-solucion.png")
     crearReferenciasLaberintos()
 
     return iterPP, iterPA
