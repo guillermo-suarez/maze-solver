@@ -51,28 +51,16 @@ def make_windowLaberinto(iterPP, iterPA):
     layout = [[sg.Text(text ='Laberinto',
                 font=('Calibri', 30),
                 size= 30, 
-                expand_x= True,
                 justification= 'center')],
-                [sg.Image('lab.png', expand_x=True, expand_y=True, key = '-IMAGE-')],
-                [sg.Text(text='Referencias', font=('Calibri', 20), 
-                size= 30, 
-                expand_x= True,
-                justification= 'center')],
-                [sg.Image('refLab.png', expand_x=True, expand_y=True, key = '-IMAGE-')],
+                [sg.Image('lab.png', expand_y=True, key = '-IMAGE-'), sg.Image('refLab.png', expand_y=True, key = '-IMAGE-')],
                 [sg.Text(' ')],
                 [sg.Button(button_text='Resolver por PP',
                 size=(15,2), font=('Calibri')), 
                 sg.Button(button_text='Resolver por PA', 
                         size=(15,2), font=('Calibri'))],
-                [sg.Button(button_text='Generar nuevo laberinto', size=(32,2), font=('Calibri'))]                
+                [sg.Button(button_text='Generar nuevo laberinto', size=(32,2), font=('Calibri'))]
               ]
-    im = Image.open('lab.png')
-    imAncho, imAlto = im.size
-    im2 =  Image.open('refLab.png')
-    im2Ancho, im2Alto = im2.size
-    altoAux = srcAlto - (imAlto + im2Alto)
-    alto = int(imAlto + im2Alto + (altoAux/1.5))
-    window0= sg.Window('Laberinto', layout, element_justification='c', size=(imAncho+35,alto))
+    window0 = sg.Window('Laberinto', layout, element_justification='c')
     window  = [window0, None, None, None, None, None, None]
     active  = [True, False, False, False, False, False, False]
     event   = [None, None, None, None, None, None, None]
@@ -207,18 +195,8 @@ def layoutIteracion(iteraciones, tipo):
     return layout
 
 def layoutLaberinto(tipo):
-    layout = [
-    [sg.Text(text='Laberinto Recorrido ' + tipo, font=('Calibri', 30), 
-                size= 30, 
-                expand_x= True,
-                justification= 'center')],    
-    [sg.Image(filename=tipo+'-lab-solucion.png', key='Image')],
-    [sg.Text(text='Referencias', font=('Calibri', 20), 
-                size= 20, 
-                expand_x= True,
-                justification= 'center')],
-    [sg.Image('refLabComp.png', expand_x=True, expand_y=True, key = '-IMAGE-')]              
-    ]
+    layout = [[sg.Text(text='Laberinto Recorrido ' + tipo, font=('Calibri', 30), size= 30, expand_x= True, justification= 'center')],    
+            [sg.Image(filename=tipo+'-lab-solucion.png', key='Image'), sg.Image('refLabComp.png', expand_y=True, key = '-IMAGE-')]]
     return layout
 
 def layoutArbol(tipo):
