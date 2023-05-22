@@ -10,3 +10,4 @@
 # Ignorar carpetas relacionadas a la compilación
 /dist
 /build
+*.db
