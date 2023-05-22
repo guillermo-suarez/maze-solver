@@ -95,24 +95,26 @@ def make_windowLaberinto(iterPP, iterPA):
                 elif event[i] == 'Resolver por PP' and not active[1]:      
                     im = Image.open('IMG-PP-arbol-expansion.png')
                     imgAncho, imgAlto = im.size
-                    imgAncho = imgAncho+35         
-                    if(imgAncho>srcAncho):
+                    ancho, alto = imgAncho, imgAlto
+                    if(imgAncho > srcAncho):
                         ancho = srcAncho - 15
-                    else:
-                        ancho = imgAncho
-                    alto= srcAlto - 75     
+                        alto = alto + 55
+                    if(imgAlto > srcAlto):
+                        alto = srcAlto - 75
+                        ancho = ancho + 55    
                     window[1] = sg.Window("Árbol PP", layoutArbol('PP'),
                              finalize=True, location=(int((srcAncho-ancho)/2),0), size=(ancho, alto),  element_justification='c')                    
                     active[1] = True
                 elif event[i] == 'Resolver por PA' and not active[2]:
                     im = Image.open('IMG-PA-arbol-expansion.png')
                     imgAncho, imgAlto = im.size
-                    imgAncho = imgAncho+35         
-                    if(imgAncho>srcAncho):
+                    ancho, alto = imgAncho, imgAlto
+                    if(imgAncho > srcAncho):
                         ancho = srcAncho - 15
-                    else:
-                        ancho = imgAncho
-                    alto= srcAlto - 75     
+                        alto = alto + 55
+                    if(imgAlto > srcAlto):
+                        alto = srcAlto - 75
+                        ancho = ancho + 55
                     window[2] = sg.Window("Árbol PA", layoutArbol('PA'), size=(ancho, alto),
                     finalize=True, location=(int((srcAncho-ancho)/2),0),  element_justification='c')
                     active[2] = True
@@ -195,7 +197,7 @@ def layoutIteracion(iteraciones, tipo):
     return layout
 
 def layoutLaberinto(tipo):
-    layout = [[sg.Text(text='Laberinto Recorrido ' + tipo, font=('Calibri', 30), size= 30, expand_x= True, justification= 'center')],    
+    layout = [[sg.Text(text='Laberinto Recorrido ' + tipo, font=('Calibri', 30), size = 30, expand_x= True, justification= 'center')],    
             [sg.Image(filename = 'IMG-' + tipo + '-laberinto-solucion.png', key='Image'), sg.Image('IMG-referencias-laberinto-completo.png', expand_y=True, key = '-IMAGE-')]]
     return layout
 
@@ -204,21 +206,14 @@ def layoutArbol(tipo):
     column = [[sg.Image(filename=path, key='Image')]]
     im = Image.open(path)
     imgAncho, imgAlto = im.size
-    imgAncho = imgAncho + 35
     srcAncho, srcAlto = getScreenSize()
-    if(imgAncho>srcAncho):
-        ancho = srcAncho - 15
-    else:
-        ancho = imgAncho
-    alto = srcAlto - 75
-    layout = [
-        [[sg.Text(text='Árbol de expansión ' + tipo, font=('Calibri', 30), 
-                size= 30, 
-                expand_x= True,
-                justification= 'center')], sg.Button(button_text= 'Ver laberinto recorrido',
-                size=(15,2), font=('Calibri'), enable_events=True), 
-                sg.Button(button_text= 'Ver iteraciones',
-                size=(15,2), font=('Calibri'), enable_events=True)],
-        [sg.Column(column, scrollable=True, key='Column', size=(ancho, alto))]
-    ]
+    scrollVertical = False
+    scrollHorizontal = False
+    if(imgAncho > srcAncho):
+        scrollHorizontal = True
+    if(imgAlto > srcAlto):
+        scrollVertical = True
+    layout = [[sg.Text(text='Árbol de expansión ' + tipo, font=('Calibri', 30), size = 30, expand_x= True, justification= 'center')],
+              [sg.Button(button_text= 'Ver laberinto recorrido', size=(15,2), font=('Calibri'), enable_events=True), sg.Button(button_text= 'Ver iteraciones', size=(15,2), font=('Calibri'), enable_events=True)],
+              [sg.Column(column, scrollable = (scrollVertical or scrollHorizontal), vertical_scroll_only = not scrollHorizontal, key='Column')]]
     return layout
