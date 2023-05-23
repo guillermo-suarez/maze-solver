@@ -10,7 +10,7 @@
 
 ### Descargar entrega completa del TPI (23/05/2023)
 
-Click ([acá]()). Esta descarga incluye:
+Click ([acá](https://drive.google.com/file/d/1y0sKuzOtZ8w2lU60M80xcDgHhbcUmF8I/view?usp=sharing)). Esta descarga incluye:
 
 * Código fuente.
 * Aplicación ejecutable.
@@ -18,7 +18,7 @@ Click ([acá]()). Esta descarga incluye:
 
 ### Descargar código fuente
 
-Click ([acá]()). Esta descarga incluye únicamente el código fuente.
+Click ([acá](https://drive.google.com/file/d/1pz3OBVpNXJoIRlKfryQHqhMHomGo0h-H/view?usp=sharing)). Esta descarga incluye únicamente el código fuente.
 
 ### Descargar aplicación ejecutable (archivo .exe)
 
@@ -71,7 +71,7 @@ Click ([acá](https://drive.google.com/file/d/1GHNTkgfKwcXegVVWa_bp6QIOmcw4eJnu/
     ```
 
 3. Abrir la carpeta del código fuente en algún IDE que permita ejecutar archivos de Python (.py)
-4. Ejecutar el archivo main.py
+4. Ejecutar el archivo `main.py`
 
 ## Comnsideraciones al momento de ejecutar la aplicación
 
