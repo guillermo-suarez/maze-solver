@@ -21,6 +21,7 @@
 
 1. Instalar ([Graphviz](https://graphviz.org/download/#windows))
 2. Instalar todas las librerías necesarias:
+
     a. Colorama
 
     ```text
