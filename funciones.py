@@ -114,57 +114,57 @@ def arbolAPng(arbol: Node, path: str):
         Referencias[shape=none, color=white, margin=0, width=2, label=<
             <TABLE BORDER="1" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
                 <TH>
-                    <TD COLSPAN="3" COLOR="white"><FONT FACE="Arial" COLOR="white" POINT-SIZE="32"><B>Referencias</B></FONT></TD>
+                    <TD COLSPAN="3" COLOR="white"><FONT FACE="Arial" COLOR="white" POINT-SIZE="18"><B>Referencias</B></FONT></TD>
                 </TH>
                 <TR>
                     <TD COLSPAN="2" COLOR="white">
                         <TABLE BORDER="0">
                             <TR>
-                                <TD BORDER="1" STYLE="rounded" COLOR="white" BGCOLOR="darkgreen">       </TD>
+                                <TD BORDER="1" STYLE="rounded" COLOR="white" BGCOLOR="darkgreen">    </TD>
                             </TR>
                         </TABLE>
                     </TD>
-                    <TD COLSPAN="1" ALIGN="LEFT" COLOR="white"><FONT FACE="Arial" COLOR="white" POINT-SIZE="24">Celda del laberinto libre (camino)</FONT></TD>
+                    <TD COLSPAN="1" ALIGN="LEFT" COLOR="white"><FONT FACE="Arial" COLOR="white" POINT-SIZE="12">Celda del laberinto libre (camino)</FONT></TD>
                 </TR>
                 <TR>
                     <TD COLSPAN="2" COLOR="white">
                         <TABLE BORDER="0">
                             <TR>
-                                <TD BORDER="1" STYLE="rounded" COLOR="white" BGCOLOR="darkred"></TD>
+                                <TD BORDER="1" STYLE="rounded" COLOR="white" BGCOLOR="darkred">    </TD>
                             </TR>
                         </TABLE>
                     </TD>
-                    <TD COLSPAN="1" ALIGN="LEFT" COLOR="white"><FONT FACE="Arial" COLOR="white" POINT-SIZE="24">Celda del laberinto bloqueada (pared)</FONT></TD>
+                    <TD COLSPAN="1" ALIGN="LEFT" COLOR="white"><FONT FACE="Arial" COLOR="white" POINT-SIZE="12">Celda del laberinto bloqueada (pared)</FONT></TD>
                 </TR>
                 <TR>
                     <TD COLSPAN="2" COLOR="white">
                         <TABLE BORDER="0">
                             <TR>
-                                <TD BORDER="1" STYLE="rounded" COLOR="white" BGCOLOR="darkblue"></TD>
+                                <TD BORDER="1" STYLE="rounded" COLOR="white" BGCOLOR="darkblue">    </TD>
                             </TR>
                         </TABLE>
                     </TD>
-                    <TD COLSPAN="1" ALIGN="LEFT" COLOR="white"><FONT FACE="Arial" COLOR="white" POINT-SIZE="24">Celda inicial o final</FONT></TD>
+                    <TD COLSPAN="1" ALIGN="LEFT" COLOR="white"><FONT FACE="Arial" COLOR="white" POINT-SIZE="12">Celda inicial o final</FONT></TD>
                 </TR>
                 <TR>
                     <TD COLSPAN="2" COLOR="white">
                         <TABLE BORDER="0">
                             <TR>
-                                <TD BORDER="1" STYLE="rounded" COLOR="white"></TD>
+                                <TD BORDER="1" STYLE="rounded" COLOR="white">    </TD>
                             </TR>
                         </TABLE>
                     </TD>
-                    <TD COLSPAN="1" ALIGN="LEFT" COLOR="white"><FONT FACE="Arial" COLOR="white" POINT-SIZE="24">Celda expandida pero no visitada (quedó en memoria)</FONT></TD>
+                    <TD COLSPAN="1" ALIGN="LEFT" COLOR="white"><FONT FACE="Arial" COLOR="white" POINT-SIZE="12">Celda expandida pero no visitada (quedó en memoria)</FONT></TD>
                 </TR>
                 <TR>
                     <TD COLSPAN="2" COLOR="white">
                         <TABLE BORDER="0">
                             <TR>
-                                <TD BORDER="1" STYLE="rounded" COLOR="yellow"></TD>
+                                <TD BORDER="1" STYLE="rounded" COLOR="yellow">    </TD>
                             </TR>
                         </TABLE>
                     </TD>
-                    <TD COLSPAN="1" ALIGN="LEFT" COLOR="white"><FONT FACE="Arial" COLOR="white" POINT-SIZE="24">Celda que es parte del camino solución</FONT></TD>
+                    <TD COLSPAN="1" ALIGN="LEFT" COLOR="white"><FONT FACE="Arial" COLOR="white" POINT-SIZE="12">Celda que es parte del camino solución</FONT></TD>
                 </TR>
             </TABLE>
         >]

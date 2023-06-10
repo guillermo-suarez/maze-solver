@@ -27,40 +27,46 @@ def make_main():
                    size= 30, 
                    expand_x= True,
                    justification= 'center')],     
-          [sg.Text(' ')],  
-          [sg.Text(text = 'Algoritmos de búsqueda', 
-                   font=('Calibri', 20),
-                   size= 20, 
-                   expand_x= True,
-                   justification= 'center')], 
-          [sg.Text(' ')],  
-          [sg.Button(button_text='Generar laberinto',
-                     size=(15,2), font=('Calibri')), 
-                    sg.Button(button_text='Salir',
-                              size=(15,2), font=('Calibri'))],
-          [sg.Text(' ')],  
-          [sg.Text(text = 'Malazotto, Soledad - Mezio, Santiago - Suárez, Guillermo',
-                   font=('Calibri', 10),
-                   size= 10, 
-                   expand_x= True,
-                   justification= 'center')]]
+            [sg.Text(text = 'Universidad Gastón Dachary - Inteligencia Artificial I - 2023', 
+                    font=('Calibri', 15),
+                    size= 15, 
+                    expand_x= True,
+                    justification= 'center')], 
+            [sg.Text(' ')],  
+            [sg.Text(text = 'Algoritmos de Búsqueda Sistemática', 
+                    font=('Calibri', 20),
+                    size= 20, 
+                    expand_x= True,
+                    justification= 'center')], 
+            [sg.Text(' ')],  
+            [sg.Button(button_text='Generar laberinto',
+                        size=(15,2), font=('Calibri')), 
+                        sg.Button(button_text='Salir',
+                                size=(15,2), font=('Calibri'))],
+            [sg.Text(' ')],  
+            [sg.Text(text = 'Malazotto, Soledad - Mezio, Santiago - Suárez, Guillermo',
+                    font=('Calibri', 10),
+                    size= 10, 
+                    expand_x= True,
+                    justification= 'center')]]
     return sg.Window('TPI Inteligencia Artificial I', layout, element_justification='c')      
     
 def make_windowLaberinto(iterPP, iterPA):    
     srcAncho, srcAlto = getScreenSize()   
-    layout = [[sg.Text(text ='Laberinto',
+    layout = [[sg.Text(text ='Laberinto Generado',
                 font=('Calibri', 30),
                 size= 30, 
                 justification= 'center')],
                 [sg.Image('IMG-laberinto.png', expand_y=True, key = '-IMAGE-'), sg.Image('IMG-referencias-laberinto.png', expand_y=True, key = '-IMAGE-')],
                 [sg.Text(' ')],
-                [sg.Button(button_text='Resolver por PP',
-                size=(15,2), font=('Calibri')), 
-                sg.Button(button_text='Resolver por PA', 
-                        size=(15,2), font=('Calibri'))],
-                [sg.Button(button_text='Generar nuevo laberinto', size=(32,2), font=('Calibri'))]
+                [sg.Text('Recorrer el laberinto mediante el algoritmo:')],
+                [sg.Button(button_text='Primero en Profundidad',
+                size=(20,2), font=('Calibri')), 
+                sg.Button(button_text='Primero en Amplitud', 
+                        size=(20,2), font=('Calibri'))],
+                [sg.Button(button_text='Generar nuevo laberinto', size=(42,2), font=('Calibri'))]
               ]
-    window0 = sg.Window('Laberinto', layout, element_justification='c')
+    window0 = sg.Window('Laberinto Generado', layout, element_justification='c')
     window  = [window0, None, None, None, None, None, None]
     active  = [True, False, False, False, False, False, False]
     event   = [None, None, None, None, None, None, None]
@@ -92,7 +98,7 @@ def make_windowLaberinto(iterPP, iterPA):
                                 window[6].close()
                         active[i] = False
                         window[i].close()
-                elif event[i] == 'Resolver por PP' and not active[1]:      
+                elif event[i] == 'Primero en Profundidad' and not active[1]:      
                     im = Image.open('IMG-PP-arbol-expansion.png')
                     imgAncho, imgAlto = im.size
                     ancho, alto = imgAncho, imgAlto
@@ -102,10 +108,10 @@ def make_windowLaberinto(iterPP, iterPA):
                     if(imgAlto > srcAlto):
                         alto = srcAlto - 75
                         ancho = ancho + 55    
-                    window[1] = sg.Window("Árbol PP", layoutArbol('PP'),
+                    window[1] = sg.Window("Árbol de expansión", layoutArbol('PP'),
                              finalize=True, location=(int((srcAncho-ancho)/2),0), size=(ancho, alto),  element_justification='c')                    
                     active[1] = True
-                elif event[i] == 'Resolver por PA' and not active[2]:
+                elif event[i] == 'Primero en Amplitud' and not active[2]:
                     im = Image.open('IMG-PA-arbol-expansion.png')
                     imgAncho, imgAlto = im.size
                     ancho, alto = imgAncho, imgAlto
@@ -115,28 +121,28 @@ def make_windowLaberinto(iterPP, iterPA):
                     if(imgAlto > srcAlto):
                         alto = srcAlto - 75
                         ancho = ancho + 55
-                    window[2] = sg.Window("Árbol PA", layoutArbol('PA'), size=(ancho, alto),
+                    window[2] = sg.Window("Árbol de expansión", layoutArbol('PA'), size=(ancho, alto),
                     finalize=True, location=(int((srcAncho-ancho)/2),0),  element_justification='c')
                     active[2] = True
                 elif event[i] == 'Ver laberinto recorrido':                    
                     if i == 1 and not active[5]:
                         active[5] = True
-                        window[5] = sg.Window("Laberinto solución PP", layoutLaberinto('PP'),
+                        window[5] = sg.Window("Laberinto recorrido", layoutLaberinto('PP'),
                              finalize=True, location=(0,0),  element_justification='c')
                     if i == 2 and not active[6]:
                         active[6] = True
-                        window[6] = sg.Window("Laberinto solución PA", layoutLaberinto('PA'),
+                        window[6] = sg.Window("Laberinto recorrido", layoutLaberinto('PA'),
                              finalize=True, location=(0,0),  element_justification='c')    
                 elif event[i] == 'Ver iteraciones':
                     if i == 1:
                         if not active[3]:    
                             active[3] = True
-                            window[3] = sg.Window("Iteraciones PP", layoutIteracion(iterPP, 'PP'),
+                            window[3] = sg.Window("Iteraciones", layoutIteracion(iterPP, 'PP'),
                                 finalize=True, resizable=False, margins=(0,0), location=(7,0),  element_justification='c', size=(srcAncho - 15, srcAlto - 75))  
                     if i == 2:
                         if not active[4]:
                             active[4] = True
-                            window[4] = sg.Window("Iteraciones PA", layoutIteracion(iterPA, 'PA'),
+                            window[4] = sg.Window("Iteraciones", layoutIteracion(iterPA, 'PA'),
                                 finalize=True, resizable=False, margins=(0,0), location=(7,0),  element_justification='c', size=(srcAncho - 15, srcAlto - 75))  
                 elif event[i] == 'Generar nuevo laberinto':  
                     for j in range (1, 7):
@@ -181,9 +187,14 @@ def layoutIteracion(iteraciones, tipo):
             else:
                 fila.append("(" + str(est.x) + ", " + str(est.y) + ")")
         valores.append(list(fila))
-        
-    layout = [[sg.Text(text='Iteraciones ' + tipo, font=('Calibri', 30), 
-                size= 30,
+    txt = ''    
+    if tipo == 'PP':
+        txt = 'Realizadas en el algoritmo Primero en Profundidad'
+    else:
+        txt = 'Realizadas en el algoritmo Primero en Amplitud'
+    layout = [[sg.Text(text='Iteraciones', font=('Calibri', 30), 
+                justification= 'center')],
+                [sg.Text(text=txt, font=('Calibri', 20), 
                 justification= 'center')],
                 [sg.Table(values = valores, 
                           headings = cabeceras,
@@ -197,7 +208,12 @@ def layoutIteracion(iteraciones, tipo):
     return layout
 
 def layoutLaberinto(tipo):
-    layout = [[sg.Text(text='Laberinto Recorrido ' + tipo, font=('Calibri', 30), size = 30, expand_x= True, justification= 'center')],    
+    if tipo == 'PP':
+        txt = 'Aplicando Primero en Profundidad'
+    else:
+        txt = 'Aplicando Primero en Amplitud'
+    layout = [[sg.Text(text='Laberinto Recorrido', font=('Calibri', 25), expand_x= True, justification= 'center')],   
+              [sg.Text(text=txt, font=('Calibri', 20), expand_x= True, justification= 'center')],  
             [sg.Image(filename = 'IMG-' + tipo + '-laberinto-solucion.png', key='Image'), sg.Image('IMG-referencias-laberinto-completo.png', expand_y=True, key = '-IMAGE-')]]
     return layout
 
@@ -213,7 +229,12 @@ def layoutArbol(tipo):
         scrollHorizontal = True
     if(imgAlto > srcAlto):
         scrollVertical = True
-    layout = [[sg.Text(text='Árbol de expansión ' + tipo, font=('Calibri', 30), size = 30, expand_x= True, justification= 'center')],
+    if tipo == 'PP':
+        txt = 'Expandido mediante el algoritmo de Primero en Profundidad'
+    else:
+        txt = 'Expandido mediante el algoritmo de Primero en Amplitud'
+    layout = [[sg.Text(text='Árbol de expansión', font=('Calibri', 30), expand_x= True, justification= 'center')],
+              [sg.Text(text=txt, font=('Calibri', 20), expand_x= True, justification= 'center')],
               [sg.Button(button_text= 'Ver laberinto recorrido', size=(15,2), font=('Calibri'), enable_events=True), sg.Button(button_text= 'Ver iteraciones', size=(15,2), font=('Calibri'), enable_events=True)],
               [sg.Column(column, scrollable = (scrollVertical or scrollHorizontal), vertical_scroll_only = not scrollHorizontal, key='Column')]]
     return layout
