@@ -82,6 +82,23 @@ def crearArbolExpansion(visitados, pendientes):
         nodoActual.esSolucion = True
     return arbolExpansion
 
+def getMatrizRecorrida(arbol: Node, filas: int, columnas: int):
+    if arbol:
+        lab = []
+        for x in range(0, filas):
+            fila = []
+            for y in range (0, columnas):
+                fila.append('N')
+            lab.append(fila)
+        for nodo in PreOrderIter(arbol):
+            if nodo.esSolucion == True and nodo.est == '0':
+                lab[nodo.cordY][nodo.cordX] = 'S'
+            else:
+                lab[nodo.cordY][nodo.cordX] = nodo.est
+        return lab
+    else:
+        return None
+
 def getNodoFinal(arbol: Node):
     nodoFinal = None
     for nodo in arbol.leaves:
@@ -89,21 +106,6 @@ def getNodoFinal(arbol: Node):
             nodoFinal = nodo
             break
     return nodoFinal
-
-def marcarCaminoSolucion(laberinto, arbol: Node):
-    solucion = copiarLaberinto(laberinto)
-    if arbol:
-        for pre, _, node in RenderTree(arbol):
-            if node.esSolucion and node.est == '0':
-                solucion[node.cordY][node.cordX] = 'S'
-    return solucion
-
-def copiarLaberinto(laberinto):
-    copia = []
-    for fila in laberinto:
-        copiaFila = list(fila)
-        copia.append(copiaFila)
-    return copia
 
 def arbolAPng(arbol: Node, path: str):
     config = []
@@ -248,15 +250,20 @@ def crearReferenciasLaberintos():
     fig, ax = plt.subplots()
     ax.set_axis_off()
     table = ax.table(
-        cellText = [['       ', 'Libre'], ['       ', 'Pared'], ['       ', 'Inicio y fin'], ['       ', 'Camino solución']],
-        cellColours = [['none'] * 2] * 4,
+        cellText = [['       ', 'Libre'],
+                    ['       ', 'Pared'],
+                    ['       ', 'Inicio y fin'],
+                    ['       ', 'Camino solución'],
+                    ['       ', 'Expandida pero no visitada'],
+                    ['       ', 'No expandida']],
+        cellColours = [['none'] * 2] * 6,
         cellLoc = 'left',
         loc = 'upper left'
     )
     table.auto_set_font_size(False)
     table.set_fontsize(48)
     table.auto_set_column_width(col = [0, 1])
-    for i in range(0, 4):
+    for i in range(0, 6):
         for j in range(0, 2):
             table[i, j].set_height(0.45)
             table[i, j].set_edgecolor('white')
@@ -265,5 +272,7 @@ def crearReferenciasLaberintos():
     table[(1, 0)].set_facecolor('grey')
     table[(2, 0)].set_facecolor('blue')
     table[(3, 0)].set_facecolor('darkgreen')
+    table[(4, 0)].set_facecolor('yellow')
+    table[(5, 0)].set_facecolor('black')
     plt.savefig('IMG-referencias-laberinto-completo.png', bbox_inches = 'tight', transparent = True, dpi = 25)
     plt.close()
