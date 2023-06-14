@@ -18,12 +18,12 @@ En cada entrega tiene 3 opciones de descarga:
 
 ## Instrucciones para ejecutar el programa desde el archivo ejecutable .exe (sólo Windows)
 
-1. Instalar ([Graphviz](https://graphviz.org/download/#windows))
+1. Instalar [Graphviz](https://graphviz.org/download/#windows).
 2. Ejecutar el archivo ejecutable .exe
 
 ## Instrucciones para ejecutar el programa desde el código fuente
 
-1. Instalar ([Graphviz](https://graphviz.org/download/#windows))
+1. Instalar [Graphviz](https://graphviz.org/download/#windows).
 2. Instalar todas las librerías necesarias:
 
     a. Colorama
