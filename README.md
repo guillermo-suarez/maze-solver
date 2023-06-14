@@ -6,23 +6,15 @@
 * Mezio, Santiago ([srebatata](https://github.com/srebatata)) - Matrícula 67156
 * Suárez, Guillermo ([guillermo-suarez](https://github.com/guillermo-suarez)) - Matrícula 67124
 
-## Descargas
+## Descargar entregas del TPI
 
-### Descargar entrega completa del TPI (23/05/2023)
+Tanto la primer entrega (23/05/2023) como la entrega corregida (15/06/2023) están disponibles para su descarga en [esta carpeta de Drive](https://drive.google.com/drive/folders/1MDuwwrBtBo22sY6LY8S7TV9il8vOBoFU?usp=sharing).
 
-Click ([acá](https://drive.google.com/file/d/1y0sKuzOtZ8w2lU60M80xcDgHhbcUmF8I/view?usp=sharing)). Esta descarga incluye:
+En cada entrega tiene 3 opciones de descarga:
 
-* Código fuente.
-* Aplicación ejecutable.
-* Informe.
-
-### Descargar código fuente
-
-Click ([acá](https://drive.google.com/file/d/1pz3OBVpNXJoIRlKfryQHqhMHomGo0h-H/view?usp=sharing)). Esta descarga incluye únicamente el código fuente.
-
-### Descargar aplicación ejecutable (archivo .exe)
-
-Click ([acá](https://drive.google.com/file/d/1GHNTkgfKwcXegVVWa_bp6QIOmcw4eJnu/view?usp=sharing)). Esta descarga incluye únicamente la aplicación ejecutable.
+1. Descargar la entrega completa, esto incluye el código fuente, la aplicación ejecutable y el informe.
+2. Descargar únicamente el código fuente.
+3. Descargar únicamente la aplicación ejecutable.
 
 ## Instrucciones para ejecutar el programa desde el archivo ejecutable .exe (sólo Windows)
 
