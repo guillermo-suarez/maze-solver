@@ -73,7 +73,7 @@ Click ([acá](https://drive.google.com/file/d/1GHNTkgfKwcXegVVWa_bp6QIOmcw4eJnu/
 3. Abrir la carpeta del código fuente en algún IDE que permita ejecutar archivos de Python (.py)
 4. Ejecutar el archivo `main.py`
 
-## Comnsideraciones al momento de ejecutar la aplicación
+## Consideraciones al momento de ejecutar la aplicación
 
 * Únicamente compatible con Windows.
 * Al momento de ejecutar la aplicación, puede tardar unos pocos segundos en generar las imágenes.
